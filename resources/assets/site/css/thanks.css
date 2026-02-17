@@ -1,129 +1,135 @@
+/* ===== صفحة شكراً – تنسيق رئيسي ===== */
+
 .thanks-container {
-  max-width: 1400px;
-  margin: 3rem auto 5rem auto;
-  padding: 0 1rem;
-
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  direction: rtl;
+  text-align: center;
 }
-.thanks-content{
-    background: #fafafa;
-    padding: 2rem 3rem;
 
-}   
+/* ===== رأس الصفحة (العنوان + المسار) ===== */
 
+.head {
+  margin-bottom: 30px;
+}
+
+.sub-title {
+  font-size: 1.7rem;
+  color: #04525a;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+  color: #7d8b95;
+}
+
+.breadcrumb-item {
+  color: #469e8d;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.breadcrumb-item.active {
+  color: #04525a;
+  font-weight: 700;
+}
+
+.breadcrumb-separator {
+  margin: 0 6px;
+  color: #999;
+}
+
+/* ===== المحتوى الرئيسي ===== */
+
+.thanks-content {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 20px;
+  border: 1px solid #e8eff5;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* ===== أيقونة النجاح ===== */
 
 .success-icon-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin-bottom: 20px;
 }
 
-.success-icon {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.success-icon img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.15));
 }
 
-.success-icon svg {
-  width: 60px;
-  height: 60px;
-}
-
-.thanks-message {
-  text-align: center;
-  margin-bottom: 3rem;
-}
+/* ===== رسالة الشكر ===== */
 
 .thanks-message h2 {
-  font-family: 'MyCustomArabic' !important;
-  color: var(--accent-color);
-  font-size: 67px;
+  font-size: 1.6rem;
+  color: #04525a;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 15px;
 }
 
-.thanks-text {
-  font-family: 'MyCustomArabic' !important;
-    text-align: center;
-  line-height: 60px;
-  font-size: 20px;
-  font-weight: 400;
-  color: #000000;
-  margin-bottom: 3rem;
+/* ===== نص الشكر ===== */
+
+.thanks-text p {
+  font-size: 1rem;
+  line-height: 2;
+  color: #4c5b65;
+  margin-bottom: 25px;
+  background: #f8fbfc;
+  padding: 18px;
+  border-radius: 14px;
+  border-right: 4px solid #469e8d;
 }
+
+/* ===== زر سجل تبرعاتي ===== */
 
 .donation-record-btn {
-  display: block;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  background-color: #F79E1B;
-  color: white;
-  border: none;
-  border-radius: 80px;
-  font-size: 1.2rem;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 1rem;
   font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease , transform 0.3s ease, box-shadow 0.3s ease;
+  background: #469e8d;
+  color: #fff;
+  border-radius: 12px;
   text-decoration: none;
+  transition: 0.3s ease;
 }
 
 .donation-record-btn:hover {
-  background-color: var(--accent-color);
-  transform:translateY(-4px) scale(1.02);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #04525a;
+  transform: translateY(-3px);
   color: white;
 }
 
-@media (max-width: 768px) {
-  .thanks-header h1 {
-    font-size: 1.8rem;
+/* ===== ريسبونسيف ===== */
+
+@media (max-width: 575px) {
+  .sub-title {
+    font-size: 1.3rem;
+  }
+
+  .thanks-content {
+    padding: 22px;
   }
 
   .thanks-message h2 {
-    font-size: 2rem;
+    font-size: 1.3rem;
   }
 
-  .success-icon {
-    width: 120px;
-    height: 120px;
-  }
-}
-
-@media (max-width: 576px) {
-  .thanks-container {
-    margin: 2rem auto 3rem;
-  }
-  .thanks-content{
-    padding: 1rem;
+  .success-icon img {
+    width: 110px;
+    height: 110px;
   }
 
-
-  .thanks-message h2 {
-    font-size: 1.4rem;
-  }
-  .thanks-text {
-    font-size: 14px;
-    line-height: 40px;
-  }
-
-  .success-icon {
-    width: 100px;
-    height: 100px;
-  }
-
-  .success-icon svg {
-    width: 50px;
-    height: 50px;
-  }
-  .donation-record-btn {
-    height: 40px;
-    font-size: 1rem;
+  .thanks-text p {
+    font-size: 0.9rem;
   }
 }

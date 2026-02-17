@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\Management\OrderController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Test\NotficationTestController;
+use App\Http\Controllers\Site\MoyasarPaymentController;
 use App\Http\Controllers\Site\PaymentController;
 use App\Http\Controllers\Site\ProfileCardsController;
-use App\Http\Controllers\Api\Test\NotficationTestController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -42,7 +43,9 @@ Route::group([
     Route::POST('notfication-sms', [NotficationTestController::class, 'sms']);
     Route::POST('notfication-email', [NotficationTestController::class, 'email']);
 
-
+Route::post('moyasar-webhook', [MoyasarPaymentController::class, 'webhook'])
+    ->name('moyasar.webhook');
+    
      // Start Api Management System --------------------------------------------
      Route::group([
         // 'prefix' => LaravelLocalization::setLocale(),

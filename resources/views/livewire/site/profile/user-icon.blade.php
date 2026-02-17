@@ -1,8 +1,9 @@
 <div class="user-items">
     @if ($user == null)
         <div class="usericon p-2" onclick="window.location.href='{{ route('site.login') }}';">
-            <i class="fa-solid fa-user fs-4"></i>
+            <i class="fa-solid fa-user fs-5"></i>
         </div>
+        
         <div class="usertext px-2" onclick="window.location.href='{{ route('site.login') }}';">
             <a class="me-4"> @lang('Login') </a>
         </div>

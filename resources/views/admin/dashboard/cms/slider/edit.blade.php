@@ -207,7 +207,7 @@
             });
         });
     </script>
-     <script>
+     {{-- <script>
   document.querySelectorAll('input[type=file][name="image"], input[type=file][name="mobile_image"]')
     .forEach(input => {
       input.addEventListener('change', () => {
@@ -223,6 +223,6 @@
         img.src = URL.createObjectURL(file);
       });
     });
-</script>
+</script> --}}
 
 @endpush

@@ -116,10 +116,10 @@ height: 70%;
 }
 
 .activity-title {
-  font-family: 'MyCustomArabic' !important;
+    font-family: Cairo;
   font-size: 20px;
   font-weight: 700;
-  color: #10353C;
+  color: #469e8d;
   margin-bottom: 1rem;
   line-height: 32px;
   text-align: right;
@@ -128,7 +128,7 @@ height: 70%;
 }
 
 .activity-desc {
-  font-family: 'MyCustomArabic' !important;
+font-family: 'IBM Plex Sans Arabic';
   color: #10353C;
   font-size: 16px;
   font-weight: 400;
@@ -139,11 +139,10 @@ height: 70%;
 }
 
 .activity-btn {
-  font-family: 'MyCustomArabic' !important;
+font-family: Almarai;
   display: inline-block;
-  background-color: white;
-  color: #666 !important;
-  border: 1px solid #666;
+  background-color: #469e8d;
+  color: #fff !important;
   border-radius: 60px;
   height: 38px;
   max-width: 269px;
@@ -159,7 +158,7 @@ height: 70%;
 }
 
 .activity-btn:hover {
-  background-color: transparent;
+  background-color: #04525a;
 }
 
 /* Responsive adjustments */
@@ -174,7 +173,7 @@ height: 70%;
         gap: 0;
         height: 100%;
         flex-flow: column nowrap;
-        justify-content:start;
+        justify-content:end;
         align-items: start;
         *{
             flex: 0;

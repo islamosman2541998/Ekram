@@ -25,3 +25,4 @@ document.querySelectorAll('.btn-add i.fa-cart-plus').forEach(function(btn){
 document.getElementById('cartSuccessModal').addEventListener('click', function(e) {
   if (e.target === this) this.style.display = 'none';
 });
+// 

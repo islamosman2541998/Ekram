@@ -966,7 +966,7 @@
     });
 
 </script>
-<script>
+{{-- <script>
     document.querySelectorAll('input[type=file][name^="logo_"]').forEach(input => {
         input.addEventListener('change', () => {
             const file = input.files[0];
@@ -982,7 +982,7 @@
         });
     });
 
-</script>
+</script> --}}
 <script>
     $(document).ready(function() {
         // Handle delete image button click

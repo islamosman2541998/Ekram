@@ -7,104 +7,114 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
    {!! $settings->getPixel('body_pixel_id') !!}
 @endif
 
-
-
-<header>
-    <div class="topBar">
-        
-        <img class="back" src="{{ site_path('img/nav-banner.png') }}" alt="">
-        <div class="UserBox ">
-            <div onclick="window.location.href='/'" class="logoBox p-4 d-none d-lg-block">
-                <img src="{{ asset(getImage($settings->getItem('logo')) ?? site_path('img/logo.png')) }}" class="img-fluid logo-img" alt="" />
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom" dir="ltr">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <div class="custom-hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
+        </button>
 
-            <div class="Name d-none d-lg-block">
+        <!-- Logo -->
+        <a class="navbar-brand d-lg-none logo-mobile" href="{{ url('/') }}">
+            <img src="{{ asset('img/Untitled-1.png') }}" alt="Logo">
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-center navmenu" id="navbarNav">
+            <ul class="navbar-nav gap-3">
+
                 @php
-                    $welcomeMessage = $settings->getItem('welcome_message_' . app()->getLocale());
-                @endphp
-                {{ $welcomeMessage ?? 'مرحبا بكم في جمعية يدا بيد' }}
-            </div>
-
-
-            <div class="useraction mx-auto mx-lg-0">
-                <div onclick="window.location.href='/'" class="logoBoxModile  d-lg-none text-center">
-                    <img src="{{ asset(getImage($settings->getItem('logo_mobile')) ?? site_path('img/logo.png')) }}" class="img-fluid" alt="" />
-                </div>
-
-                <div class="loginbox ">
-                    <div class="user ">
-                        <livewire:site.carts.cart-icon />
-
-                        <livewire:site.profile.user-icon />
-                    </div>
-
-                    <div class="nav-left">
-                        <div class="user-mobile ">
-                            <livewire:site.carts.cart-icon />
-
-                            <livewire:site.profile.user-icon />
-
-                        </div>
-
-                        <div class="nav-icon">
-                            <button class="navbar-toggler custom-hamburger" type="button">
-                                <span class="hamburger-bar"></span>
-                                <span class="hamburger-bar"></span>
-                                <span class="hamburger-bar"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <nav class="navbar navbar-expand-lg  position-relative ">
-        <div class="blue-bar"></div>
-        <div class="nav-content container">
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <ul class="navbar-nav me-auto align-content-between mb-2 mb-lg-0 pe-0">
-
-                    @php
+                    $current_lang = app()->getLocale();
                     $items = Cache::get('menus');
                     if ($items == null) {
-                    $items = Cache::rememberForever('menus', function () {
-                    return App\Models\Menue::with('trans')->orderBy('sort', 'ASC')->main()->active()->get();
-                    });
+                        $items = Cache::rememberForever('menus', function () {
+                            return App\Models\Menue::with('trans')
+                                ->orderBy('sort', 'ASC')
+                                ->main()
+                                ->active()
+                                ->get();
+                        });
                     }
+                @endphp
+
+                @foreach ($items->where('parent_id', $parent_id ?? 0) as $item)
+                    @php
+                        $totalChildren = $items->where('parent_id', $item->id)->count();
+                        $itemTitle = $item->trans?->where('locale', $current_lang)->first()->title ?? '';
+                        $itemUrl = $item->type == 'dynamic' ? $item->dynamic_url : $item->url;
+                        $isActive =
+                            @$item->id == @$menu->id ||
+                            @$item_parent_id == $item->id ||
+                            in_array($item->id, $menu_parent_ids ?? []);
                     @endphp
 
-                    @include('site.layouts.menuItem')
+                    @if ($totalChildren)
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @if ($isActive) active @endif"
+                                href="#" data-bs-toggle="dropdown">
+                                {{ $itemTitle }}
+                            </a>
+                            <ul class="dropdown-menu text-end @if ($isActive) active current @endif"
+                                aria-labelledby="navbarDropdown">
+                                @include('site.layouts.menuItem', ['parent_id' => $item->id])
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link @if ($isActive) active @endif"
+                                href="{{ $itemUrl }}">
+                                {{ $itemTitle }}
+                            </a>
+                        </li>
+                    @endif
 
-                    <!-- Blog Dropdown Menu -->
-                    {{-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="blogDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ __('site.blog') }}
-                        </a>
-                        <ul class="dropdown-menu text-end" aria-labelledby="blogDropdown">
-                            @php
-                            $blogCategories = \App\Models\Categories::query()
-                            ->with('trans')
-                            ->active()
-                            ->feature()
-                            ->orderBy('sort', 'ASC')
-                            ->limit(5)
-                            ->get();
-                            @endphp
-                            @foreach($blogCategories as $category)
-                            <li><a class="dropdown-item" href="{{ route('site.blog-categories.show', $category->transNow->slug ?? '') }}">{{ $category->transNow->title ?? '' }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li> --}}
+                    @if (!$loop->last)
+                        <li class="nav-divider"></li>
+                    @endif
+                @endforeach
 
-                </ul>
-                {{-- <form class="search-form position-relative" role="search">
-                    <input type="search" placeholder="البحث" aria-label="Search" />
-                    <i class="fa-solid fa-magnifying-glass position-absolute"></i>
-                </form> --}}
-            </div>
+                <div class="user-cart d-lg-none mt-3">
+                        <livewire:site.profile.user-icon />
+
+                    {{-- <a href="{{ url('cart') }}"><i class="fa-solid fa-cart-shopping mx-3 fs-5"></i></a> --}}
+                                <livewire:site.carts.cart-icon />
+
+                </div>
+            </ul>
         </div>
-    </nav>
-</header>
+
+        <div class="user-cart d-none d-lg-flex">
+             <livewire:site.profile.user-icon />
+
+            <livewire:site.carts.cart-icon />
+        </div>
+    </div>
+</nav>
+
+
+
+  <style>
+    .collapse
+ {
+    visibility: unset;
+}
+.navbar-nav .nav-link {
+   
+    font-size: 23px;
+}
+.fa-cart-shopping , .Badge , .usericon 
+{
+    color: #2C5F5D !important;
+}
+.start-100 {
+    left: 69% !important;
+}
+.user-items{
+    display: flex;
+    align-items: center;
+}
+  </style>
+

@@ -1,449 +1,306 @@
-.profile-page{
-  padding: 2rem 4rem;
+/* ====== صفحة البروفايل العامة ====== */
+.profile-page {
+  background: #fdf5ec;
+  padding: 40px 0 60px;
+  direction: rtl;
 }
 
-.welcome-header {
-  padding: 5rem 0 0.5rem 0;
-  font-family: 'MyCustomArabic' !important;
-  h2 {
-    font-size: 37px;
-    font-weight: 700;
-    color: #336776;
-  }
-  h3 {
-  font-family: 'MyCustomArabic' !important;
-    font-size: 30px;
-    font-weight: 700;
-  }
-}
+/* حاوية أساسية */
 .profile-container {
-  .form-group{
-  font-family: 'MyCustomArabic' !important;
-    position: relative;
-    margin: 12px 0;
-  }
-
-  .form-control {
-    background: transparent;
-    border-radius: 80px;
-    border: solid #4d4d4d 1px;
-    padding-right: 160px;
-    color: black;
-    font-weight: 700;
-  }
-  .float-label {
-    font-size: 16px;
-    position: absolute;
-    color: #4D4D4D4D;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .save-changes-btn{
-    width: 100%;
-    background: #10353C;
-    height: 50px;
-    border: none;
-    border-radius: 50px;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-  font-family: 'MyCustomArabic' !important;
-    transition: all 0.3s ease;
-  }
-
-  .save-changes-btn:hover {
-    background: #1a4954;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(16, 53, 60, 0.2);
-  }
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 0 15px;
 }
 
-@media screen and (max-width:567px) {
-  .welcome-header{
-    h2{
-      font-size: 28px;
-    }
-    h3{
-      font-size: 18px;
-    }
-  }
+/* ====== كارت بيانات المستخدم ====== */
+.user-info-section {
+  background: #ffffff;
+  border-radius: 26px;
+  border: 1px solid #dde7f0;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+  padding: 24px 22px 28px;
 }
 
-.statistics-header{
-  padding: 2rem  0 0 0 ;
+/* الهيدر الترحيبي */
+.welcome-header h2 {
+  font-size: 1.5rem;
   font-weight: 700;
-  font-size: 30px;
+  color: #04525a;
+  margin-bottom: 4px;
 }
 
+.welcome-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #7a8a96;
+  margin-bottom: 18px;
+}
 
+/* كارت بيانات المتبرع */
+.user-data-section h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #04525a;
+  margin-bottom: 16px;
+}
+
+.user-data-section .row {
+  row-gap: 12px;
+}
+
+/* اللابل والفيلد */
+.form-group {
+  margin-bottom: 10px;
+}
+
+.float-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7a88;
+  margin-bottom: 4px;
+}
+
+.user-data-section .form-control {
+  border-radius: 12px;
+  border: 1px solid #d6dde5;
+  background: #f9fbfd;
+  height: 46px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.user-data-section .form-control[readonly] {
+  color: #4b5a66;
+}
+
+/* زر حفظ التعديلات */
+.save-changes-btn {
+  border: none;
+  border-radius: 999px;
+  background: #469e8d;
+  color: #fff;
+  padding: 10px 32px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(70, 158, 141, 0.35);
+  transition: 0.2s ease;
+}
+
+.save-changes-btn:hover {
+  background: #387a6e;
+  transform: translateY(-1px);
+}
+
+/* ====== تبرعاتي – الإحصائيات ====== */
+.statistics-header {
+  max-width: 1200px;
+  margin: 25px auto 12px;
+  padding: 0 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #04525a;
+}
+
+/* حاوية الكروت */
 .statistics-container {
-  font-family: 'MyCustomArabic' !important;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  background: #f8f8f8;
-  padding:0 2rem;
-  border-radius: 50px;
-  width: 100%;
-  margin: auto;
-  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 0 15px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 }
+
+/* كارت إحصائية واحدة */
 .statistic {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 8px;
-  position: relative; /* Add this */
-  flex: 1 1 220px;
-  height: 100%;
-  min-height: 180px;
-  min-width: 250px;
-  border-radius: 24px;
-  padding: 0 1rem;
-  transition: box-shadow 0.2s;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 16px 14px;
+  border: 1px solid #e3edf4;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
-.statistic::after { /* Use pseudo-element instead of border-left */
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 25%; /* Start at 25% from top */
-  height: 50%; /* Only 50% of height */
-  width: 1px;
-  background-color: #CCCCCC;
-}
-
-.statistic:last-of-type::after {
-  display: none; /* Remove border for last item */
-}
-.statistic:hover {
-  box-shadow: 4px 6px 24px rgba(57, 178, 156, 0.579);
-}
-.statistic:last-of-type {
-  border-left: none;
-}
+/* الكارت الكبير الأول */
 .total-statistic {
-  flex: 1.5 1 320px;
-  gap: 2rem;
-  /* background: linear-gradient(135deg, #e0f7f4 0%, #f8f8f8 100%); */
-  padding: 2rem 1.5rem;
-  i {
-    transform: rotate(45deg);
-  }
-}
-.statistic-title {
-  font-weight: 500;
-  font-size: 1.25rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-.statistic-value {
-  font-weight: 700;
-  font-size: 50px;
-  color: #222;
-  line-height: 1.1;
-}
-.statistic-value span {
-  color: #39b29b;
-  font-size: 1rem;
-  margin-right: 6px;
-}
-.statistic-currency {
-  color: #39b29b;
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-.statistics-container .progress-container {
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  border-radius: 50px;
-  margin-top: 0.5rem;
-}
-.progress-value {
-  width: 100%;
-  text-align: left;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 0.25rem;
-}
-.bar {
-  width: 100%;
-  border-radius: 50px;
-  position: relative;
-  height: 14px;
-  background: #d9d9d9;
-  overflow: hidden;
-}
-.bar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: var(--progress);
-  background: linear-gradient(90deg, #39b29b 0%, #6be2c1 100%);
-  border-radius: 50px;
-  transition: width 0.3s ease;
+  grid-column: span 2;
+  background: linear-gradient(135deg, #04525a, #469e8d);
+  color: #fff;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .statistics-container {
-    gap: 0.5rem;
-    padding: 1.5rem 0.5rem;
-  }
-  .statistic,
-  .total-statistic {
-    min-width: 280px;
-  }
-}
-@media (max-width: 920px) {
-  .statistics-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 0.5rem;
-  }
-  .statistic,
-  .total-statistic {
-    border: solid 1px #CCCCCC;
-    gap: 4px;
-    border-radius: 24px;
-    min-width: unset;
-    width: 100%;
-    margin-bottom: 0.5rem;
-    padding: 1rem;
-    min-height: 250px;
-    box-shadow: 0 2px 8px rgba(51, 103, 118, 0.2);
-  }
-  .total-statistic {
-    justify-content: space-around;
-  }
-} 
-@media (max-width: 600px) {
-  .profile-page {
-    padding: 1rem;
-  }
-  .welcome-header{
-    padding: 1rem;
-  }
-  .statistics-container {
-    padding: 1rem;
-    border-radius: 18px;
-    gap: 0;
-  }
-  .statistic,
-  .total-statistic {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.95rem;
-    border-radius: 14px;
-  }
-  .statistic-title {
-    font-size: 1rem;
-  }
-  .statistic-value {
-    font-size: 35px;
-  }
-  .progress-container {
-    margin-top: -20px !important;
-  }
-}
 .statistic-title {
-  font-weight: 400;
-  font-size: 30px;
-  color: #555555;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: inherit;
 }
+
 .statistic-value {
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #555555;
-  span {
-    color: #39b29b;
-    font-size: 20px;
-    margin-right: 4px;
-  }
-}
-.statistic-currency {
-  color: #999999;
-  font-size: 30px;
-  font-weight: 700;
-}
-.statistics-container .progress-container {
-  width: 80%;
+  margin-bottom: 4px;
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.total-statistic .statistic-value span {
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.statistic-currency {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* شريط التقدم */
+.progress-container {
+  display: flex;
   align-items: center;
-  border-radius: 50px;
-  .progress-value {
-    width: 100%;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 700;
-    color: #555555;
-  }
-  .bar {
-    width: 100%;
-    border-radius: 50px;
-    position: relative;
-    height: 20px;
-    background: #d9d9d9;
-  }
-
-  .bar::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 20%;
-    background-color: #39b29b;
-    border-radius: 50px;
-    transition: width 0.3s ease;
-  }
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
-.orders-table-container {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  margin: 2rem 0;
-}
-
-.orders-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.orders-table thead {
-  background-color: #f8f9fa;
-}
-
-.orders-table th {
-  padding: 15px 10px;
+.progress-value {
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #336776;
-  text-align: center;
-  border-bottom: 2px solid #eee;
+  color: #04525a;
 }
 
-.orders-table td {
-  padding: 12px 10px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-  vertical-align: middle;
+.bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #469e8d, #f8d5ae);
+}
+
+/* ====== جدول التبرعات ====== */
+.orders-table-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  background: #ffffff;
+  border-radius: 26px;
+  border: 1px solid #dde7f0;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+/* ترويسة الجدول */
+.orders-table thead {
+  background: #f1f6fb;
+}
+
+.orders-table thead th {
+  border-bottom: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #04525a;
+  white-space: nowrap;
+}
+
+/* جسم الجدول */
+.orders-table tbody tr {
+  font-size: 0.9rem;
+}
+
+.orders-table tbody tr:nth-child(even) {
+  background: #fafbfd;
 }
 
 .orders-table tbody tr:hover {
-  background-color: #f9f9f9;
+  background: #eef5fb;
 }
 
-/* Status Badges */
+/* خانات الجدول */
+.orders-table td,
+.orders-table th {
+  padding: 10px 12px;
+  vertical-align: middle;
+  text-align: right;
+}
+
+/* شارات الحالة */
 .status-badge {
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .status-badge.completed {
-  background-color: #d4edda;
-  color: #28a745;
+  background: #e6f6eb;
+  color: #248a3d;
 }
 
 .status-badge.pending {
-  background-color: #fff3cd;
-  color: #e0a800;
+  background: #fff5e5;
+  color: #b87916;
 }
 
 .status-badge.canceled {
-  background-color: #f8d7da;
-  color: #dc3545;
+  background: #ffe8e8;
+  color: #c13b3b;
 }
 
-/* View Button */
+/* زر عرض */
 .view-btn {
-  background-color: #35a697;
-  color: white;
+  border-radius: 12px;
   border: none;
-  border-radius: 4px;
-  padding: 5px 15px;
+  padding: 5px 14px;
   font-size: 0.85rem;
+  font-weight: 600;
+  background: #469e8d;
+  color: #fff;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.2s ease;
 }
 
 .view-btn:hover {
-  background-color: #2a8a7e;
-  transform: translateY(-2px);
+  background: #387a6e;
 }
 
-/* Pagination */
-.pagination-container {
-  margin-top: 20px;
-}
-
-.pagination .page-link {
-  color: #35a697;
-  border-color: #dee2e6;
-  padding: 8px 16px;
-}
-
-.pagination .page-item.active .page-link {
-  background-color: #35a697;
-  border-color: #35a697;
-  color: white;
-}
-
-.pagination .page-item.disabled .page-link {
-  color: #6c757d;
-}
-
-.pagination .page-link:hover {
-  background-color: #e9f7f5;
-  color: #2a8a7e;
-}
-
-/* Responsive Adjustments for Orders Table */
-@media (max-width: 992px) {
-  .orders-table {
-    min-width: 800px;
+/* ====== ريسبونسيف ====== */
+@media (max-width: 991.98px) {
+  .user-info-section {
+    border-radius: 20px;
   }
 
-  .orders-table-container {
-    overflow-x: auto;
+  .statistics-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .total-statistic {
+    grid-column: span 2;
   }
 }
 
-@media (max-width: 768px) {
-  .filter-buttons {
-    flex-direction: row;
-    justify-content: center;
+@media (max-width: 575.98px) {
+  .profile-page {
+    padding-top: 25px;
   }
 
-  .filter-btn {
-    padding: 6px 12px;
-    font-size: 0.9rem;
+  .user-info-section {
+    padding: 20px 16px 24px;
   }
 
-  .stat-card {
-    margin-bottom: 15px;
+  .statistics-container {
+    grid-template-columns: 1fr;
   }
-  .exit-btn {
-    padding: 8px 20px;
+
+  .total-statistic {
+    grid-column: span 1;
   }
-  .stat-card {
-    padding: 10px 0;
-    margin-bottom: 8px;
+
+  .orders-table td,
+  .orders-table th {
+    font-size: 0.8rem;
+    padding-inline: 8px;
   }
 }

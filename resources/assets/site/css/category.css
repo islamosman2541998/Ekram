@@ -1,0 +1,285 @@
+/* ========== صفحة الأقسام (category) ========== */
+
+.category-page {
+  background: #fdf5ec;
+  padding: 40px 0 60px;
+  direction: rtl;
+}
+
+/* ===== سكشن العنوان + الكارت المختار ===== */
+
+.category-page .sections.home {
+  background: transparent;
+  padding: 0;
+}
+
+.category-page .category-container {
+  max-width: 900px;
+  margin: 0 auto 10px;
+  text-align: center;
+}
+
+.category-page .sections.home .title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #04525a;
+  margin-bottom: 10px;
+}
+
+/* نخلى السلايدر يعرض كارت واحد ثابت فى النص */
+.category-page .SectionSwiper {
+  margin-top: 10px;
+}
+
+.category-page .ProjectSections {
+  width: 100%;
+}
+
+.category-page .ProjectSections .swiper-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.category-page .ProjectSections .swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+/* نكبر الكارت شوية فى صفحة الكاتيجوري */
+.category-page .creative-card {
+  max-width: 260px;
+  border-radius: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== سكشن المشاريع تحت القسم ===== */
+
+.category-page .RamdanProjects {
+  margin-top: 25px;
+}
+
+.category-page .RamdanProjects .container {
+  max-width: 1200px;
+}
+
+.category-page .RamdanProjects h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #04525a;
+  margin-bottom: 20px;
+}
+
+/* الخلفية حوالين كروت المشاريع */
+.category-page .Ramdan {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 20px 18px 10px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+  border: 1px solid #dde7f0;
+}
+
+/* نتاكد إن الكروت تاخد العرض بالكامل داخل الأعمدة */
+.category-page .CardBox.custom-card {
+  width: 100%;
+  max-width: none;
+  border-radius: 20px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e4eaef;
+  overflow: hidden;
+  transition: 0.22s ease;
+}
+
+.category-page .CardBox.custom-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* صورة الكارت */
+.category-page .custom-card-img {
+  height: 190px;
+}
+
+.category-page .custom-card-img-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* جسم الكارت */
+.category-page .custom-card-body-bg {
+  padding: 14px;
+}
+
+/* صف المبالغ */
+.category-page .custom-card-btn-row .amount-btn {
+  flex: 1;
+  border-radius: 10px;
+  border: none;
+  padding: 6px 6px;
+  font-size: 13px;
+  background: #e6f4f2;
+  color: #04525a;
+  font-weight: 700;
+}
+
+/* حقل المبلغ */
+.category-page .custom-card-input,
+.category-page .input-open-container .open {
+  border-radius: 12px;
+  border: 1px solid #cfd7dd;
+  height: 42px;
+  font-size: 13px;
+}
+
+/* صف زر التبرع+العربة */
+.category-page .custom-card-action-row .custom-card-donate-btn {
+  height: 42px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin: 0 8px;
+}
+
+.category-page .custom-card-cart-btn {
+  height: 42px;
+  width: 46px;
+  border-radius: 12px;
+}
+
+/* زر المزيد تحت الكارت */
+.category-page .button-more {
+  margin-top: 4px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #04525a;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* نرتب الأعمدة فى الوسط */
+.category-page .Ramdan .row {
+  justify-content: center;
+}
+
+/* ===== ريسبونسيف ===== */
+
+@media (max-width: 991.98px) {
+  .category-page {
+    padding-top: 25px;
+  }
+
+  .category-page .Ramdan {
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .category-page .CardBox.custom-card {
+    margin-bottom: 10px;
+  }
+
+  .category-page .custom-card-img {
+    height: 170px;
+  }
+}
+/* ====== رحلة المستفيد مع خدماتنا ====== */
+
+.service-flow {
+  background-color: #fdf2e2; /* قريب من خلفية الموقع */
+}
+
+.service-flow-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #04525a;
+}
+
+.service-flow-subtitle {
+  font-size: 0.95rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+/* الخط الواصل بين الدواير */
+.flow-line {
+  position: absolute;
+  top: 40px;              /* تقريباً في منتصف الدواير */
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    to left,
+    #ee5a34,
+    #f1aa42,
+    #469e8d
+  );
+  border-radius: 999px;
+  opacity: 0.4;
+}
+
+/* كل Step */
+.flow-step {
+  position: relative;
+  padding-top: 50px; /* مساحة فوق علشان الدائرة */
+}
+
+/* الدائرة بتاعة رقم الخطوة */
+.step-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ألوان مختلفة لكل خطوة */
+.step-orange {
+  background-color: #ee5a34;
+}
+
+.step-yellow {
+  background-color: #f1aa42;
+}
+
+.step-green {
+  background-color: #469e8d;
+}
+
+.step-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #04525a;
+  margin-bottom: 6px;
+}
+
+.step-text {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.9;
+}
+
+/* موبايل / تابلت */
+@media (max-width: 767.98px) {
+  .flow-line {
+    display: none; /* نخفي الخط الواصل في الشاشات الصغيرة */
+  }
+
+  .flow-step {
+    padding-top: 0;
+  }
+
+  .step-circle {
+    margin-bottom: 10px;
+  }
+
+  .service-flow-title {
+    font-size: 1.6rem;
+  }
+}

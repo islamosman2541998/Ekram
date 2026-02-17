@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Site\Payments;
 
 use App\Charity\Carts\DatabaseCart;
+use App\Http\Controllers\Site\CheckoutController;
 use App\Models\PaymentMethod;
 use Livewire\Component;
 
@@ -48,17 +49,25 @@ class Visa extends Component
         return $data;
     }
 
-    public function checkout(){
-        // checkinig if missing data
-        $missId = $this->checkMissingData();
-        if($missId){
-            $this->emit('openModal', $missId);
-            return false;
-        }
-
-        $data = $this->getSanitized();
-        return redirect(route('site.payments.intital', $data));
+   public function checkout()
+{
+    // تحقق من البيانات المفقودة
+    $missId = $this->checkMissingData();
+    if ($missId) {
+        $this->emit('openModal', $missId);
+        return false;
     }
+
+    // أنشئ الأوردر
+    $data['payment_method_id'] = $this->payment_method_id;
+    $data['payment_method_key'] = $this->payment_method_key;
+    
+    $order = new CheckoutController();
+    $process = $order->process($data);
+    
+    // وجه لصفحة Moyasar بدل PayFort
+    return redirect()->route('site.moyasar.payment', $process['order']->identifier);
+}
 
     public function checkMissingData(){
         $cart = new DatabaseCart();

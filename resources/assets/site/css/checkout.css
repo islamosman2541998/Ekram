@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding:  1rem 1rem 3rem 1rem;
-  font-family: 'MyCustomArabic' !important;
+  font-family: 'Almarai', sans-serif;
 }
 
 .checkout-content {
@@ -11,6 +11,11 @@
   flex-direction: column;
   gap: 2rem;
   background: #FAFAFA;
+}
+.ReceiptBtn{
+  min-width: 180px;
+  color: #04525a;
+  background-color: #e6e6e6;
 }
 
 @media (min-width: 992px) {
@@ -115,7 +120,7 @@
 .quantity-value, 
 .amount-value {
   font-weight: 600;
-  color: #015263;
+  color: #faa440;
 }
 
 .donation-item-price {
@@ -181,7 +186,7 @@
   display: block;
   width: 100%;
   padding:.5rem 1rem;
-  background-color: #F79E1B;
+  background-color: #469e8d;
   color: #fff;
   border: none;
   border-radius: 80px;
@@ -192,9 +197,12 @@
   text-align: center;
   box-shadow: 0 4px 6px rgba(247, 164, 28, 0.2);
 }
-
+.donation_A{
+  color: white;
+  text-decoration: none;
+}
 .donate-now-btn:hover {
-  background-color: #e8940d;
+  background-color: #04525a;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(247, 164, 28, 0.3);
 }

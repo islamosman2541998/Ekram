@@ -1,6 +1,6 @@
 body {
-  font-family: 'MyCustomArabic' !important;
-  background: #f8f8f8;
+  font-family: 'Tajawal', Arial, sans-serif;
+  background: #fdf5ec;
   margin: 0;
   width: 100vw;
   margin: auto;
@@ -18,11 +18,10 @@ input{
 .cart{
   width: 90vw;
   margin: auto;
-  margin-bottom: 5rem;
 
 }
 .cart-title {
-  font-family: 'MyCustomArabic' !important;
+  font-family: droid;
   font-weight: 700;
   font-size: 37px;
   margin:0 4rem;
@@ -30,8 +29,10 @@ input{
 }
 
 .cart button{
-  font-size: 1.5rem;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  font-size: 1rem;
+  transition:  0.2s, color 0.2s, box-shadow 0.2s;
+  background-color: #1ab7a6;
+  color: white;
 }
 
 .cart .head{
@@ -42,13 +43,13 @@ input{
 
 .cart-checkout-btn:hover,
 .cart-checkout-btn:focus {
-  background: var(--green-color);
+
   color: #fff;
 }
 
 .tab-btn:hover
  {
-  background: #22B573;
+  background: #04525a;
   color: #fff;
 }
 
@@ -66,7 +67,7 @@ input{
 
 .cancel-btn:hover,
 .cancel-btn:focus {
-  background: #a11d23;
+  background: #ee5a34;
   color: #fff;
 }
 
@@ -133,7 +134,7 @@ label,.text{
   margin-right: 4px;
 }
 .cart-checkout-btn {
-  background: var(--accent-color);
+  background: #469e8d;
   color: #fff;
   border: none;
   border-radius: 0 0 1rem 1rem;
@@ -144,12 +145,16 @@ label,.text{
   cursor: pointer;
   font-weight: bold;
 }
+.cart-checkout-btn:hover{
+  background-color: #04525a;
+  transition: ease all 600ms;
+}
 .cart-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 1rem ;
-  font-family: 'MyCustomArabic' !important;
+  font-family: brando;
   border: solid 1px #555;
   border-radius: 1rem;
   height: 100%;
@@ -169,8 +174,8 @@ label,.text{
   padding: 7px 0;
   border-radius: 8px;
   border: none;
-  background: #DEE0E0;
-  color: #5d6d63;
+  background: #faa440;
+  color: #fff;
   font-size: 1rem;
   cursor: pointer;
   font-weight: bold;
@@ -179,6 +184,9 @@ label,.text{
 .tab-btn.active {
   background: #35A697;
   color: #fff;
+}
+.tab-btn:hover{
+  background: #04525a;
 }
 .form-group{
   display: flex;
@@ -288,7 +296,7 @@ label,.text{
 }
 
 .pay-btn {
-  background: #22B573;
+  background: #469e8d;
   color: #fff;
   border: none;
   font-size: 1.2rem;
@@ -304,7 +312,7 @@ label,.text{
 }
 
 .cancel-btn {
-  background: #C1272D;
+  background: #ee5a34;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -363,7 +371,7 @@ label,.text{
   align-items: center;
   min-width: 120px;
   margin-left: 16px;
-  font-family: 'MyCustomArabic' !important;
+  font-family: brando;
 
 }
 
@@ -376,29 +384,29 @@ label,.text{
 }
 
 .cart-item-title {
-  font-size: 1.4rem;
-  color: #1ab7a6;
-  font-weight: bold;
+  font-size: 1rem;
+  color: #faa440;
+  
   text-align: center;
   margin-top: 2px;
 }
 .cart-item-remove {
-  background: none;
+  background: none !important;
   border: none;
-  color: #6c757d;
+  color: #6c757d !important;
   font-size: 1.7rem;
   cursor: pointer;
   margin-left: 16px;
   transition: color 0.2s;
 }
 .cart-item-remove:hover {
-  color: #e74c3c;
+  color: #e74c3c !important;
 }
 
 .cart-item-price {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #555;
+  color: #04525a;
   display: flex;
   align-items: baseline;
   gap: 6px;
@@ -408,7 +416,7 @@ label,.text{
 
 .price-currency {
   font-size: 1.1rem;
-  color: #888;
+  color: #04525a;
   margin-right: 3px;
 }
 
@@ -432,20 +440,20 @@ label,.text{
 }
 
 .unit-value {
-  color: #1a7a5c;
+  color: #04525a;
   font-weight: 600;
   margin-left: 6px;
 }
 
 .unit-label {
-  color: #1a7a5c;
+  color: #04525a;
   font-weight: 600;
 }
 
 .qty-btn {
   background: #e6f2ee;
   border: none;
-  color: #4ca96b;
+  color: #469e8d;
   font-size: 1.1rem;
   border-radius: 50%;
   width: 28px;
@@ -457,7 +465,7 @@ label,.text{
   transition: background 0.2s, color 0.2s;
 }
 .qty-btn:hover {
-  background: #4ca96b;
+  background: #faa440;
   color: #fff;
 }
 
@@ -493,7 +501,7 @@ label,.text{
 }
 
 .cart-total-value {
-  color: var(--accent-color);
+  color: #469e8d;
   font-size: 2.5rem;
   font-weight: 700;
 }

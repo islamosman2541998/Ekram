@@ -30,7 +30,7 @@
 }
 
 .fast-pay .container {
-  background-color: #10353C;
+  background-color: #ee5a34;
   color: white;
   border-radius: 4px;
   display: flex;
@@ -52,7 +52,7 @@
     margin-right: 10px;
     width: 40px;
     font-weight: bold;
-    color: #10353C;
+    color: #ee5a34;
     transition: transform 1s ease;
     z-index: 1;
     display: flex;

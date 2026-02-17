@@ -28,9 +28,9 @@
 
 
     <!--  Fonts -->
-    <link rel="preload" href="{{ asset('resources/assets/site/fonts/4.TTF') }}" as="font" type="font/ttf"
+    <link rel="preload" href="{{ asset('resources/assets/site/fonts/din-next-lt-w23-regular.ttf') }}" as="font" type="font/ttf"
         crossorigin>
-    <link rel="preload" href="{{ asset('resources/assets/site/fonts/4_0.TTF') }}" as="font" type="font/ttf"
+    <link rel="preload" href="{{ asset('resources/assets/site/fonts/din-next-lt-w23-medium.ttf') }}" as="font" type="font/ttf"
         crossorigin>
     <link rel="preload" href="{{ asset('resources/assets/site/fonts/4_1.TTF') }}" as="font" type="font/ttf"
         crossorigin>

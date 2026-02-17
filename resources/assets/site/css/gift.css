@@ -2,11 +2,12 @@
   max-width: 1400px;
   margin: 2rem auto;
   padding: 0 1rem;
+ 
 }
 
 .gift-title {
   text-align: center;
-  color: #004A6A;
+  color: #04525a;
   font-size: 37px;
   font-weight: 700;
   margin-bottom: 3rem;
@@ -21,13 +22,15 @@
 }
 
 .gift-left {
-  font-family: 'MyCustomArabic' !important;
+font-family: 'IBM Plex Sans Arabic';
   flex: 1;
   padding: 2.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
   border-radius:55px;
+  height:127vh ;
+  background-color: #1a4b56;
 
 }
 
@@ -48,7 +51,7 @@
     font-weight: 700 !important;
 }
 .normal,.large{
-    color: #004A6A !important;
+    color: #fff !important;
 }
 
 @media screen and (max-width:576px) {
@@ -63,29 +66,31 @@
     }
 }
 .gift-heading {
-  color: #004A6A;
+  color: #04525a;
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
+  font-size: 2rem;
 }
 
 .gift-subheading {
-  color: #004A6A;
+  color: #04525a;
   margin-bottom: 1.5rem;
   text-align: center;
 }
 
 .gift-project {
-  color: #004A6A;
+  color: #04525a;
   margin: 1.5rem 0;
   text-align: center;
   direction: rtl;
 }
 
 .gift-name {
-  color: #004A6A;
+  color: #04525a;
   margin: 1rem 0;
   text-align: center;
+  font-size: 2rem;
 }
 
 .gift-message {
@@ -93,18 +98,20 @@
   line-height: 1.6;
   margin: 1.5rem 0;
   text-align: center;
+  font-size: 1rem;
 }
 
 .gift-quote {
-    color: #004A6A;
+    color: #04525a;
   margin: 1.5rem 0;
   text-align: center;
   padding: 0 1rem;
+  font-size: 1rem;
 }
 
 .gift-sender {
-  color: #004A6A;
-  font-size: 35px;
+  color: #fff;
+  font-size: 29px;
   font-weight: 700;
   margin-top: 2rem;
   text-align: left;
@@ -121,13 +128,13 @@
 }
 
 .form-section-title {
-  color: #004A6A;
+  color: #04525a;
   margin-bottom: 1.5rem;
   text-align: right;
 }
 
 .submit-donation {
-  background-color: var(--accent-color);
+  background-color: #469e8d;
   color: white;
   border: none;
   border-radius: 50px;
@@ -140,7 +147,7 @@
 }
 
 .submit-donation:hover {
-  background-color: #1a4b56;
+  background-color: #04525a;
   transform: translateY(-2px);
 }
 
@@ -152,4 +159,7 @@
   .gift-left, .gift-right {
     padding: 2rem 1.5rem;
   }
+}
+.form-section h4{
+  color: #faa440;
 }

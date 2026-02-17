@@ -17,6 +17,7 @@
 
         <x-site.home.banars />
 
+        @include('site.pages.maps')
     </main>
 @endsection
 

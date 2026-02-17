@@ -1,187 +1,206 @@
-/* Governance (Hawkama) Page Styles */
+/* ===== حوكمة - تصميم عام ===== */
+
 .hawkama-container {
-  max-width: 1800px;
-  margin: 3rem auto 1rem auto;
-  padding: 0 1.5rem;
-  font-family: 'MyCustomArabic' !important;
-  color: #666666;
-  background-color: #fff;
-  border-radius: 12px;
+  background: #fdf5ec;
+  padding: 40px 0;
 }
 
 .hawkama-content {
-  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 32px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  border: 1px solid #dde7f0;
+  padding: 32px 28px;
+  direction: rtl;
+  text-align: right;
 }
 
-/* Logo Section */
+/* العمود الأساسي (النص) */
+.governance-sections {
+  border-left: 2px solid #dde7f0;
+  padding-left: 32px;
+}
+
+/* اللوغو على اليسار */
 .logo-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  margin: 2rem auto 0 auto;
-  border-radius: 10px;
-  max-height: 300px;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 24px 16px;
 }
 
 .logo-section img {
-    width: 100%;
-  max-width: 250px;
+  max-width: 180px;
+  height: auto;
 }
 
-.governance-sections {
-  border: solid #457581 1px;
-  border-radius: 1rem;
-  padding: 2rem;
+/* في الشاشات الكبيرة نخلي اللوغو ثابت (sticky) */
+@media (min-width: 992px) {
+  .logo-section {
+    position: sticky;
+    top: 110px;
+  }
 }
 
-/* Governance Sections */
+/* ===== عناوين الأقسام ===== */
+
 .governance-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 32px;
 }
 
 .section-title {
-  color: #336776;
-  font-size: 30px;
+  font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  color: #006f6b;
+  margin-bottom: 12px;
   position: relative;
-  display: inline-block;
 }
 
-.policies-title,
-.regulations-title,
+.section-title::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -6px;
+  width: 70px;
+  height: 3px;
+  border-radius: 999px;
+  background: #469e8d;
+}
+
+/* ألوان خاصة لعناوين فرعية */
+.policies-title {
+  color: #faa440;
+}
+
+.policies-title::after {
+  background: #faa440;
+}
+
+.regulations-title {
+  color: #faa440;
+}
+
+.regulations-title::after {
+  background: #faa440;
+}
+
 .reports-title {
-  color: #f45c21;
+  color: #faa440;
 }
 
-/* Lists */
-.governance-importance,
+.reports-title::after {
+  background: #faa440;
+}
+
+/* ===== قائمة أهمية الحوكمة ===== */
+
+.governance-importance {
+  margin: 10px 0 0;
+  padding-right: 1.2rem;
+  list-style: disc;
+}
+
+.governance-importance li {
+  margin-bottom: 8px;
+  line-height: 1.9;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* ===== قوائم الملفات (سياسات / لوائح / تقارير) ===== */
+
 .policies-list,
 .regulations-list,
 .reports-list {
   list-style: none;
+  margin: 16px 0 0;
   padding: 0;
-  margin: 0;
 }
 
-.governance-importance li {
-  position: relative;
-  padding-right: 1.5rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.6rem;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 45px;
-  letter-spacing: 0%;
-  text-align: right;
-  color: #666666;
+.policies-list li,
+.regulations-list li,
+.reports-list li {
+  margin-bottom: 10px;
 }
 
-.governance-importance li:before {
-  content: "•";
-  font-weight: bold;
-  font-size: 1.2rem;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-/* Policy Links */
+/* رابط الملف */
 .policy-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
-  margin-bottom: 0.2rem;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: 400;
-  color: #666666;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid #e2edf4;
+  background: #fbfdff;
   text-decoration: none;
-  transition: all 0.3s ease;
-}
-.policy-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.download-arrow {
-  color: #000;
-  margin-right: auto;
-  transform: rotate(125deg);
-  margin-right: 16px;
-  transition: transform 0.2s ease;
-}
-
-.policy-link:hover .download-arrow {
-  transform: translateY(3px) rotate(90deg);
+  color: #1a2933;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 .policy-link:hover {
-  background-color: #f0f0f0;
-  transform: translateX(-5px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #f3f8fc;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 
-.policy-link img {
-  width: 15px;
-  height: 100%;
-  margin: 0 8px;
+/* محتوى الملف (أيقونة + نص) */
+.policy-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-  .logo-section {
-    min-height: 300px;
-  }
+.policy-content img {
+  width: 22px;
+  height: auto;
 }
 
-@media (max-width: 768px) {
-  .hawkama-container {
-    margin: 2rem auto;
-  }
-
-  .logo-section {
-    min-height: auto;
-  }
-
-  .logo-section img {
-    max-width: 150px;
-  }
-
-  .organization-name {
-    font-size: 1.3rem;
-  }
-
-  .section-title {
-    font-size: 1.3rem;
-  }
-  .policy-link {
-    font-size: 16px;
-    padding: 0.8rem 0;
-  }
-  .governance-importance li {
-    font-size: 16px;
-    line-height: 1.4;
-  }
+.policy-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #23313c;
 }
 
-@media (max-width: 576px) {
+/* سهم التحميل */
+.download-arrow {
+  font-size: 0.9rem;
+  color: #faa440;
+}
+
+/* ===== ريسبونسيف ===== */
+
+@media (max-width: 991.98px) {
   .hawkama-content {
-    padding: 1.5rem 0;
+    padding: 20px 18px;
   }
-  .governance-importance li{
-    font-size: 14px;
-    line-height: 1.4;
-    margin: 16px 0;
+
+  .governance-sections {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid #dde7f0;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .logo-section {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .section-title {
+    font-size: 1.2rem;
   }
 
   .policy-link {
-    font-size: 8px;
-    padding: 0.6rem 0;
+    padding: 9px 10px;
+  }
+
+  .policy-text {
     font-size: 0.9rem;
   }
 }

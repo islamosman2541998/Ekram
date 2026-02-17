@@ -40,6 +40,8 @@ use App\Http\Controllers\Site\Manager\ManagerAuthController;
 use App\Http\Controllers\Site\Referer\RefererAuthController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Site\ReferAffiliateController;
+use App\Http\Controllers\Site\MoyasarPaymentController;
+
 
 
 use App\Http\Controllers\Site\Vendor\AuthController as VendorAuthController;
@@ -79,6 +81,12 @@ Route::group([
     Route::get('external-payment-intital', [PaymentController::class, 'payfortIntitalExternal'])->name('external.payments.intital');  // intial payment
     // Route::get('external/success/{identifier}', [CheckoutController::class, 'success'])->name('checkout.success');
 
+    // moyasar
+    Route::get('moyasar-payment/{identifier}', [MoyasarPaymentController::class, 'showPaymentForm'])
+        ->name('moyasar.payment');
+
+    Route::post('moyasar-save-payment', [MoyasarPaymentController::class, 'savePaymentId'])
+        ->name('moyasar.save-payment');
 
     // cart
     Route::get('cart', [CartController::class, 'index'])->name('cart.show');
@@ -100,9 +108,12 @@ Route::group([
 
     Route::get('/r/{code}', [ReferAffiliateController::class, 'index'])->name('front.refer');
 
+
     // Blog Routes
     Route::get('blogs', [\App\Http\Controllers\Site\BlogController::class, 'index'])->name('blogs.index');
     Route::get('blogs/{slug}', [\App\Http\Controllers\Site\BlogController::class, 'show'])->name('blogs.show');
+
+    
     Route::get('blog-categories', [\App\Http\Controllers\Site\BlogCategoryController::class, 'index'])->name('blog-categories.index');
     Route::get('blog-categories/{slug}', [\App\Http\Controllers\Site\BlogCategoryController::class, 'show'])->name('blog-categories.show');
 
@@ -239,7 +250,9 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
     \UniSharp\Laravelfilemanager\Lfm::routes();
 });
 
-
+Route::get('moyasar-callback', [MoyasarPaymentController::class, 'callback'])
+    ->name('site.moyasar.callback')
+    ->middleware('web');
 // Route::get('translate-category', [OldCategoryController::class, 'category']);
 // Route::get('translate-projects', [OldCategoryController::class, 'projects']);
 Route::get('translate-projects-images', [OldCategoryController::class, 'categoryProjectsImages']);

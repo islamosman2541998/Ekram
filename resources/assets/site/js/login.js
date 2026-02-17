@@ -66,3 +66,27 @@ document.addEventListener('DOMContentLoaded', function() {
         fileText.textContent = 'اختر ملف';
     });
 });
+// 
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const switchBtns = document.querySelectorAll(".switch-btn");
+    const loginCard = document.getElementById("login-card");
+    const registerCard = document.getElementById("register-card");
+
+    switchBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        switchBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const target = btn.getAttribute("data-target");
+        if (target === "login-card") {
+          loginCard.classList.add("active");
+          registerCard.classList.remove("active");
+        } else {
+          registerCard.classList.add("active");
+          loginCard.classList.remove("active");
+        }
+      });
+    });
+  });
