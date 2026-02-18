@@ -3,7 +3,10 @@
     <section class="RamdanProjects high-sales-projects mt-5">
         <div class="container pb-2 text-center">
             {{-- <p class="title">المشاريع الأكثر طلبا</p> --}}
-            <h2> المشاريع الأكثر طلبا </h2>
+            <h2 class="fs-1 fw-bold main-font"> 
+                <span style="color:#469e8d ;"> المشاريع</span>
+                <span style="color:#faa440 ;"> الأكثر طلبا</span>
+            </h2>
             </br>
             <div class="Ramdan position-relative">
                 <div class="swiper  projectsSlider">
