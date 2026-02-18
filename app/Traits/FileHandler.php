@@ -39,18 +39,22 @@ trait FileHandler
         return $image;
     }
 
-    private function createThumbnail($imagepath, $file)
-    {
-        $image = Image::make(storage_path('app/public/' . $imagepath));
-        $thumbnail = $image->resize($this->thumbsize, $this->thumbsize);
-        $thumbspath = $this->thumbspath . $file . '/' ;
-        $thumbnailPath = $thumbspath .  pathinfo($imagepath)['basename'];
-        // if (!file_exists(storage_path('app/public/'. $thumbspath), storage_path('app/public/' . $thumbnailPath))) { 
-            @mkdir(storage_path('app/public/'. $thumbspath), 666, true); 
-        // }
-        $thumbnail->save(storage_path('app/public/' . $thumbnailPath));
-        return $thumbnailPath;
+   private function createThumbnail($imagepath, $file)
+{
+    $image = Image::make(storage_path('app/public/' . $imagepath));
+    $thumbnail = $image->resize($this->thumbsize, $this->thumbsize);
+    $thumbspath = $this->thumbspath . $file . '/';
+    $thumbnailPath = $thumbspath . pathinfo($imagepath)['basename'];
+
+    $fullThumbsDir = storage_path('app/public/' . $thumbspath);
+
+    if (!is_dir($fullThumbsDir)) {
+        mkdir($fullThumbsDir, 0755, true);
     }
+
+    $thumbnail->save(storage_path('app/public/' . $thumbnailPath));
+    return $thumbnailPath;
+}
 
     public function delete_file($path = '')
     {
