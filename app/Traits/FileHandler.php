@@ -39,18 +39,14 @@ trait FileHandler
         return $image;
     }
 
-   private function createThumbnail($imagepath, $file)
+  private function createThumbnail($imagepath, $file)
 {
     $image = Image::make(storage_path('app/public/' . $imagepath));
     $thumbnail = $image->resize($this->thumbsize, $this->thumbsize);
     $thumbspath = $this->thumbspath . $file . '/';
     $thumbnailPath = $thumbspath . pathinfo($imagepath)['basename'];
 
-    $fullThumbsDir = storage_path('app/public/' . $thumbspath);
-
-    if (!is_dir($fullThumbsDir)) {
-        mkdir($fullThumbsDir, 0755, true);
-    }
+    Storage::disk('public')->makeDirectory($thumbspath);
 
     $thumbnail->save(storage_path('app/public/' . $thumbnailPath));
     return $thumbnailPath;
