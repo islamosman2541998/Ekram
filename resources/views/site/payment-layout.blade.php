@@ -16,7 +16,7 @@
 <body>
     {{-- Header بسيط بدون Livewire --}}
     <div style="padding:15px; background:#fff; border-bottom:1px solid #eee; text-align:center;">
-        <img src="{{ site_path('img/logo.png') }}" height="50" alt="Logo">
+        <img src="{{ asset('img/Untitled-1.png') }}" height="50" alt="Logo">
     </div>
 
     @yield('content')
