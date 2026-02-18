@@ -51,21 +51,18 @@ class Visa extends Component
 
    public function checkout()
 {
-    // تحقق من البيانات المفقودة
     $missId = $this->checkMissingData();
     if ($missId) {
         $this->emit('openModal', $missId);
         return false;
     }
 
-    // أنشئ الأوردر
     $data['payment_method_id'] = $this->payment_method_id;
     $data['payment_method_key'] = $this->payment_method_key;
     
     $order = new CheckoutController();
     $process = $order->process($data);
     
-    // وجه لصفحة Moyasar بدل PayFort
     return redirect()->route('site.moyasar.payment', $process['order']->identifier);
 }
 

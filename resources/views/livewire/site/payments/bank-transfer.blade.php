@@ -4,8 +4,8 @@
     </div>
     <form wire:submit.prevent="checkout" class="">
         @include('livewire.site.payments.message')
-        <div class="bank payment-content">
-            <div class="payment-fields bank-fields">
+<div class="bank payment-content" style="display:block !important;">
+<div class="payment-fields bank-fields mt-5" style="display:block !important; visibility:visible !important; opacity:1 !important;">
                 <div class="form-group bank-form">
                     <label for="bank-name"> @lang('Bank name')</label>
                     <select class="bank-input" id="bank-name" wire:model="bank_id">

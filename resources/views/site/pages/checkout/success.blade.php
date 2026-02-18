@@ -27,10 +27,9 @@
                                 الله ﷺ: "ما نقص مالٌ من صدقة". [رواه مسلم] نسأل الله أن يجعل تبرعك هذا في ميزان حسناتك، وأن
                                 يخلف عليك بخير، ويجعل لك به بركة في المال والأهل والولد.</p>
                         </div>
-                        <div>
+                        {{-- <div>
                             {{ $order->total }}
-                        </div>
-                        @include('site.layouts.message')
+                        </div> --}}
                         {{-- <p class="fs-4"> مع تحيات جمعية {{ $settings->getItem('site_name') }} </p> --}}
                         <a href="{{ route('site.home') }}"
                             class="btn bg-main donation-record-btn py-2 my-3 fs-5 btn btn-main">

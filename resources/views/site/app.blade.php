@@ -16,6 +16,7 @@
 
 
     @include('site.layouts.script')
-
+    
+@stack('js')
   </body>
 </html>

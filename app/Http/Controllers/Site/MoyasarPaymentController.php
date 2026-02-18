@@ -13,21 +13,20 @@ use Illuminate\Support\Facades\Log;
 
 class MoyasarPaymentController extends Controller
 {
-    /**
-     * عرض صفحة الدفع - فورم ميسّر
-     */
+
+
     public function showPaymentForm(Request $request, $identifier)
     {
         $order = Order::where('identifier', $identifier)->firstOrFail();
 
-        // لو الأوردر مدفوع بالفعل
         if ($order->status == 1) {
             session()->flash('success', __('Thank you for your donation through Nama'));
             return redirect()->route('site.checkout.success', $order->identifier);
         }
 
-        // المبلغ بالهللات (ميسّر يستقبل أصغر وحدة عملة)
         $amountInHalalas = intval($order->total * 100);
+
+       
 
         return view('site.pages.checkout.moyasar-payment', [
             'order'          => $order,
@@ -60,75 +59,82 @@ class MoyasarPaymentController extends Controller
         return response()->json(['status' => 'ok'], 201);
     }
 
-    /**
-     * Callback بعد الدفع - ميسّر بيرجع المستخدم هنا
-     * URL: ?id=xxx&status=paid&message=Succeeded
-     */
+
     public function callback(Request $request)
     {
+        Log::info('Moyasar Callback', $request->all());
+
+    
+
         $paymentId = $request->query('id');
         $status    = $request->query('status');
-        $message   = $request->query('message');
 
         if (!$paymentId) {
             session()->flash('warning', 'حدث خطأ في عملية الدفع');
             return redirect()->route('site.checkout.show');
         }
 
-        // تحقق من الدفع عن طريق API (مهم جداً!)
         $payment = $this->verifyPayment($paymentId);
+        Log::info('Moyasar Payment Data', ['payment' => $payment]);
 
         if (!$payment) {
             session()->flash('warning', 'تعذر التحقق من عملية الدفع');
             return redirect()->route('site.checkout.show');
         }
 
-        // استخرج الـ order من metadata
-        $orderId = $payment['metadata']['order_id'] ?? null;
+        // البحث عن الأوردر بكل الطرق الممكنة
+        $orderId = $payment['metadata']['order_id']
+            ?? $payment['metadata']['order_identifier']
+            ?? $request->query('order_id')  // ← fallback من الـ URL
+            ?? null;
 
-        // لو مفيش order_id في metadata، جرب تدور بالـ payment_proof
-        if (!$orderId) {
-            $order = Order::where('payment_proof', 'LIKE', '%' . $paymentId . '%')->first();
-        } else {
-            $order = Order::find($orderId);
+        $order = null;
+
+        if ($orderId) {
+            $order = Order::find($orderId)
+                ?? Order::where('identifier', $orderId)->first();
         }
 
         if (!$order) {
-            Log::error('Moyasar callback: Order not found', [
+            $order = Order::where('payment_proof', 'LIKE', '%' . $paymentId . '%')->first();
+        }
+
+        if (!$order) {
+            Log::error('Moyasar: Order not found', [
                 'payment_id' => $paymentId,
+                'all_params' => $request->all(),
                 'metadata'   => $payment['metadata'] ?? [],
             ]);
             session()->flash('warning', 'لم يتم العثور على الطلب');
             return redirect()->route('site.checkout.show');
         }
 
-        // لو مدفوع بالفعل
         if ($order->status == 1) {
-            session()->flash('success', __('Thank you for your donation through Nama'));
             return redirect()->route('site.checkout.success', $order->identifier);
         }
 
-        // تحقق من المبلغ والعملة
-        $expectedAmount = intval($order->total * 100);
-        if ($payment['amount'] != $expectedAmount || $payment['currency'] != 'SAR') {
-            Log::error('Moyasar payment amount mismatch', [
-                'payment_id'      => $paymentId,
-                'expected_amount' => $expectedAmount,
-                'received_amount' => $payment['amount'],
-                'currency'        => $payment['currency'],
+        $expectedAmount = (int) round($order->total * 100);
+        $receivedAmount = (int) $payment['amount'];
+
+        Log::info('Amount check', [
+            'expected' => $expectedAmount,
+            'received' => $receivedAmount
+        ]);
+
+        if ($receivedAmount !== $expectedAmount || strtoupper($payment['currency']) !== 'SAR') {
+            Log::error('Moyasar amount mismatch', [
+                'expected' => $expectedAmount,
+                'received' => $receivedAmount,
             ]);
             session()->flash('warning', 'خطأ في التحقق من المبلغ');
             return redirect()->route('site.checkout.show');
         }
 
-        // حدث حالة الأوردر
         $order->payment_proof = json_encode($payment);
 
         if ($payment['status'] === 'paid') {
             $order->status = 1;
             $order->save();
-
-            // امسح السلة
             $this->clearCart($order);
 
             session()->flash('success', __('Thank you for your donation through Nama'));
@@ -137,12 +143,13 @@ class MoyasarPaymentController extends Controller
             $order->status = 0;
             $order->save();
 
-            $errorMsg = $message ?? 'فشلت عملية الدفع';
+            $errorMsg = $payment['source']['message']
+                ?? $request->query('message')
+                ?? 'فشلت عملية الدفع';
             session()->flash('warning', $errorMsg);
-            return redirect()->route('site.checkout.show', ['msg' => $errorMsg]);
+            return redirect()->route('site.checkout.show');
         }
     }
-
     /**
      * Webhook - ميسّر بيبعت إشعار على السيرفر مباشرة
      */
@@ -191,32 +198,32 @@ class MoyasarPaymentController extends Controller
 
     /**
      */
-   private function verifyPayment(string $paymentId): ?array
-{
-    try {
-        $http = Http::withBasicAuth(config('moyasar.key'), '');
-        
-        if (app()->environment('local')) {
-            $http = $http->withoutVerifying();
-        }
-        
-        $response = $http->get("https://api.moyasar.com/v1/payments/{$paymentId}");
+    private function verifyPayment(string $paymentId): ?array
+    {
+        try {
+            $http = Http::withBasicAuth(config('moyasar.key'), '');
 
-        if ($response->successful()) {
-            return $response->json();
-        }
+            if (app()->environment('local')) {
+                $http = $http->withoutVerifying();
+            }
 
-        Log::error('Moyasar verify failed', [
-            'payment_id' => $paymentId,
-            'status'     => $response->status(),
-            'response'   => $response->body(),
-        ]);
-        return null;
-    } catch (\Exception $e) {
-        Log::error('Moyasar verify exception', ['error' => $e->getMessage()]);
-        return null;
+            $response = $http->get("https://api.moyasar.com/v1/payments/{$paymentId}");
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            Log::error('Moyasar verify failed', [
+                'payment_id' => $paymentId,
+                'status'     => $response->status(),
+                'response'   => $response->body(),
+            ]);
+            return null;
+        } catch (\Exception $e) {
+            Log::error('Moyasar verify exception', ['error' => $e->getMessage()]);
+            return null;
+        }
     }
-}
 
     /**
      * مسح السلة بعد الدفع الناجح

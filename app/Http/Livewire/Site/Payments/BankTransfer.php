@@ -88,6 +88,7 @@ class BankTransfer extends Component
         $this->payment = PaymentMethod::find($this->payment_method_id);
         $this->bankHoldName = $this->payment->name_holder;
         $this->bank_accounts = PaymentBank::get();
+        //  dd($this->bank_accounts);
     }
 
 
