@@ -110,7 +110,7 @@
             </div>
         @empty
             <div class="empty-cart-message">
-                <h5> @lang('The cart is empty') </h5>
+                <h5 class="text-dark"> @lang('The cart is empty') </h5>
             </div>
         @endforelse
 
