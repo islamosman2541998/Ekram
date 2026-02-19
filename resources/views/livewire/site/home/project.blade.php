@@ -12,7 +12,6 @@
             <img src="{{ asset(getImage($project['cover_image']) ?? 'site/img/project3.png') }}" alt="project" class="custom-card-img-el">
         </div>
         <div class="custom-card-body custom-card-body-bg">
-            {{-- Progress Section - مطابق للديزاين الثابت --}}
             <div class="money-collected">
                 <div class="d-flex justify-content-between mb-2 custom-card-amount-row">
                     <span>تم جمع: <br>{{ number_format($progressBar['collected']) }} ر.س</span>
@@ -91,7 +90,6 @@
                 </div>
             @endif
 
-            {{-- Action Row: مبلغ التبرع + زر تبرع + سلة (مطابق للديزاين الثابت) --}}
             <div class="d-flex align-items-center justify-content-between mb-3 custom-card-action-row">
                 <input disabled class="form-control custom-card-input" type="text" placeholder="مبلغ التبرع" wire:model="donationAmt">
                 <a href="{{ route('site.charity-project.show', $project['slug'] ?? $project->transNow?->slug) }}?amount={{ @$donationAmt }}">
