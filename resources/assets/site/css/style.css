@@ -24,7 +24,9 @@
     font-style: normal;
     font-display: swap;
   }
-
+body {
+  font-family: "brando", sans-serif;
+}
 
   body {
     direction: rtl;

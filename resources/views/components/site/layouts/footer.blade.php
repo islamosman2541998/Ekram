@@ -8,7 +8,7 @@
         <div class="first p-3 h-100">
           <div class="footer-text">
             <div class="ImgContainer d-flex justify-content-between align-items-center">
-              <img src="img/00.png" class="img-fluid footerimg" alt="" />
+              <img src="{{ asset(getImage($settings->getItem('logo'))) }}" class="img-fluid footerimg" alt="" />
 
             </div>
             <h2 class="first-title">عــن الجمعية</h2>
@@ -56,8 +56,6 @@
           </div>
         </div>
       </div>
-
-      <!-- أهم الروابط -->
       <div class="col-12 col-lg-4 p-0">
         <div class="secand p-3 h-100 text-center">
           <h5>أهم الروابط :</h5>
@@ -106,14 +104,14 @@
 
           <div class="ImgContainer2 d-flex justify-content-center align-items-center mt-2" style="    display: flex !important;
             gap: 2rem;">
-            <img src="img/pay-1.png" class="img-fluid imgg" alt="" />
-            <img src="img/pay-2.png" class="img-fluid imgg" alt="" />
-            <img src="img/pay-4.png" class="img-fluid imgg" alt="" />
+            <img src="{{ asset('img/pay-1.png') }}" class="img-fluid imgg" alt="" />
+            <img src="{{ asset('img/pay-2.png') }}" class="img-fluid imgg" alt="" />
+            <img src="{{ asset('img/pay-4.png') }}" class="img-fluid imgg" alt="" />
           </div>
         </div>
       </div>
 
     </div>
 
-    <img src="./img/1.jpg" style="height:4rem;width:100%;object-fit:cover;">
+    <img src="{{ asset('img/1.jpg') }}" style="height:4rem;width:100%;object-fit:cover;">
   </footer>

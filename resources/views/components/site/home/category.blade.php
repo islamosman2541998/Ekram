@@ -58,8 +58,8 @@
 
             <!-- Title -->
             <div class="text-center mb-5">
-                <h1 class="fw-bold main-font mb-3">
-                    <span style="color:#469e8d ;">البرامج</span>
+                <h1 class="fw-bold fs-1 main-font mb-3">
+                    <span class="main-font" style="color:#469e8d ;">البرامج</span>
                     <span style="color:#faa440 ;">والمبادرات </span>
                     <span style="color:#ee5a34 ;">والفعاليات</span>
                 </h1>
