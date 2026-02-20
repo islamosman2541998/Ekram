@@ -3,7 +3,6 @@
   <footer>
     <div class="row">
 
-      <!-- عن الجمعية -->
       <div class="col-12 col-lg-4 p-0">
         <div class="first p-3 h-100">
           <div class="footer-text">

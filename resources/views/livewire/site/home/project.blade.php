@@ -30,7 +30,6 @@
             @if (is_array($donation))
                 @switch($donation['type'])
 
-                    {{-- Unit: أزرار مبالغ + input مبلغ آخر (زي الديزاين الثابت بالظبط) --}}
                     @case('unit')
                         @if (!empty($donation['data']) && is_array($donation['data']))
                             <div class="d-flex align-items-center justify-content-between mb-3 custom-card-btn-row">
@@ -47,7 +46,6 @@
                         @endif
                     @break
 
-                    {{-- Share: أزرار مبالغ ثابتة --}}
                     @case('share')
                         @if (!empty($donation['data']) && is_array($donation['data']))
                             <div class="d-flex align-items-center justify-content-between mb-3 custom-card-btn-row">
@@ -63,7 +61,6 @@
                         @endif
                     @break
 
-                    {{-- Fixed: مبلغ واحد ثابت --}}
                     @case('fixed')
                         <div class="d-flex align-items-center justify-content-between mb-3 custom-card-btn-row">
                             <label title="{{ @$project['title'] }}" class="amount-btn" style="background-color: {{ @$colors[0] ?? '#3B82F6' }}">
@@ -72,7 +69,6 @@
                         </div>
                     @break
 
-                    {{-- Open: مبلغ مفتوح --}}
                     @case('open')
                         <div class="input-open-container">
                             <input class="form-control open custom-placeholder" type="number" placeholder="@lang('Price')" wire:model="openValue" min="0">

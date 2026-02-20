@@ -99,14 +99,13 @@
 
 .currency {
   position: absolute;
-  left: 12px;
+  /* left: 12px; */
   top: 50%;
   transform: translateY(-50%);
   color: #555;
   font-weight: 700;
 }
 
-/* خيار الإهداء */
 .gift-option {
   display: flex;
   align-items: center;
@@ -129,7 +128,6 @@
 }
 
 /* ================================
-   كارت الإهداء (يظهر عند التفعيل)
 ================================ */
 .gift-container {
   background: #ffffff;
@@ -193,7 +191,6 @@
   border-color: #469e8d;
 }
 
-/* زر إضافة إهداء */
 .gift-btn {
   margin-top: 10px;
   padding: 10px 20px;
@@ -203,7 +200,6 @@
   font-size: 0.9rem;
 }
 
-/* زر اتمام الطلب */
 .checkout-container {
   margin-top: 18px;
   display: flex;
@@ -307,7 +303,6 @@
 }
 
 /* =======================
-   ريسبونسيف
 ======================= */
 @media (max-width: 991px) {
   .project-content {
@@ -316,4 +311,12 @@
   .project-card-container {
     width: 100%;
   }
+  .currency {
+  position: absolute;
+  /* left: 12px; */
+  top: 65%;
+  transform: translateY(-50%);
+  color: #555;
+  font-weight: 700;
+}
 }

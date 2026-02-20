@@ -1,4 +1,5 @@
 @extends('site.app')
+
 @section('title', __('cart'))
 
 

@@ -76,7 +76,7 @@
                         اتمام الطلب
                     </button>
                     <button class="cart-icon-btn" wire:click="addToCart()">
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <i class="fa-solid fa-cart-shopping cart-shop"></i>
                     </button>
                 </div>
             </div>
@@ -175,9 +175,9 @@
 
                 <div class="money-collected">
                     <div class="d-flex justify-content-between custom-card-amount-row">
-                        <span>تم جمع: <br>{{ $progressBar['collected'] }} <span>ر.س</span> </br></span>
-                        <span class="mt-1">{{ $progressBar['avarge'] }}%</span>
-                        <span> المستهدف: <br>{{ $progressBar['target_price'] }} <span>ر.س</span> </br></span>
+                        <span class="cl-bg">تم جمع: <br>{{ $progressBar['collected'] }} <span>ر.س</span> </br></span>
+                        <span class="mt-1 cl-bg">{{ $progressBar['avarge'] }}%</span>
+                        <span class="cl-bg"> المستهدف: <br>{{ $progressBar['target_price'] }} <span>ر.س</span> </br></span>
                     </div>
 
                     <div class="progress mb-2 custom-card-progress">
@@ -195,3 +195,26 @@
 
 
 </div>
+<style>
+.checkout-btn{
+        padding: 10px 21px;
+    font-size: 11px;
+}
+.cart-shop {
+     color: #ffffff !important; 
+}
+.gift-text , .fa-gift {
+   
+    color: #04525A;
+}
+
+.cl-bg {
+    color: #04525A;
+}
+
+    @media (min-width: 1536px) {
+        .container {
+             max-width: 1024px !important; 
+        }
+    }
+</style>

@@ -261,5 +261,8 @@
     .cart-main-checkout {
         width: 400px !important;
     }
+    .iti-phone {
+width: 336px!important;    
+}
 
 </style>
