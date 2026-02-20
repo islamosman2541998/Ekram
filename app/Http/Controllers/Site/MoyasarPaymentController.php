@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Donor;
 use App\Models\Order;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
@@ -15,31 +16,35 @@ class MoyasarPaymentController extends Controller
 {
 
 
-    public function showPaymentForm(Request $request, $identifier)
-    {
-        $order = Order::where('identifier', $identifier)->firstOrFail();
+   public function showPaymentForm(Request $request, $identifier)
+{
+    $order = Order::where('identifier', $identifier)->firstOrFail();
 
-        if ($order->status == 1) {
-            session()->flash('success', __('Thank you for your donation through Nama'));
-            return redirect()->route('site.checkout.success', $order->identifier);
-        }
-
-        $amountInHalalas = intval($order->total * 100);
-
-       
-
-        return view('site.pages.checkout.moyasar-payment', [
-            'order'          => $order,
-            'amount'         => $amountInHalalas,
-            'publishableKey' => config('moyasar.publishable_key'),
-            'callbackUrl'    => route('site.moyasar.callback'),
-            'description'    => 'تبرع - طلب رقم ' . $order->identifier,
-        ]);
+    if ($order->status == 1) {
+        session()->flash('success', __('Thank you for your donation through Nama'));
+        return redirect()->route('site.checkout.success', $order->identifier);
     }
 
-    /**
-     * حفظ معرف الدفع قبل 3DS redirect (اختياري لكن مهم)
-     */
+    $amountInHalalas = intval($order->total * 100);
+
+    $methods = ['creditcard'];
+    $paymentMethod = PaymentMethod::find($order->payment_method_id);
+    
+    if ($paymentMethod && $paymentMethod->payment_key === 'ApplePay') {
+        $methods = ['applepay'];
+    }
+
+    return view('site.pages.checkout.moyasar-payment', [
+        'order'          => $order,
+        'amount'         => $amountInHalalas,
+        'publishableKey' => config('moyasar.publishable_key'),
+        'callbackUrl'    => route('site.moyasar.callback'),
+        'description'    => 'تبرع - طلب رقم ' . $order->identifier,
+        'methods'        => $methods,
+    ]);
+}
+
+    
     public function savePaymentId(Request $request)
     {
         $request->validate([
@@ -225,9 +230,7 @@ class MoyasarPaymentController extends Controller
         }
     }
 
-    /**
-     * مسح السلة بعد الدفع الناجح
-     */
+   
     private function clearCart(Order $order): void
     {
         try {

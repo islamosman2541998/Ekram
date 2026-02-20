@@ -34,7 +34,7 @@
         publishable_api_key: '{{ $publishableKey }}',
         callback_url: '{{ url("moyasar-callback") }}?order_id={{ $order->id }}',
         language: 'ar',
-        methods: ['creditcard'],
+        methods: {!! json_encode($methods) !!},
         supported_networks: ['visa', 'mastercard', 'mada'],
         metadata: {
             order_id: '{{ $order->id }}',
