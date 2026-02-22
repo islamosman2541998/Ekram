@@ -6,9 +6,9 @@
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="btn-close"  wire:click="closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        <img src="{{ site_path('img/logo.png') }}" alt="{{ env('APP_NAME') }}" height="70px">
+                    {{-- <button type="button" class="btn-close"  wire:click="closeModal" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                    <h5 class="modal-title d-flex align-items-center justify-content-center" id="exampleModalLabel">
+                        <img class="img-fluid modal-img text-center" src="{{asset('img/Untitled-1.png')}}" alt="{{ env('APP_NAME') }}" height="20px" width="20px">
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -30,3 +30,17 @@
     </div>
     @endif
 </div>
+
+<style>
+
+    .modal-img {
+        height: 60px!important;
+    }
+    .modal {
+        z-index:999999!important;
+
+    }
+    .modal-header{
+        justify-content: space-around !important;
+    }
+</style>

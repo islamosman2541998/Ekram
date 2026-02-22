@@ -2,7 +2,7 @@
     <section class="RamdanProjects mt-5">
         <div class="container pb-2 text-center">
             <h1 class="fw-bold fs-1 main-font mb-3">
-                <span style="color:#469e8d ;">مشاريع </span>
+                <span class="" style="color:#469e8d ;">مشاريع </span>
                 <span style="color:#faa440 ;"> متنوعة</span>
             </h1>
             </br>

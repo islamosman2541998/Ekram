@@ -38,7 +38,6 @@ class ApplePay extends Component
     $order = new CheckoutController();
     $process = $order->process($data);
     
-    // Moyasar بدل PayFort
     return redirect()->route('site.moyasar.payment', $process['order']->identifier);
 }
 
