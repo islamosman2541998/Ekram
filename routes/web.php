@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Charity\OrderController;
 use App\Http\Controllers\Data\OldCategoryController;
 use App\Http\Controllers\Data\OldMenusController;
 use App\Http\Controllers\Data\OldPagesController;
+use App\Http\Controllers\Site\About_usController;
 use App\Http\Controllers\Site\AboutController;
 use App\Http\Controllers\Site\AuthController;
 use App\Http\Controllers\Site\BeneficiariesController;
@@ -14,7 +15,6 @@ use App\Http\Controllers\Site\CharityProductController;
 use App\Http\Controllers\Site\CharityProjectController;
 use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Site\Contact_usController;
-use App\Http\Controllers\Site\About_usController;
 use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\ExternalController;
 use App\Http\Controllers\Site\HomeController;
@@ -22,6 +22,7 @@ use App\Http\Controllers\Site\Manager\ManagerAuthController;
 use App\Http\Controllers\Site\Manager\ManagerController;
 use App\Http\Controllers\Site\MediaController;
 use App\Http\Controllers\Site\MoyasarPaymentController;
+use App\Http\Controllers\Site\NewsController;
 use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\PaymentController;
 use App\Http\Controllers\Site\ProfileCardsController;
@@ -41,10 +42,10 @@ use App\View\Components\Gifts\CardForm;
 use App\View\Components\Gifts\CardImg;
 use App\View\Components\Site\Home\LoadMoreMedia;
 use Illuminate\Support\Facades\Blade;
+
+
+
 use Illuminate\Support\Facades\Route;
-
-
-
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use UniSharp\LaravelFilemanager\Lfm;
 
@@ -114,6 +115,9 @@ Route::group([
     // Blog Routes
     Route::get('blogs', [\App\Http\Controllers\Site\BlogController::class, 'index'])->name('blogs.index');
     Route::get('blogs/{slug}', [\App\Http\Controllers\Site\BlogController::class, 'show'])->name('blogs.show');
+    // Blog Routes
+    Route::get('news', [NewsController::class, 'index'])->name('news.index');
+    Route::get('news/{slug}', [NewsController::class, 'show'])->name('news.show');
 
     
     Route::get('blog-categories', [\App\Http\Controllers\Site\BlogCategoryController::class, 'index'])->name('blog-categories.index');

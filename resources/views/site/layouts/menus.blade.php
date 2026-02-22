@@ -103,7 +103,7 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
 }
 .navbar-nav .nav-link {
    
-    font-size: 19px;
+    font-size: 16px;
 }
 .fa-cart-shopping , .Badge , .usericon 
 {

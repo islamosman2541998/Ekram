@@ -4,7 +4,6 @@
         $cardColors = ['#ee5a34', '#469e8d', '#faa440', '#04525A'];
     @endphp
 
-    <!-- الاقسام -->
     <section class="programs-section py-5" dir="rtl">
         <div class="container">
 

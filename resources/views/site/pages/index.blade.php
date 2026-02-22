@@ -15,7 +15,7 @@
 
         <x-site.home.statistics />
 
-        <x-site.home.banars />
+        <x-site.home.news />
 
         @include('site.pages.maps')
     </main>
