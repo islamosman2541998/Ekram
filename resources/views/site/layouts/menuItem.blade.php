@@ -36,3 +36,14 @@
         </li>
     @endif
 @endforeach
+<style>
+    @media (min-width: 992px) {
+        .nav-item.dropdown > .nav-link.dropdown-toggle {
+            position: relative;
+        }
+
+        .nav-item:not(.dropdown) > .nav-link::after {
+            background: #2C5F5D !important;
+        }
+    }
+</style>

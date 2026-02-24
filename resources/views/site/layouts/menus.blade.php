@@ -116,5 +116,63 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
     display: flex;
     align-items: center;
 }
+
+
+.navbar-nav .nav-item.dropdown > .nav-link.dropdown-toggle {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+.navbar-nav .nav-item.dropdown > .nav-link.dropdown-toggle::after {
+    border-bottom: none !important;
+}
+.navbar-nav .nav-item .nav-link.active::after,
+.navbar-nav .nav-item .nav-link:hover::after {
+}
+
+.navbar-nav .nav-item.dropdown > .nav-link.dropdown-toggle::after {
+    display: inline-block !important;
+    border-top: 0.3em solid #2C5F5D;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    vertical-align: middle;
+    margin-right: 5px;
+    background: none !important;
+    content: "" !important;
+    width: auto !important;
+    height: auto !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+}
+
+.navbar-nav .nav-item:not(.dropdown) > .nav-link:hover::after,
+.navbar-nav .nav-item:not(.dropdown) > .nav-link.active::after {
+    display: block !important;
+    background: #2C5F5D !important;
+}
+
+.navbar-nav .dropdown-menu {
+    right: auto !important;
+    left: 0 !important;
+    top: 100%;
+}
+
+.dropdown-menu .dropdown-menu {
+    top: 0 !important;
+    right: 100% !important;
+    left: auto !important;
+    margin-top: 0;
+    margin-right: 0.5rem;
+}
+
+[dir="rtl"] .dropdown-menu .dropdown-menu,
+.navbar[dir="ltr"] .dropdown-menu .dropdown-menu {
+    right: auto !important;
+    left: -2.5rem !important;
+    margin-left: -2.5rem;
+    margin-right: 0;
+}
+
   </style>
 
