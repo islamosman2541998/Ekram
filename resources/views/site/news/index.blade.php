@@ -6,6 +6,8 @@
 @section('meta_key', @$settings['news_meta_key_' . app()->getLocale()])
 
 @section('content')
+
+
     <div class="activities-container">
         <div class="row">
 

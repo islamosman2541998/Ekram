@@ -70,7 +70,7 @@
                                 <div class="statistic card">
                                     <div class="statistic-title">@lang('Number of donates')</div>
 
-                                    <div class="statistic-value">{{ $orders->sum('total') }}</div>
+                                    <div class="statistic-value">{{ $orders->count() }}</div>
 
                                 </div>
                             </div>
