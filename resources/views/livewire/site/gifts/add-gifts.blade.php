@@ -1,4 +1,20 @@
 <div>
+    <style>
+ 
+@media (min-width: 481px) and (max-width: 767px)
+{
+    .amount-btn {
+    padding: 11px 15px  !important;
+   
+}
+}
+
+   .amount-btn {
+    padding: 11px 20px !important;
+   
+}
+
+</style>
     <div class="gift-option">
         <span class="gift-text">تبرع عن أسرتك و أصدقائك و شاركهم الأجر</span>
         <i class="fa-solid fa-gift"></i>
@@ -27,7 +43,6 @@
             <div class="gift-form">
                 <div class="form-group mb-3">
                     <div class="inputs-container">
-                        <!-- اسم المستلم - مطلوب دائماً -->
                         <div class="form-group mb-2">
                             <label class="form-label" for="recipient_name" id="recipient_name">الاسم</label>
                             <input type="text" class="form-control" wire:model="cardFields.{{ $index }}.giver_name" placeholder="اسم المستلم" disabled />
@@ -86,11 +101,11 @@
             <!-- Donation Amount Section -->
             <div class="gift-donation-section mb-3">
                 <div class="donation-label mb-2" style="text-align: right;">مبلغ التبرع</div>
-                <div class="donation-amounts">
+                <div class="donation-amounts ">
                     @if (is_array($donation))
                         @switch($donation['type'])
                             @case('unit')
-                                <div class="donation-amounts text-center">
+                                <div class="donation-amounts  text-center">
                                     @forelse (@$donation['data'] ?? [] as $key => $data)
                                     <label data-toggle="tooltip" data-placement="top" title="{{ $data['name'] }}"  style="background-color:{{ is_array($colors) && count($colors) > 0 ? $colors[$key % count($colors)] : '#ccc' }}" 
                                         class="amount-btn amount-btn {{ $cardFields[$index]['unitValueRadio'] == json_encode($data) ? 'active' : null }} ">
