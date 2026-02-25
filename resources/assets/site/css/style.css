@@ -4218,7 +4218,6 @@ html[dir="rtl"] .RamdanProjects .swiper-button-prev {
   }
 }
 
-/* ترتيب العناصر داخل الناف */
 .navbar .navbar-brand {
   order: 1;
 }
@@ -4230,7 +4229,7 @@ html[dir="rtl"] .RamdanProjects .swiper-button-prev {
 
 .navbar .user-cart {
   order: 3;
-  margin-left: 263px;
+  /* margin-left: 263px; */
   z-index: 10000;
 
 }

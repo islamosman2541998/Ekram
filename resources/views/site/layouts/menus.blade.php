@@ -79,8 +79,7 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
                 <div class="user-cart d-lg-none mt-3">
                         <livewire:site.profile.user-icon />
 
-                    {{-- <a href="{{ url('cart') }}"><i class="fa-solid fa-cart-shopping mx-3 fs-5"></i></a> --}}
-                                <livewire:site.carts.cart-icon />
+                         <livewire:site.carts.cart-icon />
 
                 </div>
             </ul>
@@ -104,6 +103,9 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
 .navbar-nav .nav-link {
    
     font-size: 16px;
+}
+.ms-3 {
+    margin-left: -2rem !important;
 }
 .fa-cart-shopping , .Badge , .usericon 
 {
