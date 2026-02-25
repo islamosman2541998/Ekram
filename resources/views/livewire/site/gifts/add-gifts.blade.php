@@ -13,6 +13,21 @@
     padding: 11px 20px !important;
    
 }
+.amount-btn {
+    padding: 11px 20px !important;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.85;
+}
+
+.amount-btn.active {
+    border: 3px solid #333 !important;
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
 </style>
     <div class="gift-option">
