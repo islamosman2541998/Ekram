@@ -128,7 +128,7 @@ Route::group([
                 Route::resource('users', AdminController::class);
                 Route::post('users/actions', [AdminController::class, 'actions'])->name('users.actions');
                 Route::get('users/update-status/{id}', [AdminController::class, 'update_status'])->name('users.update-status');
-               
+
                 //--------------- End Admins ------------------------------------//
 
                 // ----- Authorization -----------------------------------------------
@@ -156,6 +156,11 @@ Route::group([
                 Route::post('news/actions', [NewsController::class, 'actions'])->name('news.actions');
                 Route::get('news/update-featured/{id}', [NewsController::class, 'update_featured'])->name('news.update-featured');
                 // ----- End news -------------------------------------------
+
+                // ----- About -----------------------------------------------
+                Route::get('about', [App\Http\Controllers\Admin\Cms\AboutController::class, 'index'])->name('about.index');
+                Route::put('about', [App\Http\Controllers\Admin\Cms\AboutController::class, 'update'])->name('about.update');
+                // ----- End About -------------------------------------------
 
                 //----------------Start Sliders----------------------------//
                 Route::resource('slider', SliderController::class);

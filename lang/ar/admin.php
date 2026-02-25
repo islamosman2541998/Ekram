@@ -73,6 +73,22 @@ return [
     'badal_notify_setting'              => 'اعدادات تنبيهات البدل',
     'site'                              => 'الصفحه',
     'footerMenu'                        => 'عرض القائمة الفوتر',
+    // في lang/ar/admin.php
+'about' => 'من نحن',
+'mission' => 'مهمتنا',
+'vision' => 'رؤيتنا',
+'values' => 'قيمنا',
+'images' => 'الصور',
+'about_image' => 'صورة من نحن',
+'mission_image' => 'صورة المهمة',
+'vision_image' => 'صورة الرؤية',
+'values_image' => 'صورة القيم',
+'mission_title_in' => 'عنوان المهمة بـ',
+'mission_description_in' => 'وصف المهمة بـ',
+'vision_title_in' => 'عنوان الرؤية بـ',
+'vision_description_in' => 'وصف الرؤية بـ',
+'values_title_in' => 'عنوان القيم بـ',
+'values_description_in' => 'وصف القيم بـ',
 
     'ar' => [
         'name' => 'Name in Arabic ',

@@ -67,71 +67,7 @@
     </div>
 </section>
 
-<section class="service-flow py-5" dir="rtl">
-    <div class="container">
 
-        <div class="row justify-content-center mb-4">
-            <div class="col-lg-8 text-center">
-                <h1 class="fw-bold fs-3 main-font mb-3">
-                    <span style="color:#469e8d ;">رحلة</span>
-                    <span style="color:#faa440 ;">المستفيد </span>
-                    <span style="color:#ee5a34 ;">مع خدماتنا</span>
-                </h1>
-
-                <p class="service-flow-subtitle main-font">
-                    نرافق كبار السن في كل خطوة، من طلب الخدمة وحتى المتابعة المستمرة لضمان أعلى مستويات الجودة والراحة.
-                </p>
-            </div>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-10 position-relative">
-
-                <div class="flow-line d-none d-md-block"></div>
-
-                <div class="row g-4 text-center text-md-right align-items-start">
-
-                    <div class="col-md-4">
-                        <div class="flow-step">
-                            <div class="step-circle step-orange">1</div>
-                            <h3 class="step-title">طلب الخدمة</h3>
-                            <p class="step-text main-font">
-                                يستقبل فريق الجمعية طلبات الخدمة عبر الهاتف، الموقع الإلكتروني أو الزيارات المباشرة
-                                من كبار السن أو ذويهم.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="flow-step">
-                            <div class="step-circle step-yellow">2</div>
-                            <h3 class="step-title">تقييم الاحتياج</h3>
-                            <p class="step-text main-font">
-                                يتم تقييم حالة المستفيد بشكل إنساني ومهني لتحديد نوع البرامج المناسبة له
-                                من اجتماعية، ترفيهية أو تعليمية.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- خطوة 3 -->
-                    <div class="col-md-4">
-                        <div class="flow-step">
-                            <div class="step-circle step-green">3</div>
-                            <h3 class="step-title">تنفيذ ومتابعة</h3>
-                            <p class="step-text main-font">
-                                تبدأ رحلة المستفيد مع البرامج المختارة، مع متابعة دورية للتأكد من رضا كبار السن
-                                وتحسين جودة الخدمات المقدمة لهم.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-</section>
 
 <style>
     .programP p {
