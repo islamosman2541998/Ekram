@@ -44,7 +44,6 @@ class PagesController extends Controller
             $imagePath = $this->upload_file($request->file('image'), 'pages');
         }
 
-        // validate بعد رفع الملفات
         $validated = $request->validate([
             'status' => 'nullable',
         ]);
@@ -122,16 +121,19 @@ class PagesController extends Controller
 
 
 
-    public function deleteFile(Pages $page, $index)
-    {
-        $files = $page->files;
-        if (isset($files[$index])) {
-            $this->delete_file($files[$index]);
-            unset($files[$index]);
-            $page->update(['files' => array_values($files)]);
+  public function deleteFile(Pages $page, $index)
+{
+    $files = $page->files ?? [];
+    if (isset($files[$index])) {
+        $filePath = storage_path('app/public/' . $files[$index]);
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
-        return redirect()->back();
+        unset($files[$index]);
+        $page->update(['files' => !empty($files) ? array_values($files) : null]);
     }
+    return redirect()->back();
+}
 
     public function destroy(Pages $page)
     {
