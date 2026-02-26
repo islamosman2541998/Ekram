@@ -24,7 +24,7 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
         </a>
 
         <div class="collapse navbar-collapse justify-content-center navmenu" id="navbarNav">
-            <ul class="navbar-nav gap-3">
+            <ul class="navbar-nav">
 
                 @php
                     $current_lang = app()->getLocale();
@@ -102,7 +102,7 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
 }
 .navbar-nav .nav-link {
    
-    font-size: 16px;
+    font-size: 14px;
 }
 .ms-3 {
     margin-left: -2rem !important;
