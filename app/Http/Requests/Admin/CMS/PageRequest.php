@@ -16,23 +16,20 @@ class PageRequest extends FormRequest
 
 
 
-    public function rules()
-    {
-        $req = [];
-        foreach (config('translatable.locales') as $locale) {
-            $req += [$locale . '.title' => 'required'];
-            $req += [$locale . '.slug' => 'required'];
-            $req += [$locale . '.content' => 'nullable'];
-            $req += [$locale . '.meta_title' => 'nullable'];
-            $req += [$locale . '.meta_description' => 'nullable'];
-            $req += [$locale . '.meta_key' => 'nullable'];
-        }
-        $req += ['files' => 'nullable|array'];
-        $req += ['files.*' => 'nullable|mimes:jpg,jpeg,png,gif,webp,svg,pdf|max:10240'];
-        $req += ['image' => 'nullable|mimes:jpg,jpeg,png,gif,webp,svg,pdf|max:10240'];
-        $req += ['status' => 'nullable'];
-        return $req;
+   public function rules()
+{
+    $req = [];
+    foreach (config('translatable.locales') as $locale) {
+        $req += [$locale . '.title' => 'required'];
+        $req += [$locale . '.slug' => 'required'];
+        $req += [$locale . '.content' => 'nullable'];
+        $req += [$locale . '.meta_title' => 'nullable'];
+        $req += [$locale . '.meta_description' => 'nullable'];
+        $req += [$locale . '.meta_key' => 'nullable'];
     }
+    $req += ['status' => 'nullable'];
+    return $req;
+}
 
 
     public function getSanitized()

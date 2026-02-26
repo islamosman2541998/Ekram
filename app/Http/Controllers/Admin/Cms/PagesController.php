@@ -9,11 +9,11 @@ use App\Http\Requests\Admin\CMS\PageRequest;
 
 class PagesController extends Controller
 {
-    
+
     public function index()
     {
         $query = Pages::query()->with('trans')->orderBy('id', 'DESC');
-        if(request()->input('title')  != ''){
+        if (request()->input('title')  != '') {
             $query = $query->WhereTranslationLike('title', '%' . request()->input('title') . '%');
         }
         $items = $query->paginate($this->pagination_count);
@@ -27,114 +27,153 @@ class PagesController extends Controller
     }
 
 
-  public function store(PageRequest $request)
-{
-    $data = $request->getSanitized();
-    
-    if ($request->hasFile('image')) {
-        $data['image'] = $this->upload_file($request->file('image'), 'pages');
-    }
 
-    if ($request->hasFile('files')) {
+    public function store(Request $request)
+    {
         $filesArr = [];
-        foreach ($request->file('files') as $file) {
-            $filesArr[] = $this->upload_file($file, 'pages');
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $fileName = $file->getClientOriginalName();
+                $file->move(storage_path('app/public/attachments/pages'), $fileName);
+                $filesArr[] = 'attachments/pages/' . $fileName;
+            }
         }
-        $data['files'] = $filesArr;
-    }
 
-    Pages::create($data);
-    session()->flash('success', trans('message.admin.created_sucessfully'));
-    if (request()->submit == "new") { return redirect()->back(); }
-    return redirect()->route('admin.pages.index');
-}
-
-
-    public function show( Pages $page)
-    {
-        return view('admin.dashboard.cms.pages.show' , compact('page'));
-    }
-
-
-    public function edit( Pages $page)
-    {
-        return view('admin.dashboard.cms.pages.edit' , compact('page'));
-    }
-
-
-    public function update(PageRequest $request, Pages $page)
-{
-    $data = $request->getSanitized();
-
-    if ($request->hasFile('image')) {
-        $this->delete_file($page->image);
-        $data['image'] = $this->upload_file($request->file('image'), 'pages');
-    }
-
-    if ($request->hasFile('files')) {
-        $existingFiles = $page->files ?? [];
-        foreach ($request->file('files') as $file) {
-            $existingFiles[] = $this->upload_file($file, 'pages');
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $this->upload_file($request->file('image'), 'pages');
         }
-        $data['files'] = $existingFiles;
+
+        // validate بعد رفع الملفات
+        $validated = $request->validate([
+            'status' => 'nullable',
+        ]);
+
+        // build data
+        $data = [];
+        foreach (config('translatable.locales') as $locale) {
+            $data[$locale] = $request->input($locale, []);
+            if (isset($data[$locale]['slug'])) {
+                $data[$locale]['slug'] = slug($data[$locale]['slug']);
+            }
+        }
+        $data['status'] = $request->has('status');
+        $data['created_by'] = @auth()->user()->id;
+
+        if (!empty($filesArr)) $data['files'] = $filesArr;
+        if ($imagePath) $data['image'] = $imagePath;
+
+        Pages::create($data);
+        session()->flash('success', trans('message.admin.created_sucessfully'));
+        if ($request->submit == "new") return redirect()->back();
+        return redirect()->route('admin.pages.index');
     }
 
-    $page->update($data);
-    session()->flash('success', trans('message.admin.updated_sucessfully'));
-    if (request()->submit == "update") { return redirect()->back(); }
-    return redirect()->route('admin.pages.index');
-}
-public function deleteFile(Pages $page, $index)
-{
-    $files = $page->files;
-    if (isset($files[$index])) {
-        $this->delete_file($files[$index]);
-        unset($files[$index]);
-        $page->update(['files' => array_values($files)]);
+    public function update(Request $request, Pages $page)
+    {
+        $filesArr = null;
+        if ($request->hasFile('files')) {
+            $existingFiles = $page->files ?? [];
+            foreach ($request->file('files') as $file) {
+                $fileName = $file->getClientOriginalName();
+                $file->move(storage_path('app/public/attachments/pages'), $fileName);
+                $existingFiles[] = 'attachments/pages/' . $fileName;
+            }
+            $filesArr = $existingFiles;
+        }
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $this->delete_file($page->image);
+            $imagePath = $this->upload_file($request->file('image'), 'pages');
+        }
+
+        // build data
+        $data = [];
+        foreach (config('translatable.locales') as $locale) {
+            $data[$locale] = $request->input($locale, []);
+            if (isset($data[$locale]['slug'])) {
+                $data[$locale]['slug'] = slug($data[$locale]['slug']);
+            }
+        }
+        $data['status'] = $request->has('status');
+        $data['updated_by'] = @auth()->user()->id;
+
+        if ($filesArr !== null) $data['files'] = $filesArr;
+        if ($imagePath) $data['image'] = $imagePath;
+
+        $page->update($data);
+        session()->flash('success', trans('message.admin.updated_sucessfully'));
+        if ($request->submit == "update") return redirect()->back();
+        return redirect()->route('admin.pages.index');
     }
-    return redirect()->back();
-}
+
+
+    public function show(Pages $page)
+    {
+        return view('admin.dashboard.cms.pages.show', compact('page'));
+    }
+
+
+    public function edit(Pages $page)
+    {
+        return view('admin.dashboard.cms.pages.edit', compact('page'));
+    }
+
+
+
+    public function deleteFile(Pages $page, $index)
+    {
+        $files = $page->files;
+        if (isset($files[$index])) {
+            $this->delete_file($files[$index]);
+            unset($files[$index]);
+            $page->update(['files' => array_values($files)]);
+        }
+        return redirect()->back();
+    }
 
     public function destroy(Pages $page)
     {
         $this->delete_file($page->image);
         $page->delete();
-        session()->flash('success' , trans('message.admin.deleted_sucessfully') );
+        session()->flash('success', trans('message.admin.deleted_sucessfully'));
         return redirect()->back();
     }
 
 
-    public function update_status($id){
+    public function update_status($id)
+    {
         $page = Pages::findOrfail($id);
         $page->status == 1 ? $page->status = 0 : $page->status = 1;
         $page->save();
         return redirect()->back();
     }
 
-    public function actions(Request $request){
-        if($request['publish'] == 1 ){
+    public function actions(Request $request)
+    {
+        if ($request['publish'] == 1) {
             $pages = Pages::findMany($request['record']);
-            foreach ($pages as $page){
+            foreach ($pages as $page) {
                 $page->update(['status' => 1]);
             }
-            session()->flash('success' , trans('pages.status_changed_sucessfully') );
+            session()->flash('success', trans('pages.status_changed_sucessfully'));
         }
-        if($request['unpublish'] == 1 ){
+        if ($request['unpublish'] == 1) {
             $pages = Pages::findMany($request['record']);
-            foreach ($pages as $page){
+            foreach ($pages as $page) {
                 $page->update(['status' => 0]);
             }
-            session()->flash('success' , trans('pages.status_changed_sucessfully') );
+            session()->flash('success', trans('pages.status_changed_sucessfully'));
         }
-        if($request['delete_all'] == 1 ){
+        if ($request['delete_all'] == 1) {
             $pages = Pages::findMany($request['record']);
-            foreach ($pages as $page){
+            foreach ($pages as $page) {
                 $this->delete_file($page->image);
                 $page->delete();
             }
-            session()->flash('success' , trans('pages.delete_all_sucessfully') );
+            session()->flash('success', trans('pages.delete_all_sucessfully'));
         }
         return redirect()->back();
     }
-
 }
