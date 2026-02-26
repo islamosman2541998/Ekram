@@ -35,7 +35,7 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
                                 @endif
             </p> 
 
-            <a href="{{ route('site.about.index') }}" class="btn btn-outline-light btn-lg second-font cta-button">
+            <a href="{{ route('site.about-us.index') }}" class="btn btn-outline-light btn-lg second-font cta-button">
               ماذا قالوا عنا ؟؟
             </a>
 
