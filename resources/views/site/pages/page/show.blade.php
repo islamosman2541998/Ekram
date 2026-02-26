@@ -8,52 +8,40 @@
 @section('content')
 
 
-{{-- <section>
-    <div class="container mt-5">
 
-        <h2 class="text-center">
-            {{ $page->title }}
-        </h2>
 
-        <div class="row mt-5">
-
-            <div class="col-md-6">
-                <p>{!! $page->content !!}</p>
-            </div>
-            <div class="col-md-6">
-                <img src="{{ getImage($page->image) }}" alt=" {{ $page->title }}">
-            </div>
-        </div>
-
-    </div>
-</section> --}}
-
-  <main>
+    <main>
         <div class="hawkama-container">
-          <div class="hawkama-content">
-            <div class="row">
-              
-              <div class="col-md-8 col-lg-9 governance-sections">
+            <div class="hawkama-content">
+                <div class="row">
 
-                <div class="governance-section">
-                  <h2 class="section-title">  {{ $page->title }}</h2>
-                 <p>{!! $page->content !!}</p>
+                    <div class="col-md-12 col-lg-12 governance-sections">
+
+                        <div class="governance-section">
+                            <h2 class="section-title"> {{ $page->title }}</h2>
+                            <p>{!! $page->content !!}</p>
+                        </div>
+                        <div class="logo-section w-100 text-center">
+                            @if ($page->image)
+                                @if (str_ends_with($page->image, '.pdf'))
+                                    <a href="{{ getImage($page->image) }}" target="_blank" class="btn btn-primary">
+                                        <i class="fa fa-file-pdf"></i> {{ basename($page->image) }}
+                                    </a>
+                                @else
+                                    <img src="{{ getImage($page->image) }}" alt="{{ $page->title }}" class="">
+                                @endif
+                            @endif
+                        </div>
+
+                    </div>
+
+
+
+
                 </div>
-                
-           
-              </div>
-
-              <div class="col-md-4 col-lg-3">
-                <div class="logo-section">
-                  <img src="{{ getImage($page->image) }}" alt="شعار جمعية يدا بيد للخدمات الإنسانية" class="img-fluid">
-                  <!-- <h1 class="organization-name">جمعية يدا بيد<br>للخدمات الإنسانية</h1> -->
-                </div>
-              </div>
-
             </div>
-          </div>
         </div>
-      </main>
+    </main>
 
 
 

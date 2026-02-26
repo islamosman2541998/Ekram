@@ -1,4 +1,3 @@
-/* ===== حوكمة - تصميم عام ===== */
 
 .hawkama-container {
   background: #fdf5ec;
@@ -17,13 +16,11 @@
   text-align: right;
 }
 
-/* العمود الأساسي (النص) */
 .governance-sections {
   border-left: 2px solid #dde7f0;
   padding-left: 32px;
 }
 
-/* اللوغو على اليسار */
 .logo-section {
   display: flex;
   flex-direction: column;
@@ -33,11 +30,10 @@
 }
 
 .logo-section img {
-  max-width: 180px;
+  /* max-width: 180px; */
   height: auto;
 }
 
-/* في الشاشات الكبيرة نخلي اللوغو ثابت (sticky) */
 @media (min-width: 992px) {
   .logo-section {
     position: sticky;
@@ -45,7 +41,6 @@
   }
 }
 
-/* ===== عناوين الأقسام ===== */
 
 .governance-section {
   margin-bottom: 32px;

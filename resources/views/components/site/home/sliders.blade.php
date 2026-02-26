@@ -2,40 +2,7 @@
 $settings = App\Charity\Settings\SettingSingleton::getInstance();
 @endphp
 @if ($settings->getItem('show_slider'))
-{{-- <div class="banner">
 
-    
-    <div class="swiper bannerSwiper">
-        <div class="swiper-wrapper">
-            @forelse ($slides as $key => $slide)
-            <div class="swiper-slide">
-                <a href="{{ $slide->url }}">
-                    <div class="image_Layer">
-                        <img src="{{ asset(getImage($slide->image) ?? 'site/img/bannerBG.png') }}" alt="" />
-                    </div>
-              
-                    
-                    <div class="text_Layer">
-                        <div class="container">
-                            <h1>
-                                @if (@$slide->trans?->where('locale', $current_lang)->first()->title)
-                                    {{ @$slide->trans?->where('locale', $current_lang)->first()->title }}
-                                @endif
-                                @if (@$slide->trans?->where('locale', $current_lang)->first()->description)
-                                    {{ @$slide->trans?->where('locale', $current_lang)->first()->description }}
-                                @endif
-                            </h1>
-                        </div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </a>
-            @empty
-            @endforelse
-        </div>
-        
-    </div>
-</div> --}}
 
   <!-- Header Section -->
   <header class="hero-section" dir="ltr">
@@ -68,7 +35,7 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
                                 @endif
             </p> 
 
-            <a href="#testimonials" class="btn btn-outline-light btn-lg second-font cta-button">
+            <a href="{{ route('site.about.index') }}" class="btn btn-outline-light btn-lg second-font cta-button">
               ماذا قالوا عنا ؟؟
             </a>
 

@@ -156,7 +156,8 @@
                                                     <label for="example-number-input" class="col-sm-12 col-form-label" l>
                                                         @lang('admin.image') : </label>
                                                     <div class="col-sm-12">
-                                                        <input class="form-control" type="file" placeholder="@lang('admin.image')" id="example-number-input" name="image" value="{{ old('image') }}">
+                                                        {{-- <input class="form-control" type="file" placeholder="@lang('admin.image')" id="example-number-input" name="image" value="{{ old('image') }}"> --}}
+                                                        <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.gif,.webp,.svg,.pdf" value="{{ old('image') }}">
                                                     </div>
                                                 </div>
                                             </div>
