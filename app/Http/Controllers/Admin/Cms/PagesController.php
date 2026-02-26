@@ -27,17 +27,27 @@ class PagesController extends Controller
     }
 
 
-    public function store(PageRequest $request)
-    {
-        $data =$request->getSanitized();
-        if($request->hasFile('image')){
-            $data['image'] = $this->upload_file($request->file('image') , ('pages'));
-        }
-        Pages::create($data);
-        session()->flash('success' , trans('message.admin.created_sucessfully') );
-        if(request()->submit == "new"){ return  redirect()->back();}
-        return redirect()->route('admin.pages.index');
+  public function store(PageRequest $request)
+{
+    $data = $request->getSanitized();
+    
+    if ($request->hasFile('image')) {
+        $data['image'] = $this->upload_file($request->file('image'), 'pages');
     }
+
+    if ($request->hasFile('files')) {
+        $filesArr = [];
+        foreach ($request->file('files') as $file) {
+            $filesArr[] = $this->upload_file($file, 'pages');
+        }
+        $data['files'] = $filesArr;
+    }
+
+    Pages::create($data);
+    session()->flash('success', trans('message.admin.created_sucessfully'));
+    if (request()->submit == "new") { return redirect()->back(); }
+    return redirect()->route('admin.pages.index');
+}
 
 
     public function show( Pages $page)
@@ -53,18 +63,37 @@ class PagesController extends Controller
 
 
     public function update(PageRequest $request, Pages $page)
-    {
-        $data =$request->getSanitized();
-        if ($request->hasFile('image')) {
-            $this->delete_file($page->image);
-            $data['image'] = $this->upload_file($request->file('image'), ('pages'));
-        }
-        $page->update($data);
-        session()->flash('success' , trans('message.admin.updated_sucessfully') );
-        if(request()->submit == "update"){ return  redirect()->back();}
-        return redirect()->route('admin.pages.index');
+{
+    $data = $request->getSanitized();
+
+    if ($request->hasFile('image')) {
+        $this->delete_file($page->image);
+        $data['image'] = $this->upload_file($request->file('image'), 'pages');
     }
 
+    if ($request->hasFile('files')) {
+        $existingFiles = $page->files ?? [];
+        foreach ($request->file('files') as $file) {
+            $existingFiles[] = $this->upload_file($file, 'pages');
+        }
+        $data['files'] = $existingFiles;
+    }
+
+    $page->update($data);
+    session()->flash('success', trans('message.admin.updated_sucessfully'));
+    if (request()->submit == "update") { return redirect()->back(); }
+    return redirect()->route('admin.pages.index');
+}
+public function deleteFile(Pages $page, $index)
+{
+    $files = $page->files;
+    if (isset($files[$index])) {
+        $this->delete_file($files[$index]);
+        unset($files[$index]);
+        $page->update(['files' => array_values($files)]);
+    }
+    return redirect()->back();
+}
 
     public function destroy(Pages $page)
     {

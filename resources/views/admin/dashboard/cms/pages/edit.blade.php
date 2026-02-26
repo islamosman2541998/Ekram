@@ -221,6 +221,53 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- عرض الملفات الموجودة --}}
+                                    @if ($page->files)
+                                        <div class="col-12 mb-3">
+                                            <label class="col-form-label fw-bold">الملفات الحالية</label>
+                                            @foreach ($page->files as $index => $file)
+                                                <div
+                                                    class="d-flex align-items-center justify-content-between mb-2 p-2 border rounded">
+                                                    @if (str_ends_with($file, '.pdf'))
+                                                        <a href="{{ getImage($file) }}" target="_blank">
+                                                            <i class="fa fa-file-pdf text-danger"></i>
+                                                            {{ basename($file) }}
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ getImage($file) }}" target="_blank">
+                                                            <img src="{{ getImageThumb($file) }}" width="50"
+                                                                alt="">
+                                                            {{ basename($file) }}
+                                                        </a>
+                                                    @endif
+                                                    <a href="{{ route('admin.pages.delete-file', [$page->id, $index]) }}"
+                                                        onclick="event.preventDefault(); if(confirm('هل تريد حذف هذا الملف؟')) { 
+       document.getElementById('delete-file-{{ $index }}').submit(); }"
+                                                        class="btn btn-outline-danger btn-sm">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                    <form id="delete-file-{{ $index }}"
+                                                        action="{{ route('admin.pages.delete-file', [$page->id, $index]) }}"
+                                                        method="POST" style="display:none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    {{-- رفع ملفات جديدة --}}
+                                    <div class="col-12">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-12 col-form-label">@lang('admin.files')</label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control" type="file" name="files[]" multiple
+                                                    accept=".jpg,.jpeg,.png,.gif,.pdf">
+                                                <small class="text-muted">يمكنك رفع أكثر من ملف</small>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     {{-- Status ------------------------------------------------------------------------------------- --}}
                                     <div class="col-12">

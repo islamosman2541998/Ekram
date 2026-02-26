@@ -148,6 +148,8 @@ Route::group([
                 Route::resource('pages', PagesController::class);
                 Route::get('pages/update-status/{id}', [PagesController::class, 'update_status'])->name('pages.update-status');
                 Route::post('pages/actions', [PagesController::class, 'actions'])->name('pages.actions');
+                Route::delete('pages/delete-file/{page}/{index}', [PagesController::class, 'deleteFile'])->name('pages.delete-file');
+
                 // ----- End Pages -------------------------------------------
 
                 // ----- news -----------------------------------------------

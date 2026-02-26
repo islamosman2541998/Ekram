@@ -13,7 +13,7 @@ class Pages extends Model
 {
     use HasFactory, SoftDeletes, Translatable;
 
-    protected $fillable = ['image',  'status', 'created_by', 'updated_by'];
+protected $fillable = ['image', 'files', 'status', 'created_by', 'updated_by'];
     // transatable table
     public $translatedAttributes = ['page_id', 'locale', 'title', 'slug', 'content','meta_title' ,'meta_description','meta_key'];
     // foreign key  
@@ -31,6 +31,8 @@ class Pages extends Model
     public function scopeLang($query){
         return $query->trans->where('locale',  app()->getLocale())->first();
     }
-
+protected $casts = [
+    'files' => 'array',
+];
 
 }

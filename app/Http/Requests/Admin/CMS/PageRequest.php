@@ -27,6 +27,8 @@ class PageRequest extends FormRequest
             $req += [$locale . '.meta_description' => 'nullable'];
             $req += [$locale . '.meta_key' => 'nullable'];
         }
+        $req += ['files' => 'nullable|array'];
+        $req += ['files.*' => 'nullable|mimes:jpg,jpeg,png,gif,webp,svg,pdf|max:10240'];
         $req += ['image' => 'nullable|mimes:jpg,jpeg,png,gif,webp,svg,pdf|max:10240'];
         $req += ['status' => 'nullable'];
         return $req;

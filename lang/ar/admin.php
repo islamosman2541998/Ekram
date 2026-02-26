@@ -89,6 +89,7 @@ return [
 'vision_description_in' => 'وصف الرؤية بـ',
 'values_title_in' => 'عنوان القيم بـ',
 'values_description_in' => 'وصف القيم بـ',
+'files' => 'الملفات',
 
     'ar' => [
         'name' => 'Name in Arabic ',
