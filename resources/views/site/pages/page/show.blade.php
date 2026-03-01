@@ -43,7 +43,7 @@
                                                 </a>
                                             </div>
                                         @else
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-4 m-5">
                                                 <a href="{{ getImage($file) }}" target="_blank">
                                                     <img src="{{ getImage($file) }}" alt=""
                                                         class="img-fluid rounded"
