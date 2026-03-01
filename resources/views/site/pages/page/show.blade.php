@@ -47,7 +47,7 @@
                                                 <a href="{{ getImage($file) }}" target="_blank">
                                                     <img src="{{ getImage($file) }}" alt=""
                                                         class="img-fluid rounded"
-                                                        style="width:200%; height:200px; object-fit:cover;">
+                                                        style="width:100%; height:100px; object-fit:cover;">
                                                 </a>
                                             </div>
                                         @endif
