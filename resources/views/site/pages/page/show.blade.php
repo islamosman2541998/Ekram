@@ -32,27 +32,28 @@
                                 @endif
                             @endif
 
-                             @if ($page->files)
-                            <div class="row mt-4">
-                                @foreach ($page->files as $file)
-                                    @if (str_ends_with($file, '.pdf'))
-                                        <div class="col-md-4 mb-3">
-                                            <a href="{{ getImage($file) }}" target="_blank"
-                                                class="btn btn-outline-primary w-100">
-                                                <i class="fa fa-file-pdf"></i> {{ basename($file) }}
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="col-md-4 mb-3" style="width:auto;">
-                                            <a href="{{ getImage($file) }}" target="_blank">
-                                                <img src="{{ getImage($file) }}" alt="" class="img-fluid rounded w-50 h-50"
-                                                    style="width:100%; object-fit:cover;">
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        @endif
+                            @if ($page->files)
+                                <div class="row mt-4">
+                                    @foreach ($page->files as $file)
+                                        @if (str_ends_with($file, '.pdf'))
+                                            <div class="col-md-3 mb-3">
+                                                <a href="{{ getImage($file) }}" target="_blank"
+                                                    class="btn btn-outline-primary w-100">
+                                                    <i class="fa fa-file-pdf"></i> {{ basename($file) }}
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="col-md-3 mb-3">
+                                                <a href="{{ getImage($file) }}" target="_blank">
+                                                    <img src="{{ getImage($file) }}" alt=""
+                                                        class="img-fluid rounded"
+                                                        style="width:100%; height:200px; object-fit:cover;">
+                                                </a>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
 
                     </div>
@@ -69,10 +70,10 @@
 
 @endsection
 <style>
-  @media (min-width: 768px) {
-    .col-md-4 {
-        flex: 0 0 auto;
-        width: auto !important;
+    @media (min-width: 768px) {
+        .col-md-4 {
+            flex: 0 0 auto;
+            width: auto !important;
+        }
     }
-}
 </style>
