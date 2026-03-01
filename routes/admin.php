@@ -145,8 +145,7 @@ Route::group([
                 //--------------- End Menus -----------------------------------------------------------------------//
 
                 // ----- Pages -----------------------------------------------
-                Route::delete('pages/delete-file/{page}/{index}', [PagesController::class, 'deleteFile'])->name('pages.delete-file');
-
+Route::post('delete-page-file', [PagesController::class, 'deleteFile'])->name('delete-page-file');
                 Route::resource('pages', PagesController::class);
                 Route::get('pages/update-status/{id}', [PagesController::class, 'update_status'])->name('pages.update-status');
                 Route::post('pages/actions', [PagesController::class, 'actions'])->name('pages.actions');

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Cms;
 
-use App\Models\Pages;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CMS\PageRequest;
+use App\Models\Pages;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
@@ -121,18 +122,28 @@ class PagesController extends Controller
 
 
 
-  public function deleteFile(Pages $page, $index)
+  public function deleteFile(Request $request)
 {
+    $page = Pages::findOrFail($request->page_id);
     $files = $page->files ?? [];
+    $index = (int) $request->file_index;
+
+
+
+
     if (isset($files[$index])) {
         $filePath = storage_path('app/public/' . $files[$index]);
         if (file_exists($filePath)) {
-            unlink($filePath);
+            @unlink($filePath);
         }
         unset($files[$index]);
-        $page->update(['files' => !empty($files) ? array_values($files) : null]);
+
+        DB::table('pages')
+            ->where('id', $request->page_id)
+            ->update(['files' => count($files) > 0 ? json_encode(array_values($files)) : null]);
     }
-    return redirect()->back();
+
+    return redirect()->route('admin.pages.edit', $request->page_id);
 }
 
     public function destroy(Pages $page)

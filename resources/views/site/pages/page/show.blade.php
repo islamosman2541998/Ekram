@@ -22,7 +22,6 @@
                             <p>{!! $page->content !!}</p>
                         </div>
                         <div class="logo-section w-100 text-center">
-                            {{-- الصورة الأساسية --}}
                             @if ($page->image)
                                 @if (str_ends_with($page->image, '.pdf'))
                                     <a href="{{ getImage($page->image) }}" target="_blank" class="btn btn-primary">
@@ -33,22 +32,27 @@
                                 @endif
                             @endif
 
-                            {{-- الملفات المتعددة --}}
-                            @if ($page->files)
-                                <div class="files-list mt-4">
-                                    @foreach ($page->files as $file)
-                                        @if (str_ends_with($file, '.pdf'))
+                             @if ($page->files)
+                            <div class="row mt-4">
+                                @foreach ($page->files as $file)
+                                    @if (str_ends_with($file, '.pdf'))
+                                        <div class="col-md-4 mb-3">
                                             <a href="{{ getImage($file) }}" target="_blank"
-                                                class="btn btn-outline-primary m-1">
+                                                class="btn btn-outline-primary w-100">
                                                 <i class="fa fa-file-pdf"></i> {{ basename($file) }}
                                             </a>
-                                        @else
-                                            <img src="{{ getImage($file) }}" alt="" class="m-1"
-                                                style="max-width: 300px;">
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endif
+                                        </div>
+                                    @else
+                                        <div class="col-md-4 mb-3">
+                                            <a href="{{ getImage($file) }}" target="_blank">
+                                                <img src="{{ getImage($file) }}" alt="" class="img-fluid rounded"
+                                                    style="width:100%; object-fit:cover;">
+                                            </a>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
                         </div>
 
                     </div>

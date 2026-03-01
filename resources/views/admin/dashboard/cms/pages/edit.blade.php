@@ -222,7 +222,8 @@
                                         </div>
                                     </div>
                                     {{-- عرض الملفات الموجودة --}}
-                                    @if ($page->files)
+                                    {{-- عرض الملفات الموجودة - بدون form، بس أزرار --}}
+                                    @if ($page->files && count($page->files) > 0)
                                         <div class="col-12 mb-3">
                                             <label class="col-form-label fw-bold">الملفات الحالية</label>
                                             @foreach ($page->files as $index => $file)
@@ -240,18 +241,10 @@
                                                             {{ basename($file) }}
                                                         </a>
                                                     @endif
-                                                    <a href="{{ route('admin.pages.delete-file', [$page->id, $index]) }}"
-                                                        onclick="event.preventDefault(); if(confirm('هل تريد حذف هذا الملف؟')) { 
-       document.getElementById('delete-file-{{ $index }}').submit(); }"
-                                                        class="btn btn-outline-danger btn-sm">
+                                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                                        onclick="if(confirm('هل تريد حذف هذا الملف؟')) document.getElementById('delete-file-{{ $index }}').submit();">
                                                         <i class="fa fa-trash"></i>
-                                                    </a>
-                                                    <form id="delete-file-{{ $index }}"
-                                                        action="{{ route('admin.pages.delete-file', [$page->id, $index]) }}"
-                                                        method="POST" style="display:none;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
+                                                    </button>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -305,7 +298,16 @@
 
 
             </form>
-
+{{-- Forms حذف الملفات - برا الفورم الرئيسي --}}
+@if ($page->files && count($page->files) > 0)
+    @foreach ($page->files as $index => $file)
+        <form id="delete-file-{{ $index }}" action="{{ route('admin.delete-page-file') }}" method="POST" style="display:none;">
+            @csrf
+            <input type="hidden" name="page_id" value="{{ $page->id }}">
+            <input type="hidden" name="file_index" value="{{ $index }}">
+        </form>
+    @endforeach
+@endif
         </div>
     </div>
     </div>
