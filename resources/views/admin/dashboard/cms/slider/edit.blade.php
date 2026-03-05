@@ -95,8 +95,7 @@
                                                     <input class="form-control" type="file" accept="image/*"
                                                         id="example-number-input" name="image"
                                                         value="{{ old('image') }}">
-                                                    <small class="text-danger">المقاس المطلوب: <strong>990px ×
-                                                            391px</strong> بكسل</small>
+                                                   
                                                     @error('image')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -116,8 +115,7 @@
                                                     <input class="form-control" type="file" accept="image/*" id="example-number-input"
                                                         name="mobile_image" 
                                                         value="{{ old('mobile_image') }}">
-                                                    <small class="text-danger">المقاس المطلوب: <strong>990px ×
-                                                            391px</strong> بكسل</small>
+                                                  
                                                     @error('mobile_image')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror

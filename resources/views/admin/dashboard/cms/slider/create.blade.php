@@ -93,8 +93,7 @@
                                                 <div class="col-sm-12">
                                                     <input class="form-control" type="file" accept="image/*"
                                                         name="image">
-                                                    <small class="text-danger">المقاس المطلوب: <strong>990px ×
-                                                            391px</strong> بكسل</small>
+                                                   
                                                     @error('image')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -109,8 +108,7 @@
                                                 <div class="col-sm-12">
                                                     <input class="form-control" type="file" accept="image/*"
                                                         name="mobile_image">
-                                                    <small class="text-danger">المقاس المطلوب: <strong>990px ×
-                                                            391px</strong> بكسل</small>
+                                                    
                                                     @error('mobile_image')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
