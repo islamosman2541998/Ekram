@@ -165,10 +165,11 @@
 }
 
 /* Card Image */
+
 .custom-card-img {
     position: relative;
     width: 100%;
-    height: 160px;
+    height: 307px;
     overflow: hidden;
     cursor: pointer;
 }
@@ -481,7 +482,7 @@ input.form-control.open:focus {
     }
     
     .custom-card-img {
-        height: 150px;
+        height: 279px;
     }
     
     .custom-card-body {
