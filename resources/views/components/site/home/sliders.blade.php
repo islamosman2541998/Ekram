@@ -30,9 +30,9 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
                                     {{ @$slide->trans?->where('locale', $current_lang)->first()->description }}
                                 </p>
 
-                                <a href="{{ route('site.about-us.index') }}" class="btn btn-outline-light btn-lg second-font cta-button">
+                                {{-- <a href="{{ route('site.about-us.index') }}" class="btn btn-outline-light btn-lg second-font cta-button">
                                     ماذا قالوا عنا ؟؟
-                                </a>
+                                </a> --}}
 
                                 <div class="stars-decoration">
                                     <span class="star star-1">✦</span>
