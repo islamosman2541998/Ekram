@@ -24,7 +24,7 @@ class Login extends Component
     public $testMobiles = [
         "966597767751",
         "966567296308",
-         "966561611117",
+        // "966561611117",
         "966540265614",
     ];
 
