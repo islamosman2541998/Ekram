@@ -4,6 +4,7 @@ namespace App\Charity\Notfications;
 
 use App\Charity\Settings\SettingSingleton;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SmsService
 {
@@ -36,12 +37,19 @@ class SmsService
      *
      *  send SMS
      */
-  public function send()
+public function send()
 {
     $settings = SettingSingleton::getInstance();
     $gateurl = $settings->getExternalConnectionData('sms_gateurl');
     $bearer = $settings->getExternalConnectionData('sms_password');
     $sender = $settings->getExternalConnectionData('sms_sender_name');
+
+    Log::info('SMS Request', [
+        'gateurl' => $gateurl,
+        'sender'  => $sender,
+        'mobile'  => $this->mobile,
+        'msg'     => $this->msg,
+    ]);
 
     $response = Http::withHeaders([
         'Authorization' => 'Bearer ' . $bearer,
@@ -49,6 +57,11 @@ class SmsService
         'recipients' => [$this->mobile],
         'body'       => $this->msg,
         'sender'     => $sender,
+    ]);
+
+    Log::info('SMS Response', [
+        'status' => $response->status(),
+        'body'   => $response->body(),
     ]);
 
     return $response->body();

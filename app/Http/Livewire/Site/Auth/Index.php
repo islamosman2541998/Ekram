@@ -32,7 +32,7 @@ class Index extends Component
     public $testMobiles = [
         "966597767751",
         "966567296308",
-        "966561611117",
+       // "966561611117",
         "966540265614",
         "966561611119",
     ];
@@ -89,7 +89,7 @@ class Index extends Component
         } else {
             $this->sendOTP = rand(1000, 9999);
 
-            $message = "رمز التحقق : " . $this->sendOTP . "\n منصة يد ب يد\n " . route('site.home');
+            $message = "رمز التحقق : " . $this->sendOTP . "\n   منصة اكرام \n " . route('site.home');
 
             if (substr($mobile, 0, 3) == "966") {
                 $sms = new SmsService($mobile, $message);
@@ -218,7 +218,7 @@ class Index extends Component
         } else {
             $this->sendOTP = rand(1000, 9999);
 
-            $message = "رمز التحقق : " . $this->sendOTP . "\n منصة يد ب يد\n " . route('site.home') ;
+            $message = "رمز التحقق : " . $this->sendOTP . "\n   منصة اكرام \n " . route('site.home') ;
 
             if (substr($mobile, 0, 3) == "966") {
                 $sms = new SmsService($mobile, $message);

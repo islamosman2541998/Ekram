@@ -65,7 +65,7 @@ class Login extends Component
         } else {
             $this->sendOTP = rand(1000, 9999);
 
-            $message = "رمز التحقق : " . $this->sendOTP . "\n منصة يد ب يد\n " . route('site.home') ;
+            $message = "رمز التحقق : " . $this->sendOTP . "\n   منصة اكرام \n " . route('site.home') ;
 
             if (substr($mobile, 0, 3) == "966") {
                 $sms = new SmsService($mobile, $message);

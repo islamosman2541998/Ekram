@@ -42,7 +42,7 @@ class Edit extends Component
         else{
             $this->sendOTP = rand(1000, 9999);
             // Send OTP in SMS 
-            $message = "رمز التحقق : " . $this->sendOTP . "\n منصة يد ب يد\n " . route('site.home') ;
+            $message = "رمز التحقق : " . $this->sendOTP . "\n   منصة اكرام \n " . route('site.home') ;
             $sms = new SmsService($this->mobile, $message);
             $sms = $sms->send();
         }
