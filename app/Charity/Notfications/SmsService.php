@@ -36,16 +36,23 @@ class SmsService
      *
      *  send SMS
      */
-    public function send()
-    {
-        $settings = SettingSingleton::getInstance();
-        $gateurl = $settings->getExternalConnectionData('sms_gateurl');
-        $username = $settings->getExternalConnectionData('sms_sender_name');
-        $password = $settings->getExternalConnectionData('sms_password');
-        $url = $gateurl . '?bearerTokens=' . urlencode( $password) . '&sender=' . urlencode($username) . '&recipients=' . urlencode($this->mobile) . '&body=' . urlencode($this->msg); // built url
-        $response = Http::get($url);
-        return $response->body();
-    }
+  public function send()
+{
+    $settings = SettingSingleton::getInstance();
+    $gateurl = $settings->getExternalConnectionData('sms_gateurl');
+    $bearer = $settings->getExternalConnectionData('sms_password');
+    $sender = $settings->getExternalConnectionData('sms_sender_name');
+
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . $bearer,
+    ])->post($gateurl, [
+        'recipients' => [$this->mobile],
+        'body'       => $this->msg,
+        'sender'     => $sender,
+    ]);
+
+    return $response->body();
+}
 
     public function sendForRegister($request)
     {
