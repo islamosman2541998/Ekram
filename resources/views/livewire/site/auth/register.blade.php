@@ -76,10 +76,10 @@
                     <form class="auth-form" id="register-form">
 
                         <!--username-->
-                        <div class="form-group mb-3" wire:ignore>
+                        <div class="form-group mb-3" >
                             <label for="name" class="form-label fw-bold">@lang('Name') <span
                                     class="text-danger">*</span></label>
-                            <input type="text" wire:model="name" class="form-control" id="name" dir="rtl"
+                            <input type="text" wire:model.defer="name" class="form-control" id="name" dir="rtl"
                                 placeholder="@lang('Full Name')"
                                 style="border: 2px solid #ced4da; border-radius: 10px; padding: 10px 15px; background: #fafafa;" />
                             @error('name')
@@ -91,7 +91,7 @@
                         <div class="form-group mb-3" wire:ignore>
                             <label for="mobile" class="form-label fw-bold">@lang('Mobile') <span
                                     class="text-danger">*</span></label>
-                            <input type="number" class="form-control mobile" wire:model="mobile"
+                            <input type="number" class="form-control mobile" wire:model.defer="mobile"
                                 value="{{ $mobile }}" wire:ignore id="mobile"
                                 style="direction: ltr; border: 2px solid #ced4da; border-radius: 10px; padding: 10px 15px; background: #fafafa;" />
                             <input id="countryData" wire:model="mobileWithCode" wire:ignore value=""
@@ -106,9 +106,9 @@
                         @endif
 
                         <!--email-->
-                        <div class="form-group mb-3" wire:ignore>
+                        <div class="form-group mb-3">
                             <label for="email" class="form-label fw-bold">@lang('Email')</label>
-                            <input type="email" wire:model="email" class="form-control" dir="rtl"
+                            <input type="email"  wire:model.defer="email" class="form-control" dir="rtl"
                                 placeholder="@lang('Email')"
                                 style="border: 2px solid #ced4da; border-radius: 10px; padding: 10px 15px; background: #fafafa;" />
                             @error('email')
