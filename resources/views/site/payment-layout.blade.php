@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'إتمام الدفع')</title>
     
-    <link rel="stylesheet" href="{{ asset('site/css/app.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('site/css/app.css') }}"> --}}
     <link rel="stylesheet" href="https://cdn.moyasar.com/mpf/1.7.3/moyasar.css">
     
     @stack('css')
