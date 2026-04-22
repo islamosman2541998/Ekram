@@ -23,7 +23,15 @@
 </div>
 @endsection
 
+@push('js')
+<script src="https://cdn.moyasar.com/mpf/1.7.3/moyasar.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Moyasar === 'undefined') {
+        console.error('Moyasar SDK not loaded');
+        return;
+    }
+
     Moyasar.init({
         element: '.mysr-form',
         amount: {{ (int) $amount }},
@@ -43,19 +51,10 @@
             label: 'جمعية إكرام المسنين',
             validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate'
         },
-        on_initiating: async function () {
-            console.log('Apple Pay initiating...');
-        },
-        on_completed: async function (payment) {
-            console.log('Payment completed:', payment);
-        },
         on_failure: async function (error) {
             console.log('Moyasar error:', error);
-            alert(typeof error === 'string' ? error : JSON.stringify(error));
-        },
-        on_redirect: async function (url) {
-            console.log('Redirect URL:', url);
-            window.location.href = url;
         }
     });
+});
 </script>
+@endpush
