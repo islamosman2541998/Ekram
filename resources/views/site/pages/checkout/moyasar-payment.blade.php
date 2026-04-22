@@ -28,7 +28,7 @@
 <script>
     Moyasar.init({
         element: '.mysr-form',
-        amount: {{ $amount }},
+        amount: {{ (int) $amount }},
         currency: 'SAR',
         description: '{{ addslashes($description) }}',
         publishable_api_key: '{{ $publishableKey }}',
@@ -39,6 +39,11 @@
         metadata: {
             order_id: '{{ $order->id }}',
             order_identifier: '{{ $order->identifier }}',
+        },
+        apple_pay: {
+            country: 'SA',
+            label: 'جمعية إكرام المسنين',
+            validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate'
         }
     });
 </script>

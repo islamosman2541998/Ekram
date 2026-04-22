@@ -22,6 +22,7 @@ class ApplePay extends Component
     protected $listeners = ['updateAuth'];
 
 
+
     public function updateAuth()
     {
         if(@auth('account')->user()?->types->where('type', 'donor')->first() != null){
