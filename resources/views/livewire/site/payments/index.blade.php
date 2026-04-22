@@ -13,7 +13,7 @@
                             </span>
                         </button>
                     @endif
-                    @if ($applePayStatus && ($iphone || $safari))
+                    @if ($applePayStatus )
                         <button type="button" wire:click="SelectPayment('applePay')" id="apple-pay"
                             class="button payment-items @if ($paymentMethod == 'applePay') active @endif">
                             <span>
