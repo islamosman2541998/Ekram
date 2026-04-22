@@ -26,19 +26,13 @@
 @push('js')
 <script src="https://cdn.moyasar.com/mpf/1.7.3/moyasar.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    if (typeof Moyasar === 'undefined') {
-        console.error('Moyasar SDK not loaded');
-        return;
-    }
-
     Moyasar.init({
         element: '.mysr-form',
         amount: {{ (int) $amount }},
         currency: 'SAR',
         description: '{{ addslashes($description) }}',
         publishable_api_key: '{{ $publishableKey }}',
-        callback_url: '{{ $callbackUrl }}?order_id={{ $order->id }}',
+        callback_url: '{{ url("moyasar-callback") }}?order_id={{ $order->id }}',
         language: 'ar',
         methods: {!! json_encode($methods) !!},
         supported_networks: ['visa', 'mastercard', 'mada'],
@@ -50,11 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             country: 'SA',
             label: 'جمعية إكرام المسنين',
             validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate'
-        },
-        on_failure: async function (error) {
-            console.log('Moyasar error:', error);
         }
     });
-});
 </script>
 @endpush
