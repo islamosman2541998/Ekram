@@ -23,8 +23,6 @@
 </div>
 @endsection
 
-@push('js')
-<script src="https://cdn.moyasar.com/mpf/1.7.3/moyasar.js"></script>
 <script>
     Moyasar.init({
         element: '.mysr-form',
@@ -32,7 +30,7 @@
         currency: 'SAR',
         description: '{{ addslashes($description) }}',
         publishable_api_key: '{{ $publishableKey }}',
-        callback_url: '{{ url("moyasar-callback") }}?order_id={{ $order->id }}',
+        callback_url: '{{ $callbackUrl }}?order_id={{ $order->id }}',
         language: 'ar',
         methods: {!! json_encode($methods) !!},
         supported_networks: ['visa', 'mastercard', 'mada'],
@@ -44,7 +42,20 @@
             country: 'SA',
             label: 'جمعية إكرام المسنين',
             validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate'
+        },
+        on_initiating: async function () {
+            console.log('Apple Pay initiating...');
+        },
+        on_completed: async function (payment) {
+            console.log('Payment completed:', payment);
+        },
+        on_failure: async function (error) {
+            console.log('Moyasar error:', error);
+            alert(typeof error === 'string' ? error : JSON.stringify(error));
+        },
+        on_redirect: async function (url) {
+            console.log('Redirect URL:', url);
+            window.location.href = url;
         }
     });
 </script>
-@endpush
