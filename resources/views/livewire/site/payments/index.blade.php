@@ -13,7 +13,7 @@
                             </span>
                         </button>
                     @endif
-                    @if ($applePayStatus && ($iphone || $safari))
+                    @if ($applePayStatus )
                         <button type="button" wire:click="SelectPayment('applePay')" id="apple-pay"
                             class="button payment-items @if ($paymentMethod == 'applePay') active @endif">
                             <span>
@@ -47,17 +47,17 @@
 
             </div>
 
-            <div @if ($paymentMethod != 'visa' || !$visaStatus) style="display:none" @endif>
-                @livewire('site.payments.visa')
-            </div>
+           <div @if($paymentMethod != "visa" || !$visaStatus) style="display:none" @endif>
+    @livewire('site.payments.visa')
+</div>
 
-            <div @if ($paymentMethod != 'applePay' || !$applePayStatus) style="display:none" @endif>
-                @livewire('site.payments.apple-pay')
-            </div>
+<div @if($paymentMethod != "applePay" || !$applePayStatus) style="display:none" @endif>
+    @livewire('site.payments.apple-pay')
+</div>
 
-            <div @if ($paymentMethod != 'bankTransfer' || !$banktransferStatus) style="display:none" @endif>
-                @livewire('site.payments.bank-transfer')
-            </div>
+<div @if($paymentMethod != "bankTransfer" || !$banktransferStatus) style="display:none" @endif>
+    @livewire('site.payments.bank-transfer')
+</div>
 
         @endif
     </div>
@@ -74,7 +74,7 @@
         function CalculateSignature() {
             // const requestShaPhrase = "96o0CiKlNkSJO7/OJH8ALl$+"; // Set your request SHA phrase here.
             const requestShaPhrase = document.getElementById("SHARequestPhrase")
-                .value; // "737LIJbY2e1b5sTd0.8iPE+_"; // Set your request SHA phrase here.
+            .value; // "737LIJbY2e1b5sTd0.8iPE+_"; // Set your request SHA phrase here.
 
             let signatureString = requestShaPhrase;
 
