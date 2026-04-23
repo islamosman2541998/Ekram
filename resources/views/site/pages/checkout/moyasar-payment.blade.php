@@ -44,7 +44,10 @@
             country: 'SA',
             label: 'جمعية إكرام المسنين',
             validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate'
-        }
-    });
+        },
+            on_failure: function(error) {
+        alert(JSON.stringify(error));
+    }
+        });
 </script>
 @endpush
