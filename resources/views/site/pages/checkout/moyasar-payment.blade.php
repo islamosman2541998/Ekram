@@ -40,20 +40,8 @@
             },
             apple_pay: {
                 country: 'SA',
-                label: 'جمعية إكرام المسنين',
+                label: 'Ekram',
                 validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate'
-            },
-            on_failure: function(error) {
-                console.log('type:', typeof error);
-                console.log('keys:', Object.keys(error));
-                console.log('str:', JSON.stringify(error));
-
-                // اعرض كل حاجة
-                let msg = '';
-                for (let k in error) {
-                    msg += k + ': ' + error[k] + '\n';
-                }
-                alert(msg || 'empty error - card cancelled by Apple');
             }
         });
     </script>
