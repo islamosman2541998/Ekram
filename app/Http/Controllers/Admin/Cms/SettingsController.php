@@ -86,162 +86,172 @@ class SettingsController extends Controller
         }
     }
 
-    public function form_update(Request $request, $id)
+    public function form_update(Request $request, $key)
     {
-        @$settings = Settings::findOrfail($id)->values;
-        foreach ($request->except(['_token']) as $key => $item) {
-            $settings = $settings->where('key', $key)->first();
-            if ($request->hasFile($key)) {
-                $filename = $this->upload_file($request->file($key), ('settings'), $key);
-                $settings->where('key', $key)->update(['value' => $filename]);
-            } else {
-                $settings->where('key', $key)->update(['value' => $item]);
-            }
-        }
+        $settingMain = Settings::where('key', $key)->firstOrFail();
+        $settings = $settingMain->values;
+       foreach ($request->except(['_token']) as $field => $item) {
+
+    $settingValue = $settingMain->values()->where('key', $field)->first();
+
+    if ($request->hasFile($field)) {
+        $item = $this->upload_file($request->file($field), 'settings', $field);
+    }
+
+    if ($settingValue) {
+        // update
+        $settingValue->update(['value' => $item]);
+    } else {
+        \App\Models\SettingsValues::create([
+            'setting_id' => $settingMain->id,
+            'key' => $field,
+            'value' => $item
+        ]);
+    }
+}
         session()->flash('success', trans('message.admin.updated_sucessfully'));
         return redirect()->back();
     }
 
-   public function form_update_custom(Request $request, $key)
-{
-    // return $request->all();
-    $settingMain = Settings::query()->where('key', $key)->first();
+    public function form_update_custom(Request $request, $key)
+    {
+        // return $request->all();
+        $settingMain = Settings::query()->where('key', $key)->first();
 
-    $request->replace(array_map(function ($value) {
-        return $value === 'on' ? 1 : $value;
-    }, $request->all()));
+        $request->replace(array_map(function ($value) {
+            return $value === 'on' ? 1 : $value;
+        }, $request->all()));
 
-    $coordinateFields = ['sender_x', 'sender_y', 'recipient_x', 'recipient_y'];
-    foreach ($coordinateFields as $field) {
-        if ($request->filled($field)) {
-            SettingsValues::updateOrCreate(
-                ['setting_id' => $settingMain->id, 'key' => $field],
-                ['value'      => $request->input($field)]
-            );
-        }
-    }
-
-    $otherValues = $request->except(array_merge(['_token'], $coordinateFields));
-
-    // custom request - handle color settings
-    if ($request->type_setting == "color") {
-        // Check if categoryColorlist exists and has valid data
-        if (
-            count($request->categoryColorlist ?? []) == 1 &&
-            isset($request->categoryColorlist[0]) &&
-            (!isset($request->categoryColorlist[0]['cat_title']) ||
-                $request->categoryColorlist[0]['cat_title'] == null)
-        ) {
-            $request->request->remove('categoryColorlist');
-        }
-
-        $dataColor = array_merge($request->old_category ?? [], $request->categoryColorlist ?? []);
-        $categories = [];
-
-        foreach ($dataColor as $item) {
-            // Check if the item is an array and has required fields
-            if (is_array($item) && (isset($item['cat_title']) || isset($item['cat_number']) || isset($item['cat_item']))) {
-                $categories[] = [
-                    'cat_title' => $item['cat_title'] ?? '',
-                    'cat_number' => $item['cat_number'] ?? '',
-                    'cat_item' => $item['cat_item'] ?? ''
-                ];
+        $coordinateFields = ['sender_x', 'sender_y', 'recipient_x', 'recipient_y'];
+        foreach ($coordinateFields as $field) {
+            if ($request->filled($field)) {
+                SettingsValues::updateOrCreate(
+                    ['setting_id' => $settingMain->id, 'key' => $field],
+                    ['value'      => $request->input($field)]
+                );
             }
         }
 
-        $request->request->remove('old_category');
-        $request->request->remove('type_setting');
-        $request->request->add(['categoryColorlist' => $categories]);
-    }
+        $otherValues = $request->except(array_merge(['_token'], $coordinateFields));
 
-    // check status
-    $request->request->add(['status' => isset($request->status) ? 1 : 0]);
+        // custom request - handle color settings
+        if ($request->type_setting == "color") {
+            // Check if categoryColorlist exists and has valid data
+            if (
+                count($request->categoryColorlist ?? []) == 1 &&
+                isset($request->categoryColorlist[0]) &&
+                (!isset($request->categoryColorlist[0]['cat_title']) ||
+                    $request->categoryColorlist[0]['cat_title'] == null)
+            ) {
+                $request->request->remove('categoryColorlist');
+            }
 
-    // store key in setting
-    if ($settingMain == null) {
-        $settingMain = Settings::create(['key' => $key]);
-    }
-    $settings = $settingMain->values;
-    
-    // store values in setting
-    $values = $request->except('_token');
-    if ($values) {
-        foreach ($values as $key => $value) {
-            
-            if ($key == 'gift_category') {
-                foreach ($value as $gkey => $gift) {
-                    if (@$gift['newimages'] && is_array(request()->all()['gift_category'][$gkey]['newimages'])) {
-                        $imagesArray = [];
-                        $bool = false;
-                        foreach (request()->all()['gift_category'][$gkey]['newimages'] as $keyM2 => $multiarray) {
-                            if (!is_string($multiarray) && $multiarray) {
-                                $imagesArray[] = $this->upload_file($multiarray, 'settings', $keyM2);
-                                $bool = true;
+            $dataColor = array_merge($request->old_category ?? [], $request->categoryColorlist ?? []);
+            $categories = [];
+
+            foreach ($dataColor as $item) {
+                // Check if the item is an array and has required fields
+                if (is_array($item) && (isset($item['cat_title']) || isset($item['cat_number']) || isset($item['cat_item']))) {
+                    $categories[] = [
+                        'cat_title' => $item['cat_title'] ?? '',
+                        'cat_number' => $item['cat_number'] ?? '',
+                        'cat_item' => $item['cat_item'] ?? ''
+                    ];
+                }
+            }
+
+            $request->request->remove('old_category');
+            $request->request->remove('type_setting');
+            $request->request->add(['categoryColorlist' => $categories]);
+        }
+
+        // check status
+        $request->request->add(['status' => isset($request->status) ? 1 : 0]);
+
+        // store key in setting
+        if ($settingMain == null) {
+            $settingMain = Settings::create(['key' => $key]);
+        }
+        $settings = $settingMain->values;
+
+        // store values in setting
+        $values = $request->except('_token');
+        if ($values) {
+            foreach ($values as $key => $value) {
+
+                if ($key == 'gift_category') {
+                    foreach ($value as $gkey => $gift) {
+                        if (@$gift['newimages'] && is_array(request()->all()['gift_category'][$gkey]['newimages'])) {
+                            $imagesArray = [];
+                            $bool = false;
+                            foreach (request()->all()['gift_category'][$gkey]['newimages'] as $keyM2 => $multiarray) {
+                                if (!is_string($multiarray) && $multiarray) {
+                                    $imagesArray[] = $this->upload_file($multiarray, 'settings', $keyM2);
+                                    $bool = true;
+                                }
+                            }
+                            if ($bool) {
+                                $value[$gkey]['images'] = json_encode($imagesArray, JSON_UNESCAPED_UNICODE);
                             }
                         }
-                        if ($bool) {
-                            $value[$gkey]['images'] = json_encode($imagesArray, JSON_UNESCAPED_UNICODE);
+                    }
+                } else if ($key == 'new_category') {
+                    $validatedOld = $request->input('old_category', []);
+                    $validatedNew = $request->input('new_category', []);
+                    $merged = [];
+
+                    $count = count($validatedOld['cat_title_ar'] ?? []);
+                    for ($i = 0; $i < $count; $i++) {
+                        if ($validatedOld['cat_title_ar'][$i]) {
+                            $merged[] = [
+                                'cat_title_ar' => $validatedOld['cat_title_ar'][$i] ?? '',
+                                'cat_title_en' => $validatedOld['cat_title_en'][$i] ?? '',
+                                'cat_number'   => $validatedOld['cat_number'][$i] ?? '',
+                                'cat_item'     => $validatedOld['cat_item'][$i] ?? '',
+                            ];
                         }
                     }
-                }
-            }
-            else if ($key == 'new_category') {
-                $validatedOld = $request->input('old_category', []);
-                $validatedNew = $request->input('new_category', []);
-                $merged = [];
-
-                $count = count($validatedOld['cat_title_ar'] ?? []);
-                for ($i = 0; $i < $count; $i++) {
-                    if ($validatedOld['cat_title_ar'][$i]) {
-                        $merged[] = [
-                            'cat_title_ar' => $validatedOld['cat_title_ar'][$i] ?? '',
-                            'cat_title_en' => $validatedOld['cat_title_en'][$i] ?? '',
-                            'cat_number'   => $validatedOld['cat_number'][$i] ?? '',
-                            'cat_item'     => $validatedOld['cat_item'][$i] ?? '',
-                        ];
+                    $newCount = count($validatedNew['cat_title_ar'] ?? []);
+                    for ($i = 0; $i < $newCount; $i++) {
+                        if ($validatedNew['cat_title_ar'][$i]) {
+                            $merged[] = [
+                                'cat_title_ar' => $validatedNew['cat_title_ar'][$i] ?? '',
+                                'cat_title_en' => $validatedNew['cat_title_en'][$i] ?? '',
+                                'cat_number'   => $validatedNew['cat_number'][$i] ?? '',
+                                'cat_item'     => $validatedNew['cat_item'][$i] ?? '',
+                            ];
+                        }
                     }
-                }
-                $newCount = count($validatedNew['cat_title_ar'] ?? []);
-                for ($i = 0; $i < $newCount; $i++) {
-                    if ($validatedNew['cat_title_ar'][$i]) {
-                        $merged[] = [
-                            'cat_title_ar' => $validatedNew['cat_title_ar'][$i] ?? '',
-                            'cat_title_en' => $validatedNew['cat_title_en'][$i] ?? '',
-                            'cat_number'   => $validatedNew['cat_number'][$i] ?? '',
-                            'cat_item'     => $validatedNew['cat_item'][$i] ?? '',
-                        ];
-                    }
+
+                    $key   = "cats_statistics";
+                    $value = $merged;
                 }
 
-                $key   = "cats_statistics";
-                $value = $merged;
-            }
+                if (is_array($value)) {
+                    $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+                }
 
-            if (is_array($value)) {
-                $value = json_encode($value, JSON_UNESCAPED_UNICODE);
-            }
+                if ($request->hasFile($key)) {
+                    $value = $this->upload_file($request->file($key), 'settings', $key);
+                }
 
-            if ($request->hasFile($key)) {
-                $value = $this->upload_file($request->file($key), 'settings', $key);
-            }
-
-            $set = $settings->where('key', $key)->first();
-            if ($set == null) {
-                SettingsValues::create([
-                    'key'        => $key,
-                    'value'      => $value,
-                    'setting_id' => $settingMain->id
-                ]);
-            } else {
-                $set->value = $value;
-                $set->save();
+                $set = $settings->where('key', $key)->first();
+                if ($set == null) {
+                    SettingsValues::create([
+                        'key'        => $key,
+                        'value'      => $value,
+                        'setting_id' => $settingMain->id
+                    ]);
+                } else {
+                    $set->value = $value;
+                    $set->save();
+                }
             }
         }
-    }
 
-    session()->flash('success', trans('message.admin.updated_sucessfully'));
-    return redirect()->back();
-}
+        session()->flash('success', trans('message.admin.updated_sucessfully'));
+        return redirect()->back();
+    }
 
 
     public function volunteerUpdate(Request $request, $key)
@@ -300,20 +310,19 @@ class SettingsController extends Controller
         try {
             $setting = Settings::where('key', 'general')->firstOrFail();
             $settingValue = $setting->values()->where('key', $request->key)->firstOrFail();
-            
+
             // Delete the image file if it exists
             if ($settingValue->value && file_exists(public_path($settingValue->value))) {
                 unlink(public_path($settingValue->value));
             }
-            
+
             // Update the setting value to empty
             $settingValue->update(['value' => null]);
-            
+
             return response()->json([
                 'success' => true,
                 'message' => trans('admin.image_deleted_successfully')
             ]);
-            
         } catch (\Exception $e) {
             \Log::error('Error deleting image: ' . $e->getMessage());
             return response()->json([
