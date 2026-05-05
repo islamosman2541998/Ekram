@@ -1,7 +1,7 @@
-
 @php
-$settings = App\Charity\Settings\SettingSingleton::getInstance();
+    $settings = App\Charity\Settings\SettingSingleton::getInstance();
 @endphp
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,16 +18,22 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
     <!-- OpenGraph -->
     <meta property="og:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content=" " />
+    <meta property="og:description" content=" {{ $settings->getItem('meta_description_' . $current_lang) }}" />
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta name="og:image" content="{{ asset($settings->getItem('logo')) }}">
+    <meta property="og:image" content="{{ asset('img/social-preview.png') }}">
+    <meta property="og:image:secure_url" content="{{ asset('img/social-preview.png') }}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
+    <meta name="twitter:image" content="{{ asset('img/social-preview.png') }}">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content />
-    <meta property="twitter:title" content />
-    <meta property="twitter:description" content=" " />
-    <meta property="twitter:image" content />
+    <meta property="twitter:url" content="{{ url()->current() }}" />
+    <meta property="twitter:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
+    <meta property="twitter:description" content=" {{ $settings->getItem('meta_description_' . $current_lang) }}" />
+    <meta property="twitter:image" content="{{ asset('img/social-preview.png') }}" />
 
     <!-- pixel script -->
     @if ($settings->getItem('show_pixel'))
