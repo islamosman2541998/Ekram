@@ -20,7 +20,6 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content=" {{ $settings->getItem('meta_description_' . $current_lang) }}" />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta name="og:image" content="{{ asset($settings->getItem('logo')) }}">
     <meta property="og:image" content="{{ asset('img/social-preview.png') }}">
     <meta property="og:image:secure_url" content="{{ asset('img/social-preview.png') }}">
     <meta property="og:image:type" content="image/jpeg">
