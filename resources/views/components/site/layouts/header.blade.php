@@ -15,13 +15,12 @@
     <!-- OpenGraph -->
     <meta property="og:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content=" " />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta name="og:image" content="{{ asset($settings->getItem('logo')) }}">
     <!-- OpenGraph -->
     <meta property="og:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content=" {{ $settings->getItem('meta_description_' . $current_lang) }}" />
+    <meta property="og:description" content="{{ $settings->getItem('meta_description_' . $current_lang) }}" />
+    
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta property="og:image" content="{{ asset('img/social-preview.png') }}">
     <meta property="og:image:secure_url" content="{{ asset('img/social-preview.png') }}">
@@ -35,7 +34,7 @@
     <meta property="twitter:url" content="{{ url()->current() }}" />
     <meta property="twitter:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
     <meta property="twitter:description" content=" {{ $settings->getItem('meta_description_' . $current_lang) }}" />
-    <meta property="twitter:image" content />
+    <meta property="twitter:image" content="{{ asset('img/social-preview.png') }}" />
 
 
     <!--  Fonts -->
