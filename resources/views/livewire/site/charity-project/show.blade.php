@@ -142,7 +142,8 @@
                 <div class="project-header-container">
                     <h2 class="project-title">{{ $project->trans?->where('locale', $current_lang)->first()->title }}
                     </h2>
-                    <button class="share-btn">
+                    <button class="share-btn"
+                        onclick="shareProject('{{ $project->trans?->where('locale', $current_lang)->first()->title }}')">
                         <i class="fa-solid fa-share-nodes"></i>
                     </button>
                 </div>
@@ -247,11 +248,28 @@
             max-width: 1024px !important;
         }
     }
-    @media (min-width: 1280px) {
-    .container
 
- {
+    @media (min-width: 1280px) {
+        .container {
             max-width: 1024px !important;
+        }
+    }
+</style>
+<script>
+async function shareProject(title) {
+    const shareData = {
+        title: title,
+        url: window.location.href,
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+        } catch (err) {
+        }
+    } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('تم نسخ الرابط!');
     }
 }
-</style>
+</script>
