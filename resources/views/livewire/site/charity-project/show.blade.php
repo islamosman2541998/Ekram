@@ -144,7 +144,7 @@
                     </h2>
                     <button class="share-btn"
                         onclick="shareProject('{{ $project->trans?->where('locale', $current_lang)->first()->title }}')">
-                        <i class="fa-solid fa-share-nodes"></i>
+                        <i class="fa-solid fs-4 fa-share-nodes"></i>
                     </button>
                 </div>
 
