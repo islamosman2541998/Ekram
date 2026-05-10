@@ -3,7 +3,9 @@
         <a href="{{ route('site.charity-project.show', $project['slug']) }}">
             <div class="custom-card-header d-flex align-items-center justify-content-between custom-card-header-bg">
                 <span class="custom-card-title"> {{ $project['title'] }} </span>
-                <i class="fa-solid fa-share-nodes custom-card-icon"></i>
+                <i class="fa-solid fa-share-nodes custom-card-icon" style="cursor: pointer;"
+                    onclick="shareProject('{{ $project->trans->first()?->title }}')">
+                </i>
             </div>
             <div class="custom-card-img custom-card-img-bg">
                 <img src="{{ asset(getImage($project['cover_image']) ?? 'site/img/project3.png') }}" alt="project"
@@ -83,3 +85,23 @@
         </div>
     </div>
 </div>
+<script>
+async function shareProject(title) {
+    const shareData = {
+        title: title,
+        url: window.location.href,
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+        } catch (err) {
+            // المستخدم أغلق نافذة الشير
+        }
+    } else {
+        // fallback للديسكتوب: نسخ الرابط
+        await navigator.clipboard.writeText(window.location.href);
+        alert('تم نسخ الرابط!');
+    }
+}
+</script>
