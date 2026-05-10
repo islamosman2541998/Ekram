@@ -83,8 +83,8 @@
                             </td>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->account->email }}</td>
-                            <td>{{ $item->account->mobile }}</td>
+                            <td>{{ @$item->account->email }}</td>
+                            <td>{{ @$item->account->mobile }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>{{ $item->updated_at }}</td>
 
