@@ -20,14 +20,14 @@
         </li>
 
         {{-- CMS ------------------------------------------------ --}}
-        <li class="menu-label"> @lang('admin.cms') </li>
+        {{-- <li class="menu-label"> @lang('admin.cms') </li> --}}
 
-        <li>
-            <a class="has-arrow" href="javascript:;">
+       
+            {{-- <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="bx bx-category"></i>
                 </div>
                 <div class="menu-title">@lang('admin.cms')</div>
-            </a>
+            </a> --}}
             <ul>
                 {{-- System --------------------------------------------------------------- --}}
                 <li>
@@ -174,7 +174,7 @@
    
 
             </ul>
-        </li>
+       
 
         {{-- Charity Section ------------------------------------------------ --}}
         {{-- <li class="menu-label"> @lang('admin.charity') </li> --}}
