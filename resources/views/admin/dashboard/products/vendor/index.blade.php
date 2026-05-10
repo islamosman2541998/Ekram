@@ -97,8 +97,8 @@
                     </td>
                     <td>{{ $item->responsible_person }}</td>
 
-                    <td>{{ $item->account->email }}</td>
-                    <td>{{ $item->account->mobile }}</td>
+                    <td>{{ @$item->account->email }}</td>
+                    <td>{{ @$item->account->mobile }}</td>
                     <td>{{ $item->sort }}</td>
                     <td>
                         <div class="d-flex justify-content-center">
