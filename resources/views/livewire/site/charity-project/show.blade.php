@@ -1,3 +1,39 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+@php
+    $projectTrans = $project->trans?->where('locale', $current_lang)->first();
+
+    $projectTitle = $projectTrans?->title ?? $project->title ?? $settings->getItem('site_name');
+
+    $projectDescription = Str::limit(
+        trim(strip_tags($projectTrans?->description ?? '')),
+        160
+    );
+
+    $projectImages = json_decode($project['images'] ?? '[]', true);
+
+    if (!empty($project['cover_image'])) {
+        $projectShareImage = getImage($project['cover_image']);
+    } elseif (!empty($projectImages) && isset($projectImages[0])) {
+        $projectShareImage = getImageFileManger($projectImages[0]);
+    } else {
+        $projectShareImage = asset('img/social-preview.png');
+    }
+
+    if (!Str::startsWith($projectShareImage, ['http://', 'https://'])) {
+        $projectShareImage = asset($projectShareImage);
+    }
+@endphp
+
+@section('title', $projectTitle)
+@section('meta_description', $projectDescription)
+
+@section('og_title', $projectTitle)
+@section('og_description', $projectDescription)
+@section('og_image', $projectShareImage)
+@section('og_url', url()->current())
+
 <div>
     <div class="project-content container">
         <!-- Left Card - Donation Form -->

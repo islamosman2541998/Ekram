@@ -12,36 +12,43 @@
     <meta name="author" content="holol" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- OpenGraph -->
-    <meta property="og:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ url()->current() }}" />
-    <!-- OpenGraph -->
-    <meta property="og:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content="{{ $settings->getItem('meta_description_' . $current_lang) }}" />
-    
-    <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:image" content="{{ asset('img/social-preview.png') }}">
-    <meta property="og:image:secure_url" content="{{ asset('img/social-preview.png') }}">
-    <meta property="og:image:type" content="image/jpeg">
+    @php
+        $defaultTitle =
+            $settings->getItem('site_name') .
+            ' | ' .
+            trim($__env->yieldContent('title', $settings->getItem('meta_title_' . $current_lang)));
+        $defaultDescription = trim(
+            $__env->yieldContent('meta_description', $settings->getItem('meta_description_' . $current_lang)),
+        );
+        $defaultImage = asset('img/social-preview.png');
+
+        $ogTitle = trim($__env->yieldContent('og_title', $defaultTitle));
+        $ogDescription = trim($__env->yieldContent('og_description', $defaultDescription));
+        $ogImage = trim($__env->yieldContent('og_image', $defaultImage));
+        $ogUrl = trim($__env->yieldContent('og_url', url()->current()));
+    @endphp
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
+    <meta property="og:url" content="{{ $ogUrl }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:image:secure_url" content="{{ $ogImage }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <meta name="twitter:image" content="{{ asset('img/social-preview.png') }}">
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="{{ url()->current() }}" />
-    <meta property="twitter:title" content=" {{ $settings->getItem('site_name') }}  | @yield('title', $settings->getItem('meta_title_' . $current_lang))" />
-    <meta property="twitter:description" content=" {{ $settings->getItem('meta_description_' . $current_lang) }}" />
-    <meta property="twitter:image" content="{{ asset('img/social-preview.png') }}" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ $ogUrl }}">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
 
 
     <!--  Fonts -->
-    <link rel="preload" href="{{ asset('resources/assets/site/fonts/din-next-lt-w23-regular.ttf') }}" as="font" type="font/ttf"
-        crossorigin>
-    <link rel="preload" href="{{ asset('resources/assets/site/fonts/din-next-lt-w23-medium.ttf') }}" as="font" type="font/ttf"
-        crossorigin>
+    <link rel="preload" href="{{ asset('resources/assets/site/fonts/din-next-lt-w23-regular.ttf') }}" as="font"
+        type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ asset('resources/assets/site/fonts/din-next-lt-w23-medium.ttf') }}" as="font"
+        type="font/ttf" crossorigin>
     <link rel="preload" href="{{ asset('resources/assets/site/fonts/4_1.TTF') }}" as="font" type="font/ttf"
         crossorigin>
 

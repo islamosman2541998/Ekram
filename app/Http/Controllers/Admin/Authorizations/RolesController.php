@@ -27,6 +27,7 @@ class RolesController extends Controller
     {
         $permissions = Permission::query()->get();
         return view('admin.dashboard.authorization.roles.create', compact('permissions') );
+        
     }
 
     public function store(RolesRequest $request)

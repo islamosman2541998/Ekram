@@ -52,6 +52,7 @@ class Show extends Component
     }
 
 
+
     public function render()
     {
         $this->items =  $this->cart->getItems();
