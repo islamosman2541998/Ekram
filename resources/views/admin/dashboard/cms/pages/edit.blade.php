@@ -298,16 +298,16 @@
 
 
             </form>
-{{-- Forms حذف الملفات - برا الفورم الرئيسي --}}
-@if ($page->files && count($page->files) > 0)
-    @foreach ($page->files as $index => $file)
-        <form id="delete-file-{{ $index }}" action="{{ route('admin.delete-page-file') }}" method="POST" style="display:none;">
-            @csrf
-            <input type="hidden" name="page_id" value="{{ $page->id }}">
-            <input type="hidden" name="file_index" value="{{ $index }}">
-        </form>
-    @endforeach
-@endif
+            @if ($page->files && count($page->files) > 0)
+                @foreach ($page->files as $index => $file)
+                    <form id="delete-file-{{ $index }}" action="{{ route('admin.delete-page-file') }}"
+                        method="POST" style="display:none;">
+                        @csrf
+                        <input type="hidden" name="page_id" value="{{ $page->id }}">
+                        <input type="hidden" name="file_index" value="{{ $index }}">
+                    </form>
+                @endforeach
+            @endif
         </div>
     </div>
     </div>
