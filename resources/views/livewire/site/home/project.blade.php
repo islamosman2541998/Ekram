@@ -1,9 +1,15 @@
 <div>
+    @php
+        // $project is a model on the home page but an array on the category page
+        $shareTitle = is_array($project)
+            ? ($project['title'] ?? ($project['trans'][0]['title'] ?? ''))
+            : ($project->transNow?->title ?? $project->trans?->first()?->title ?? '');
+    @endphp
     <div class="CardBox custom-card">
         <div class="custom-card-header d-flex align-items-center justify-content-between custom-card-header-bg">
             <span class="custom-card-title">{{ @$project['title'] ?? $project->transNow?->title }}</span>
             <i class="fa-solid fa-share-nodes custom-card-icon" style="cursor: pointer;"
-                onclick="shareProject('{{ $project->trans->first()?->title }}')">
+                data-title="{{ $shareTitle }}" onclick="shareProject(this.dataset.title)">
             </i>
         </div>
         <div onclick="window.location.href='{{ route('site.charity-project.show', @$project['slug'] ?? $project->transNow?->slug) }}'"
