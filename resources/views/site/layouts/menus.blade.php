@@ -144,8 +144,8 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
 
             <!-- User & cart -->
             <div class="ek-nav__actions">
-                <livewire:site.profile.user-icon />
                 <livewire:site.carts.cart-icon />
+                <livewire:site.profile.user-icon />
             </div>
         </div>
     </div>
@@ -631,8 +631,8 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
         .ek-nav .ek-user__menu[data-bs-popper] {
             top: auto;
             bottom: calc(100% + 8px);
-            inset-inline-start: 0;
-            inset-inline-end: auto;
+            inset-inline-start: auto;
+            inset-inline-end: 0;
         }
     }
 
