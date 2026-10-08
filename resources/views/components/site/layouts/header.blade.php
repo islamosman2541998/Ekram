@@ -55,10 +55,10 @@
     <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
 
     <!-- App Icons -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any" />
-    <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('favicon-48.png') }}" />
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicon-192.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('favicon-192.png') }}" />
+    <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" sizes="any" />
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('favicon-48.png') }}?v=2" />
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicon-192.png') }}?v=2" />
+    <link rel="apple-touch-icon" href="{{ asset('favicon-192.png') }}?v=2" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
