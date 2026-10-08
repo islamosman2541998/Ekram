@@ -1,5 +1,5 @@
 <div>
-    <div class="visa payment-content">
+    <div class="visa payment-content" style="display:block !important;">
         <div class="cart-form-actions">
             <p class="proceed-text">اتمام الدفع</p>
             <button 
