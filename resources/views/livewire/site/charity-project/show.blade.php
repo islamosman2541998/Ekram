@@ -203,12 +203,11 @@
                     @include('site.layouts.cart-msg')
 
                     <!-- Total + actions -->
-                    <div class="ek-pj-total">
-                        <span class="ek-pj-total__label">إجمالي التبرع</span>
-                        <span class="ek-pj-total__value">{{ $this->totalAmt ?: 0 }} <small>ر.س</small></span>
-                    </div>
-
                     <div class="checkout-container">
+                        <div class="ek-pj-total">
+                            <span class="ek-pj-total__label">إجمالي التبرع</span>
+                            <span class="ek-pj-total__value">{{ $this->totalAmt ?: 0 }} <small>ر.س</small></span>
+                        </div>
                         <button class="checkout-btn" wire:click="donateNow()" wire:loading.attr="disabled"
                             wire:target="donateNow">
                             <i class="fa-solid fa-hand-holding-heart"></i>

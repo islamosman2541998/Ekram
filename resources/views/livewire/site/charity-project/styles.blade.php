@@ -888,4 +888,78 @@
         .ek-project .gift-saved__card { width: 52px; height: 52px; }
         .ek-project .gift-saved__amount { padding: 6px 10px; font-size: 16px; }
     }
+    /* =====================================================================
+       Balanced, above-the-fold layout (overrides the values above)
+       ===================================================================== */
+    @media (min-width: 992px) {
+        .ek-pj-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
+        }
+
+        /* image never taller than what is left of the screen under the navbar */
+        .ek-project .project-image img {
+            max-height: calc(100vh - var(--ek-nav-h, 81px) - 140px);
+            min-height: 280px;
+        }
+    }
+
+    /* ---------- Compact donation card ---------- */
+    .ek-project .ek-pj-card.donation-card { padding: 20px !important; }
+
+    .ek-pj-head { margin-bottom: 14px; }
+    .ek-pj-chip { margin-bottom: 6px; padding: 3px 10px; font-size: 12px; }
+    .ek-project .ek-pj-title { font-size: clamp(18px, 1.6vw, 22px) !important; line-height: 1.45; }
+    .ek-pj-share { width: 38px; height: 38px; font-size: 15px; }
+
+    .ek-pj-progress { margin-bottom: 16px; padding: 12px 14px; }
+    .ek-pj-progress__row { margin-bottom: 8px; }
+    .ek-pj-progress__value { font-size: 15px; }
+    .ek-pj-bar { height: 7px; }
+
+    .ek-pj-section-label { margin-bottom: 8px; font-size: 14px; }
+
+    .ek-project .donation-amounts { gap: 8px !important; margin-bottom: 10px !important; }
+    .ek-project .donation-amounts .amount-btn { min-height: 56px; padding: 6px !important; }
+    .ek-project .amount-btn__value { font-size: 17px; }
+
+    .ek-project .custom-amount { margin-bottom: 10px !important; }
+    .ek-project .custom-amount .amount-input { height: 46px !important; font-size: 15px !important; }
+
+    .ek-project .gift-option { margin-bottom: 12px !important; padding: 10px 12px !important; }
+
+    /* total + donate + cart on a single row */
+    .ek-project .checkout-container { align-items: stretch; gap: 8px; }
+
+    .ek-project .checkout-container .ek-pj-total {
+        flex: none;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 2px;
+        min-width: 112px;
+        margin: 0;
+        padding: 6px 14px;
+    }
+
+    .ek-project .checkout-container .ek-pj-total__label { font-size: 12px; }
+    .ek-project .checkout-container .ek-pj-total__value { font-size: 20px; }
+
+    .ek-project .checkout-container .checkout-btn { height: 52px !important; font-size: 16px !important; }
+    .ek-project .checkout-container .cart-icon-btn { width: 52px !important; height: 52px !important; }
+
+    /* about card a bit tighter so it starts right under the image */
+    .ek-project .ek-pj-about .ek-pj-card { padding: 20px !important; }
+
+    @media (max-width: 575.98px) {
+        .ek-project .checkout-container { flex-wrap: wrap; }
+
+        .ek-project .checkout-container .ek-pj-total {
+            flex: 1 1 100%;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+        }
+    }
 </style>

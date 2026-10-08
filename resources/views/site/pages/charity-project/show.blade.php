@@ -37,7 +37,7 @@
                 flex-wrap: wrap;
                 align-items: center;
                 gap: 8px;
-                margin: 32px 0 20px;
+                margin: 22px 0 16px;
                 color: #6B7C7A;
                 font-size: 14px;
             }
