@@ -45,8 +45,23 @@
     <div class="ek-project">
         <div class="ek-pj-grid">
 
-            <!-- Media -->
+            <!-- Project info: title + share, image, description -->
             <section class="ek-pj-media">
+                <div class="ek-pj-card ek-pj-info">
+                    <div class="ek-pj-head">
+                        <div class="ek-pj-head__text">
+                            @if ($pjCategory)
+                                <span class="ek-pj-chip">{{ $pjCategory }}</span>
+                            @endif
+                            <h1 class="ek-pj-title">{{ $pjTitle }}</h1>
+                        </div>
+                        <button class="ek-pj-share" type="button" title="مشاركة" aria-label="مشاركة"
+                            data-title="{{ $pjTitle }}" onclick="shareProject(this.dataset.title)">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </button>
+                    </div>
+
+                    <div class="ek-pj-media__img">
                 @if ($pjImages != null)
                     <div id="carouselExampleIndicators" class="carousel slide project-image" data-bs-ride="carousel"
                         data-interval="10000">
@@ -88,23 +103,21 @@
                 @if ($pjClosed)
                     <span class="ek-pj-closed"><i class="fa-solid fa-circle-check"></i> مكتمل</span>
                 @endif
+                    </div>
+
+                    <div class="project-details">
+                        {!! $project->trans?->where('locale', $current_lang)->first()->description !!}
+                    </div>
+                </div>
             </section>
 
             <!-- Donation -->
             <aside class="ek-pj-donate">
                 <div class="ek-pj-card donation-card">
-                    <div class="ek-pj-head">
-                        <div class="ek-pj-head__text">
-                            @if ($pjCategory)
-                                <span class="ek-pj-chip">{{ $pjCategory }}</span>
-                            @endif
-                            <h1 class="ek-pj-title">{{ $pjTitle }}</h1>
-                        </div>
-                        <button class="ek-pj-share" type="button" title="مشاركة"
-                            onclick="shareProject('{{ $pjTitle }}')">
-                            <i class="fa-solid fa-share-nodes"></i>
-                        </button>
-                    </div>
+                    <h2 class="ek-pj-donate-title">
+                        <span><i class="fa-solid fa-hand-holding-heart"></i></span>
+                        ساهم في هذا المشروع
+                    </h2>
 
                     <!-- Progress -->
                     <div class="ek-pj-progress">
@@ -221,15 +234,8 @@
                 </div>
             </aside>
 
-            <!-- About + stats -->
+            <!-- Stats -->
             <section class="ek-pj-about">
-                <div class="ek-pj-card">
-                    <h2 class="ek-pj-card__title"><i class="fa-solid fa-circle-info"></i> عن المشروع</h2>
-                    <div class="project-details">
-                        {!! $project->trans?->where('locale', $current_lang)->first()->description !!}
-                    </div>
-                </div>
-
                 @if ($project && $project->statistic_status)
                     <div class="statistics-section">
                         <div class="stat-item">
@@ -271,19 +277,38 @@
 </div>
 <script>
 async function shareProject(title) {
-    const shareData = {
-        title: title,
-        url: window.location.href,
-    };
+    const url = window.location.href;
+
+    function toast(msg) {
+        let el = document.getElementById('ek-share-toast');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'ek-share-toast';
+            el.style.cssText = 'position:fixed;left:50%;bottom:24px;z-index:2000;transform:translateX(-50%);' +
+                'padding:10px 18px;border-radius:999px;background:#2C5F5D;color:#fff;font-size:14px;' +
+                'box-shadow:0 10px 24px rgba(0,0,0,.18);transition:opacity .3s;opacity:0;pointer-events:none';
+            document.body.appendChild(el);
+        }
+        el.textContent = msg;
+        el.style.opacity = '1';
+        clearTimeout(el._t);
+        el._t = setTimeout(() => el.style.opacity = '0', 2200);
+    }
 
     if (navigator.share) {
         try {
-            await navigator.share(shareData);
+            await navigator.share({ title: title || document.title, url: url });
+            return;
         } catch (err) {
+            if (err && err.name === 'AbortError') return; // user closed the share sheet
         }
-    } else {
-        await navigator.clipboard.writeText(window.location.href);
-        alert('تم نسخ الرابط!');
+    }
+
+    try {
+        await navigator.clipboard.writeText(url);
+        toast('تم نسخ رابط المشروع');
+    } catch (err) {
+        window.prompt('انسخ رابط المشروع:', url);
     }
 }
 </script>

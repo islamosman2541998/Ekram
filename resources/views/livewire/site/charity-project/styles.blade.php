@@ -962,4 +962,47 @@
             padding: 10px 14px;
         }
     }
+    /* ---------- Info card (title + share, image, description) ---------- */
+    .ek-project .ek-pj-info { padding: 20px !important; }
+    .ek-project .ek-pj-info .ek-pj-head { margin-bottom: 14px; }
+
+    .ek-project .ek-pj-media__img { position: relative; margin-bottom: 16px; }
+
+    .ek-project .ek-pj-info .project-image {
+        border-radius: 16px !important;
+        box-shadow: none;
+    }
+
+    .ek-project .ek-pj-info .project-details {
+        font-size: 15.5px;
+        line-height: 1.9;
+    }
+
+    .ek-project .ek-pj-share { flex: none; }
+    .ek-project .ek-pj-share:active { transform: scale(.94); }
+
+    /* donation card heading */
+    .ek-project .ek-pj-donate-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 14px;
+        color: var(--pj-text);
+        font-size: 17px !important;
+        font-weight: 700;
+    }
+
+    .ek-project .ek-pj-donate-title span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: #FFF1EA;
+        color: var(--pj-orange);
+        font-size: 15px;
+    }
+
+    .ek-project .ek-pj-about:empty { display: none; }
 </style>
