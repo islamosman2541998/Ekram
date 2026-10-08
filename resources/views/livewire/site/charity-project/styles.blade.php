@@ -776,8 +776,88 @@
     .ek-project .gift-container hr { display: none; }
 
     /* saved card summary */
-    .ek-project .gift-container .saved-card .gift-donation-section .form-control { max-width: 160px; text-align: center; }
-    .ek-project .gift-container .saved-card .row { align-items: center; margin: 0; }
+    .ek-project .gift-container .saved-card { padding: 14px !important; }
+
+    .ek-project .gift-saved {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px;
+        padding-inline-end: 34px;
+    }
+
+    .ek-project .gift-saved__card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        overflow: hidden;
+        border: 1px solid var(--pj-border);
+        border-radius: 12px;
+        background: var(--pj-soft);
+    }
+
+    .ek-project .gift-saved__card img { width: 100%; height: 100%; object-fit: cover; font-size: 0; }
+    .ek-project .gift-saved__card--empty { color: var(--pj-orange); font-size: 22px; }
+
+    .ek-project .gift-saved__info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+
+    .ek-project .gift-saved__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: #1F8A5B;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .ek-project .gift-saved__name {
+        overflow: hidden;
+        color: var(--pj-text);
+        font-size: 15.5px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ek-project .gift-saved__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        color: var(--pj-muted);
+        font-size: 12.5px;
+    }
+
+    .ek-project .gift-saved__meta span { display: inline-flex; align-items: center; gap: 5px; min-width: 0; }
+    .ek-project .gift-saved__meta i { color: var(--pj-teal-2); }
+
+    .ek-project .gift-saved__amount {
+        padding: 8px 12px;
+        border-radius: 12px;
+        background: var(--pj-soft);
+        color: var(--pj-teal);
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .ek-project .gift-saved__amount small { display: block; color: var(--pj-muted); font-size: 11px; font-weight: 500; }
+
+    .ek-project .gift-saved__note {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--pj-border);
+        color: var(--pj-muted);
+        font-size: 13px;
+    }
+
+    .ek-project .gift-saved__note i { color: var(--pj-teal-2); }
 
     /* ---------- Responsive ---------- */
     @media (max-width: 991.98px) {
@@ -804,5 +884,8 @@
         .ek-project .statistics-section { grid-template-columns: minmax(0, 1fr); }
         .ek-pj-progress__value { font-size: 15px; }
         .ek-project .gift-container .inputs-container { grid-template-columns: minmax(0, 1fr); }
+        .ek-project .gift-saved { grid-template-columns: 52px minmax(0, 1fr) auto; gap: 10px; }
+        .ek-project .gift-saved__card { width: 52px; height: 52px; }
+        .ek-project .gift-saved__amount { padding: 6px 10px; font-size: 16px; }
     }
 </style>

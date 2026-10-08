@@ -39,66 +39,48 @@
     <div class="gift-container" style="@if (!$giftStatus) display: none !important; @endif;">
         @forelse($cardFields as $index => $field)
         @if (isset($cardInfo[$index]['saved']) && $cardInfo[$index]['saved'])
-        <div class="gift-form saved-card mb-4">
+        @php
+            $savedImg = $cardFields[$index]['image'] ?? null;
+            $savedTitle = $cardFields[$index]['cardTitle'] ?? null;
+        @endphp
+        <div class="gift-form saved-card">
             <button type="button" class="gift-remove" wire:click="removeField({{ $index }})" title="حذف">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div class="gift-header">
-                <h4>بيانات المهدى إليه</h4>
-            </div>
-
-            <!-- Donation Amount Section (for saved fields) -->
-            <div class="gift-donation-section mb-4">
-                <div class="donation-label">مبلغ التبرع </div>
-                <span class="p-2 mx-auto d-inline-block">
-                    <input type="text" wire:model="cardFields.{{ $index }}.donationAmt" disabled class="form-control">
-                </span>
-            </div>
-            <div class="gift-form">
-                <div class="form-group mb-3">
-                    <div class="inputs-container">
-                        <div class="form-group mb-2">
-                            <label class="form-label" for="recipient_name" id="recipient_name">الاسم</label>
-                            <input type="text" class="form-control" wire:model="cardFields.{{ $index }}.giver_name" placeholder="اسم المستلم" disabled />
-                        </div>
-
-                        @if(!empty($cardFields[$index]['giver_mobile']))
-                        <div class="form-group mb-2">
-                            <label>الجوال</label>
-                            <input type="tel" class="form-control" wire:model="cardFields.{{ $index }}.giver_mobile" placeholder="رقم الجوال" disabled />
-                        </div>
-                        @endif
-
-                    </div>
-                </div>
-
-                @if(!empty($cardFields[$index]['sendCopy']))
-                <div class="send-copy-container">
-                    <input type="checkbox" class="form-check-input" wire:model="cardFields.{{ $index }}.sendCopy" disabled />
-                    <label class="form-check-label">إرسال نسخة من البطاقة إلى جوالي</label>
-                </div>
+            <div class="gift-saved">
+                @if ($savedImg)
+                    <a class="gift-saved__card" href="{{ getImageFileManger($savedImg) }}" target="_blank" title="عرض البطاقة">
+                        <img src="{{ asset(getImage($savedImg)) }}" alt="بطاقة الإهداء">
+                    </a>
+                @else
+                    <span class="gift-saved__card gift-saved__card--empty"><i class="fa-solid fa-gift"></i></span>
                 @endif
 
-                <!-- Card Image (for saved cards) -->
-                <div class="mb-3 row">
-                    <div class="col-12 col-md-4">
-                        <input type="text" wire:model="cardFields.{{ $index }}.cardTitle" value="{{ getImageFileManger($cardFields[$index]['image']) }}" class="form-control content-input" disabled>
-                    </div>
-                    <div class="col-md-3">
-                        @php
-                        $img = $cardFields[$index]['image'] ?? null;
-                        @endphp
-
-                        @if ($img)
-                        <a href="{{ getImageFileManger($img) }}" target="_blank">
-                            <img src="{{ asset(getImage($img)) }}" width="60" alt="بطاقة الإهداء">
-                        </a>
+                <div class="gift-saved__info">
+                    <span class="gift-saved__badge"><i class="fa-solid fa-circle-check"></i> تم حفظ الإهداء</span>
+                    <div class="gift-saved__name">{{ $cardFields[$index]['giver_name'] ?? '' }}</div>
+                    <div class="gift-saved__meta">
+                        @if (!empty($cardFields[$index]['giver_mobile']))
+                            <span dir="ltr"><i class="fa-solid fa-mobile-screen"></i> {{ $cardFields[$index]['giver_mobile'] }}</span>
+                        @endif
+                        @if (!empty($savedTitle))
+                            <span><i class="fa-regular fa-image"></i> {{ $savedTitle }}</span>
                         @endif
                     </div>
                 </div>
-                <hr />
+
+                <div class="gift-saved__amount">
+                    {{ $cardFields[$index]['donationAmt'] ?? 0 }}
+                    <small>ر.س</small>
+                </div>
             </div>
+
+            @if (!empty($cardFields[$index]['sendCopy']))
+                <div class="gift-saved__note">
+                    <i class="fa-solid fa-paper-plane"></i> سيتم إرسال نسخة من البطاقة إلى جوالك
+                </div>
+            @endif
         </div>
         @else
         <div class="gift-form mb-4">
