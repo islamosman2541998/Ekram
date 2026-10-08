@@ -41,8 +41,10 @@ class DatabaseCart implements CartInterface
 
         $cookieValue = Cookie::get('cart');
         if(!$cookieValue){
-            $token = Str::random(32); // Adjust the length as needed
-            $cookieValue = Cookie::make('cart', $token, 60 * 24 * 365);
+            // first visit straight to a project page (no home visit yet): create the cart cookie
+            $cookieValue = Str::random(32);
+            Cookie::queue('cart', $cookieValue, 60 * 24 * 365);
+            request()->cookies->set('cart', $cookieValue);
         }
     
         if($giftIfo == NULL && !$new){

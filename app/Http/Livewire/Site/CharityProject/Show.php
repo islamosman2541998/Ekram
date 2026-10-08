@@ -9,6 +9,8 @@ use App\Charity\Carts\DatabaseCart;
 use App\Charity\Settings\SettingSingleton;
 use App\Models\Settings;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class Show extends Component
 {
@@ -169,7 +171,61 @@ class Show extends Component
         foreach (session()->get('card', []) as $gift) {
             $item = new Item(CharityProject::class, $this->project['id'], $gift['donationtype']);
 
-            $path = storage_path('app/public/' . $gift['image']);
+            // Writing the names on the card must never block the donation itself:
+            // if anything fails we log it and keep the original card image.
+            try {
+                $relativePath = $this->renderGiftCard($gift, $senderXPercent, $senderYPercent, $recipientXPercent, $recipientYPercent);
+            } catch (\Throwable $e) {
+                Log::error('Gift card rendering failed', ['image' => $gift['image'] ?? null, 'error' => $e->getMessage()]);
+                $relativePath = $gift['image'];
+            }
+
+            $info_gift = [
+                'donationtype' => $gift['donationtype'],
+                'donationAmt'  => $gift['donationAmt'],
+                'giver_name'   => $gift['giver_name'],
+                'giver_mobile' => $gift['giver_mobile'],
+                'giver_email'  => $gift['giver_email'],
+                'cardTitle'    => $gift['cardTitle'],
+                'image'        => $relativePath,
+                'sendCopy'     => $gift['sendCopy'],
+            ];
+
+            $this->msg = $cart->addItem($item, $this->donationQty, $gift['donationAmt'], $info_gift);
+        }
+
+        session()->put('card', []);
+        $this->emit('finishedSaveGifts');
+    }
+
+    /**
+     * Find the gift card image on disk (it may live in a different storage folder per server setup).
+     */
+    protected function resolveGiftImagePath($image)
+    {
+        $candidates = [
+            storage_path('app/public/' . $image),
+            Storage::disk('public')->path($image),
+            public_path('storage/' . $image),
+            public_path($image),
+            base_path('../../storage/' . $image),
+        ];
+
+        foreach ($candidates as $candidate) {
+            if ($candidate && is_file($candidate)) {
+                return $candidate;
+            }
+        }
+
+        throw new \RuntimeException("Gift card image not found: {$image}");
+    }
+
+    /**
+     * Draw sender / recipient names on the selected card and return its relative path.
+     */
+    protected function renderGiftCard($gift, $senderXPercent, $senderYPercent, $recipientXPercent, $recipientYPercent)
+    {
+            $path = $this->resolveGiftImagePath($gift['image']);
             $info = getimagesize($path);
             $mime = $info['mime'];
 
@@ -235,23 +291,7 @@ class Show extends Component
             imagepng($img, $fullServerPath);
             imagedestroy($img);
 
-            $info_gift = [
-                'donationtype' => $gift['donationtype'],
-                'donationAmt'  => $gift['donationAmt'],
-                'giver_name'   => $gift['giver_name'],
-                'giver_mobile' => $gift['giver_mobile'],
-                'giver_email'  => $gift['giver_email'],
-                'cardTitle'    => $gift['cardTitle'],
-                'image'        => $relativePath,
-                'sendCopy'     => $gift['sendCopy'],
-            ];
-    
-
-            $this->msg = $cart->addItem($item, $this->donationQty, $gift['donationAmt'], $info_gift);
-        }
-
-        session()->put('card', []);
-        $this->emit('finishedSaveGifts');
+            return $relativePath;
     }
 
 
@@ -273,7 +313,7 @@ class Show extends Component
     public function donateNow()
     {
         if ($this->addToCart(false)) {
-            redirect()->route('site.checkout.show');
+            return redirect()->route('site.checkout.show');
         }
     }
 
