@@ -19,17 +19,47 @@
                 </div>
             </div> --}}
 
-        <div class="row mt-5 ms-5">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item h2 display-6"><a href="{{ route('site.home') }}"> الرئيسية </a></li>
-                    <span class="split-page"> / </span>
-                    <li class="breadcrumb-item h2 display-6"><a href="{{ route('site.projectCategories.show', @$project->categories?->first()?->transNow?->slug ?? 1) }}"> {{ $project->categories?->first()?->transNow?->title ??"" }} </a></li>
-                    <span class="split-page"> / </span>
-                    <li class="breadcrumb-item active h2 display-6"> {{ $project->transNow?->title  }} </li>
-                </ol>
-            </nav>
-        </div>
+        <nav class="ek-pj-breadcrumb" aria-label="breadcrumb">
+            <a href="{{ route('site.home') }}">الرئيسية</a>
+            @if ($project->categories?->first())
+                <i class="fa-solid fa-chevron-left"></i>
+                <a href="{{ route('site.projectCategories.show', @$project->categories?->first()?->transNow?->slug ?? 1) }}">{{ $project->categories?->first()?->transNow?->title ?? '' }}</a>
+            @endif
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>{{ $project->transNow?->title }}</span>
+        </nav>
+
+        <style>
+            .project-page.container { max-width: 1200px !important; padding: 0 16px; }
+
+            .ek-pj-breadcrumb {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 8px;
+                margin: 32px 0 20px;
+                color: #6B7C7A;
+                font-size: 14px;
+            }
+
+            .ek-pj-breadcrumb a { color: #6B7C7A; text-decoration: none; }
+            .ek-pj-breadcrumb a:hover { color: #2C5F5D; }
+            .ek-pj-breadcrumb i { font-size: 10px; opacity: .6; }
+
+            .ek-pj-breadcrumb span {
+                max-width: 100%;
+                overflow: hidden;
+                color: #2C5F5D;
+                font-weight: 600;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            @media (max-width: 575.98px) {
+                .project-page.container { padding: 0 12px; }
+                .ek-pj-breadcrumb { margin: 20px 0 14px; font-size: 13px; }
+            }
+        </style>
 
         <livewire:site.charity-project.show :project="$project" :amount="$amount" />
     </div>
@@ -37,14 +67,15 @@
 
 
 <script>
+    window.dataLayer = window.dataLayer || [];
     dataLayer.push({
       event: 'view_item',
       ecommerce: {
         items: [{
-          item_id: {{ $project->id }},
-          item_name: {{ $project->transNow?->title }},
-          item_category: {{ $project->categories?->first()?->transNow?->title }},
-          price: {{ $project->price }},
+          item_id: @json($project->id),
+          item_name: @json($project->transNow?->title),
+          item_category: @json($project->categories?->first()?->transNow?->title),
+          price: @json((float) $project->price),
         }]
       }
     });
