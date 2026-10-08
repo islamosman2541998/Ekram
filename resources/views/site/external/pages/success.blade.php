@@ -58,6 +58,7 @@
 @endphp
 
 <script>
+  window.dataLayer = window.dataLayer || [];
   dataLayer.push({
       'event': 'purchase',
       'ecommerce': {

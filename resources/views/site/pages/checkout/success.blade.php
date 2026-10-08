@@ -62,7 +62,7 @@
   dataLayer.push({
     event: 'purchase',
     ecommerce: {
-      currency 'SAR',
+      currency: 'SAR',
       value: @json(round($order->total, 2)),
       payment_method: @json(optional($order->paymentMethod)->payment_key),
       transaction_id: @json($order->identifier),
@@ -75,6 +75,7 @@
  {{-- gtag purchase event  --}}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      if (typeof gtag !== 'function') return;
       gtag('event', 'purchase', {
           transaction_id: '{{ $order->id }}',
           affiliation: 'Online Store',
@@ -84,7 +85,7 @@
               @foreach ($order->details as $item)
               {
                   item_id: '{{ $item->id }}',
-                  item_name: "{{ $item->item_name }}",
+                  item_name: @json($item->item_name),
                   price: {{ $item->price }},
                   quantity: {{ $item->quantity }}
               } @if (!$loop->last),@endif

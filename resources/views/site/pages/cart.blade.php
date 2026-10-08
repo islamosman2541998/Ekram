@@ -41,6 +41,7 @@
     @endphp
     
     <script>
+        window.dataLayer = window.dataLayer || [];
         dataLayer.push({
           event: 'view_cart',
           ecommerce: {

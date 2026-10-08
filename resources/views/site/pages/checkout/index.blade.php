@@ -127,6 +127,7 @@
 @endphp
 
 <script>
+    window.dataLayer = window.dataLayer || [];
     dataLayer.push({
       event: 'begin_checkout',
       ecommerce: {

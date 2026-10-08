@@ -563,6 +563,11 @@
 
     .ek-checkout .payment-content { margin: 0 !important; padding: 0 !important; }
 
+    /* Showing/hiding a method is done by the Livewire wrappers ($paymentMethod).
+       public/site/js/cart.js still toggles .payment-content by image *index*, which is wrong when
+       Apple Pay is listed (3 images, 2 contents) and hid the bank form on iPhone - keep them visible. */
+    .ek-checkout #payment-methods .payment-content { display: block !important; }
+
     /* keep the hidden receipt file input hidden */
     .ek-checkout input[type="file"].d-none { display: none !important; }
 

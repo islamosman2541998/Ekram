@@ -308,6 +308,15 @@ class Show extends Component
         $this->dynamicAmt    = 0;
         $this->donationtype  = "";
         $this->giftStatus    = false;
+
+        // also clear the selected amount, otherwise the button stays "active" while the amount is 0
+        // and picking the same amount again sends nothing (the radio is already checked)
+        $this->unitValueRadio = "";
+        $this->unitValueInput = "";
+        $this->shareValue     = null;
+        if (($this->donation['type'] ?? null) === 'fixed') {
+            $this->donationAmt = $this->donation['data'];
+        }
     }
 
     public function donateNow()
