@@ -81,6 +81,8 @@
             },
             apple_pay: {
                 country: 'SA',
+                // card-issuing countries accepted by Apple Pay (Moyasar's default is SA only)
+                supported_countries: ['SA', 'EG', 'AE', 'KW', 'QA', 'BH', 'OM', 'JO'],
                 label: 'Ekram',
                 validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate'
             }
