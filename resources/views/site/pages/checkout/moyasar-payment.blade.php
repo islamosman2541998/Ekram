@@ -18,6 +18,10 @@
         <!-- Moyasar Payment Form -->
         <div class="mysr-form"></div>
 
+        <div id="mysr-error" role="alert"
+            style="display:none; margin-top:16px; padding:12px 14px; border:1px solid #f5c2c7; border-radius:10px; background:#fff5f5; color:#b02a37; font-size:14px; line-height:1.7; text-align:center;">
+        </div>
+
     </div>
 @endsection
 
@@ -37,6 +41,30 @@
             metadata: {
                 order_id: '{{ $order->id }}',
                 order_identifier: '{{ $order->identifier }}',
+            },
+            // Moyasar only reports failures through this callback; without it the user sees nothing
+            on_failure: function (error) {
+                var text = (error && (error.message || error.toString())) || 'unknown';
+                var box = document.getElementById('mysr-error');
+                box.innerHTML = 'تعذّر إتمام الدفع، يرجى المحاولة مرة أخرى أو استخدام وسيلة دفع أخرى.' +
+                    '<br><small style="color:#888">' + String(text).replace(/</g, '&lt;') + '</small>';
+                box.style.display = 'block';
+
+                try {
+                    fetch('{{ route('site.moyasar.client-error') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                        },
+                        body: JSON.stringify({
+                            order_id: '{{ $order->id }}',
+                            method: {!! json_encode(implode(',', $methods)) !!},
+                            error: String(text),
+                            host: location.host
+                        })
+                    });
+                } catch (e) {}
             },
             apple_pay: {
                 country: 'SA',

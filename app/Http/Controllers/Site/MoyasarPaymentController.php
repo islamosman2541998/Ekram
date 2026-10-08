@@ -45,6 +45,23 @@ class MoyasarPaymentController extends Controller
 }
 
     
+    /**
+     * Moyasar form failures (Apple Pay merchant validation, declined token, ...) happen in the browser
+     * and never reach the callback. The payment page reports them here so they show up in the log.
+     */
+    public function logClientError(Request $request)
+    {
+        Log::warning('Moyasar client failure', [
+            'order_id'   => $request->input('order_id'),
+            'method'     => $request->input('method'),
+            'error'      => mb_substr((string) $request->input('error'), 0, 1000),
+            'host'       => $request->input('host'),
+            'user_agent' => mb_substr((string) $request->userAgent(), 0, 300),
+        ]);
+
+        return response()->json(['status' => 'ok']);
+    }
+
     public function savePaymentId(Request $request)
     {
         $request->validate([

@@ -91,6 +91,10 @@ Route::group([
     Route::post('moyasar-save-payment', [MoyasarPaymentController::class, 'savePaymentId'])
         ->name('moyasar.save-payment');
 
+    Route::post('moyasar-client-error', [MoyasarPaymentController::class, 'logClientError'])
+        ->middleware('throttle:20,1')
+        ->name('moyasar.client-error');
+
     // cart
     Route::get('cart', [CartController::class, 'index'])->name('cart.show');
     // checkout
