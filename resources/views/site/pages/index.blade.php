@@ -29,6 +29,7 @@
             --ek-card-border: #E6ECEB;
             --ek-card-shadow: 0 10px 28px rgba(31, 70, 69, .08);
             --ek-card-shadow-hover: 0 18px 40px rgba(31, 70, 69, .16);
+            --ek-dots-h: 34px;
         }
 
         /* ---- Sections ---- */
@@ -71,7 +72,7 @@
             width: 100%;
             max-width: none !important;
             margin: 0 !important;
-            padding: 8px 2px 20px !important;
+            padding: 8px 2px 16px !important;
             overflow: hidden !important;
         }
 
@@ -96,8 +97,11 @@
         .ek-home .RamdanProjects .Ramdan > .swiper-button-next,
         .ek-home .RamdanProjects .Ramdan > .swiper-button-prev {
             position: absolute !important;
-            top: 50% !important;
+            top: calc((100% - var(--ek-dots-h)) / 2) !important;
             bottom: auto !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
             width: 46px !important;
             height: 46px !important;
             margin: -23px 0 0 !important;
@@ -145,6 +149,9 @@
 
         .ek-home .swiper-button-disabled { opacity: .35 !important; pointer-events: none; }
 
+        .ek-home .ek-slider > .swiper-button-lock,
+        .ek-home .RamdanProjects .Ramdan > .swiper-button-lock { display: none !important; }
+
         @media (max-width: 1299.98px) {
             .ek-home .ek-slider > .swiper-button-next,
             .ek-home .RamdanProjects .Ramdan > .swiper-button-next { left: 6px !important; }
@@ -153,13 +160,70 @@
             .ek-home .RamdanProjects .Ramdan > .swiper-button-prev { right: 6px !important; }
         }
 
+        /* ---- Pagination dots ---- */
+        .ek-home .ek-dots {
+            position: static !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100% !important;
+            min-height: var(--ek-dots-h);
+            margin: 0 !important;
+            padding: 4px 64px 0;
+            transform: none !important;
+            inset: auto !important;
+        }
+
+        .ek-home .ek-dots .swiper-pagination-bullet {
+            width: 9px;
+            height: 9px;
+            margin: 0 !important;
+            border-radius: 999px;
+            background: var(--ek-teal);
+            opacity: .22;
+            cursor: pointer;
+            transition: width .3s ease, opacity .3s ease, background-color .3s ease;
+        }
+
+        .ek-home .ek-dots .swiper-pagination-bullet:hover { opacity: .5; }
+
+        .ek-home .ek-dots .swiper-pagination-bullet-active {
+            width: 28px;
+            opacity: 1;
+            background: linear-gradient(90deg, var(--ek-teal), #469e8d);
+        }
+
+        .ek-home .ek-dots.swiper-pagination-lock { display: none; }
+
         @media (max-width: 767.98px) {
+            .ek-home { --ek-dots-h: 52px; }
+
+            .ek-home .ek-dots { padding: 6px 56px 0; }
+
+            /* arrows sit on both ends of the dots bar */
             .ek-home .ek-slider > .swiper-button-next,
             .ek-home .ek-slider > .swiper-button-prev,
             .ek-home .RamdanProjects .Ramdan > .swiper-button-next,
             .ek-home .RamdanProjects .Ramdan > .swiper-button-prev {
-                display: none !important; /* swipe on phones */
+                top: auto !important;
+                bottom: 3px !important;
+                width: 42px !important;
+                height: 42px !important;
+                margin: 0 !important;
             }
+
+            .ek-home .ek-slider > .swiper-button-next,
+            .ek-home .RamdanProjects .Ramdan > .swiper-button-next { left: 2px !important; }
+
+            .ek-home .ek-slider > .swiper-button-prev,
+            .ek-home .RamdanProjects .Ramdan > .swiper-button-prev { right: 2px !important; }
+
+            .ek-home .ek-slider > .swiper-button-next::after,
+            .ek-home .ek-slider > .swiper-button-prev::after,
+            .ek-home .RamdanProjects .Ramdan > .swiper-button-next::after,
+            .ek-home .RamdanProjects .Ramdan > .swiper-button-prev::after { font-size: 14px !important; }
         }
 
         /* ---- Shared card shell ---- */
@@ -318,13 +382,49 @@
             function unify(swiperEl) {
                 var s = swiperEl && swiperEl.swiper;
                 if (!s) return;
+                // Loop mode misbehaves with only a few slides (dots jump to the wrong slide);
+                // rewind keeps the "endless" autoplay feel while dots stay accurate.
+                if (s.params.loop) {
+                    s.loopDestroy();
+                    s.params.loop = s.originalParams.loop = false;
+                }
+                s.params.rewind = s.originalParams.rewind = true;
                 s.params.breakpoints = breakpoints;
                 s.originalParams.breakpoints = breakpoints;
                 s.currentBreakpoint = null;
                 s.setBreakpoint();
                 s.update();
-                if (s.params.loop) s.slideToLoop(s.realIndex, 0, false);
-                else s.slideTo(s.activeIndex, 0, false);
+                s.slideTo(0, 0, false);
+            }
+
+            // Point a swiper's pagination at a new element (re-initialising the module).
+            function paginate(s, el) {
+                if (!s || !s.pagination || !el) return;
+                if (s.pagination.el) {
+                    try { s.pagination.destroy(); } catch (e) {}
+                }
+                s.params.pagination = Object.assign({}, s.params.pagination, {
+                    el: el,
+                    type: 'bullets',
+                    clickable: true,
+                    dynamicBullets: false
+                });
+                s.pagination.init();
+                s.pagination.render();
+                s.pagination.update();
+            }
+
+            // Dots row under the cards, inside the section's slider frame.
+            function addDots(swiperEl) {
+                if (!swiperEl || !swiperEl.swiper) return;
+                var frameEl = swiperEl.parentElement;
+                var dots = frameEl.querySelector(':scope > .ek-dots');
+                if (!dots) {
+                    dots = document.createElement('div');
+                    dots.className = 'ek-dots';
+                    swiperEl.insertAdjacentElement('afterend', dots);
+                }
+                paginate(swiperEl.swiper, dots);
             }
 
             window.addEventListener('load', function () {
@@ -337,7 +437,21 @@
                     ['.media-section-button-next', '.media-section-button-prev']);
 
                 ['.programs-section .ProjectSections', '.RamdanProjectSwiper', '.projectsSlider', '.media-center-section .media-grid']
-                    .forEach(function (sel) { unify(home.querySelector(sel)); });
+                    .forEach(function (sel) {
+                        var el = home.querySelector(sel);
+                        unify(el);
+                        addDots(el);
+                    });
+
+                // The programs slider used the global ".swiper-pagination" selector and was drawing its
+                // dots inside the hero/statistics sliders. Give those sliders back their own dots.
+                ['.bannerSwiper', '.statisticsSwiper'].forEach(function (sel) {
+                    var el = home.querySelector(sel);
+                    var pg = el && el.querySelector(':scope > .swiper-pagination');
+                    if (!el || !el.swiper || !pg) return;
+                    paginate(el.swiper, pg);
+                    pg.style.display = el.swiper.slides.length > 1 ? '' : 'none';
+                });
             });
         })();
     </script>
