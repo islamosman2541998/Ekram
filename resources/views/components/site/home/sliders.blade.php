@@ -50,4 +50,15 @@ $settings = App\Charity\Settings\SettingSingleton::getInstance();
     </div>
 </header>
 
+<style>
+    /* Decorative strip: start right under the fixed navbar and stay below its dropdowns.
+       The artwork in 1.png starts 187px down a 1350px-tall image (13.85%), so shift by that. */
+    .hero-section .pattern-section .pattern-img {
+        top: 0 !important;
+        transform: translateY(-13.85%);
+        z-index: 2 !important;
+        pointer-events: none;
+    }
+</style>
+
 @endif
