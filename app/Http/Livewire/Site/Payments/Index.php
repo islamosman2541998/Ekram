@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public  $paymentMethod = "visa";
+    public  $paymentMethod = "";
     public  $visaStatus = false, $applePayStatus = false, $banktransferStatus = false;
 
     protected $listeners = ['updateAuth'];
