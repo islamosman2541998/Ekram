@@ -135,7 +135,7 @@
                         <div class="modal-body">
                             <div class="row text-center">
                                 <div class="col-md-9">
-                                    <input type="text" max="4" min="4" wire:model="otp" class="form-control">
+                                    <input type="text" max="4" min="4" wire:model="otp" class="form-control" inputmode="numeric" autocomplete="one-time-code">
                                 </div>
                                 <div class="col-md-3">
                                     <button class="btn btn-primary" type="button" wire:click="checkOTP()">@lang('Send') </button>
@@ -237,7 +237,7 @@
                     return false;
                 }
             });
-            $(".submit_form").on("click", function(e) {
+            $("#register-form .submit_form.register").on("click", function(e) {
                 $("#notification-register").html("");
                 var full_numberRegister = phoneInputFieldRegister.getNumber(intlTelInputUtils.numberFormat.E164);
                 var isValidRegister = phoneInputFieldRegister.isValidNumber();
