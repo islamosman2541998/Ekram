@@ -40,11 +40,18 @@
                     $gift_details = json_decode($itemCart['gift_details']);
                     $total += $itemCart['price'] * $itemCart['quantity'];
                 @endphp
+                <div class="cart-item-actions">
+                    @if ($gift_details)
+                        <button class="btn btn-sm btn-warm warm m-1" data-bs-toggle="modal"
+                            data-bs-target="#giftGiven{{ $key }}">
+                            <i class="fa-solid fa-gift text-success mx-1"></i>
+                        </button>
+                    @endif
+                    <button class="cart-item-remove" wire:click="removeItem({{ $itemCart->id }})"><i
+                            class="fa fa-trash"></i></button>
+                </div>
+
                 @if ($gift_details)
-                    <button class="btn btn-sm btn-warm warm m-1" data-bs-toggle="modal"
-                        data-bs-target="#giftGiven{{ $key }}">
-                        <i class="fa-solid fa-gift text-success mx-1"></i>
-                    </button>
                     <div class="modal fade" id="giftGiven{{ $key }}" data-bs-backdrop="static"
                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                         aria-hidden="true">
@@ -103,10 +110,6 @@
                     </script>
                 @endif
 
-
-                <button class="cart-item-remove" wire:click="removeItem({{ $itemCart->id }})"><i
-                        class="fa fa-trash"></i></button>
-
             </div>
         @empty
             <div class="empty-cart-message">
@@ -154,5 +157,154 @@
 
 
     @endif
+
+    <style>
+        /* actions (gift + remove) sit together; same look as before on desktop */
+        .cart-container .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== Mobile: one fixed layout for every cart item, whatever the title length ===== */
+        @media (max-width: 768px) {
+            .cart-container .cart-item {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                grid-template-areas:
+                    "head     actions"
+                    "line     line"
+                    "controls price";
+                align-items: center;
+                gap: 12px 10px;
+                margin-bottom: 14px;
+                padding: 14px;
+                border: 1px solid #E6ECEB;
+                border-radius: 16px;
+                background: #fff;
+                box-shadow: 0 6px 18px rgba(31, 70, 69, .07);
+            }
+
+            /* one dashed divider across the whole card */
+            .cart-container .cart-item::before {
+                content: "";
+                grid-area: line;
+                border-top: 1px dashed #DCE5E4;
+            }
+
+            .cart-container .cart-item > a {
+                grid-area: head;
+                min-width: 0;
+            }
+
+            .cart-container .cart-item-img-title {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+                min-width: 0;
+                margin: 0;
+                text-align: start;
+            }
+
+            .cart-container .cart-item-img {
+                flex: none;
+                width: 64px;
+                height: 64px;
+                margin: 0;
+                border-radius: 12px;
+                object-fit: cover;
+            }
+
+            .cart-container .cart-item-title {
+                margin: 0;
+                font-size: 15px;
+                line-height: 1.6;
+                text-align: start;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .cart-container .cart-item-actions {
+                grid-area: actions;
+                align-self: start;
+            }
+
+            .cart-container .cart-item-actions .btn-warm {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                margin: 0 !important;
+                padding: 0;
+                border: 0;
+                border-radius: 50%;
+                background: #EAF6F1 !important;
+                font-size: 15px;
+            }
+
+            .cart-container .cart-item-actions .btn-warm i { margin: 0 !important; }
+
+            .cart-container .cart-item-remove {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                margin: 0;
+                border-radius: 50%;
+                background: #F4F6F6 !important;
+                font-size: 15px;
+            }
+
+            .cart-container .cart-item-controls {
+                grid-area: controls;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 8px;
+                margin: 0;
+            }
+
+            .cart-container .cart-item-unit,
+            .cart-container .cart-item-qty {
+                height: 36px;
+                padding: 0 12px;
+                gap: 6px;
+                border-radius: 999px;
+                font-size: 14px;
+            }
+
+            .cart-container .unit-value { margin: 0; }
+            .cart-container .qty-label { margin: 0 0 0 2px; font-size: 14px; }
+
+            .cart-container .qty-btn {
+                width: 26px;
+                height: 26px;
+                font-size: 12px;
+            }
+
+            .cart-container .qty-value {
+                min-width: 16px;
+                margin: 0 2px;
+                font-size: 15px;
+            }
+
+            .cart-container .cart-item-price {
+                grid-area: price;
+                align-self: end;
+                justify-content: flex-end;
+                min-width: 0;
+                font-size: 22px;
+                white-space: nowrap;
+            }
+
+            .cart-container .price-currency { font-size: 14px; }
+        }
+    </style>
 
 </div>
