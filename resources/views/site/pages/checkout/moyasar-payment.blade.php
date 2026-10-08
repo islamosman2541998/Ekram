@@ -44,27 +44,40 @@
             },
             // Moyasar only reports failures through this callback; without it the user sees nothing
             on_failure: function (error) {
-                var text = (error && (error.message || error.toString())) || 'unknown';
-                var box = document.getElementById('mysr-error');
-                box.innerHTML = 'تعذّر إتمام الدفع، يرجى المحاولة مرة أخرى أو استخدام وسيلة دفع أخرى.' +
-                    '<br><small style="color:#888">' + String(text).replace(/</g, '&lt;') + '</small>';
-                box.style.display = 'block';
+                function report(text) {
+                    var box = document.getElementById('mysr-error');
+                    box.innerHTML = 'تعذّر إتمام الدفع، يرجى المحاولة مرة أخرى أو استخدام وسيلة دفع أخرى.' +
+                        '<br><small style="color:#888; direction:ltr; display:inline-block; word-break:break-word">' +
+                        String(text).replace(/</g, '&lt;') + '</small>';
+                    box.style.display = 'block';
 
-                try {
-                    fetch('{{ route('site.moyasar.client-error') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
-                        },
-                        body: JSON.stringify({
-                            order_id: '{{ $order->id }}',
-                            method: {!! json_encode(implode(',', $methods)) !!},
-                            error: String(text),
-                            host: location.host
-                        })
-                    });
-                } catch (e) {}
+                    try {
+                        fetch('{{ route('site.moyasar.client-error') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                            },
+                            body: JSON.stringify({
+                                order_id: '{{ $order->id }}',
+                                method: {!! json_encode(implode(',', $methods)) !!},
+                                error: String(text),
+                                host: location.host
+                            })
+                        });
+                    } catch (e) {}
+                }
+
+                // Apple Pay merchant validation failures arrive as a raw fetch Response: read its status + body
+                if (error && typeof Response !== 'undefined' && error instanceof Response) {
+                    var head = 'HTTP ' + error.status + ' ' + (error.statusText || '') + ' (' + error.url + ')';
+                    error.text()
+                        .then(function (body) { report(head + ' - ' + body.slice(0, 600)); })
+                        .catch(function () { report(head); });
+                    return;
+                }
+
+                report((error && (error.message || error.toString())) || 'unknown');
             },
             apple_pay: {
                 country: 'SA',
