@@ -247,13 +247,17 @@
         padding: 8px 6px !important;
         border: 0 !important;
         border-radius: 14px !important;
-        background: var(--amt, var(--pj-teal-2)) !important;
         color: #fff !important;
         box-shadow: 0 6px 14px rgba(31, 70, 69, .12) !important;
         opacity: 1 !important;
         transform: none !important;
         cursor: pointer;
         transition: transform .15s ease, box-shadow .2s ease, filter .2s ease !important;
+    }
+
+    /* main amounts get their colour from --amt; gift amounts keep their inline background-color */
+    .ek-project .donation-card > .donation-amounts .amount-btn {
+        background: var(--amt, var(--pj-teal-2)) !important;
     }
 
     .ek-project .donation-amounts .amount-btn:hover {
@@ -534,6 +538,247 @@
     .ek-project .stat-value--sm { font-size: 15px; }
     .ek-project .stat-title { margin: 0 !important; color: var(--pj-muted) !important; font-size: 13px !important; }
 
+    /* ---------- Gift ("donate on behalf of someone") form ---------- */
+    .ek-project .gift-container {
+        margin: 0 0 14px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: none !important;
+        box-shadow: none !important;
+    }
+
+    .ek-project .gift-container .gift-form {
+        position: relative;
+        margin: 0 0 12px !important;
+        padding: 18px 16px 16px !important;
+        border: 1px solid var(--pj-border) !important;
+        border-radius: 16px !important;
+        background: #fff !important;
+        box-shadow: 0 6px 16px rgba(31, 70, 69, .06) !important;
+    }
+
+    /* nested .gift-form (saved card) should not get a second box */
+    .ek-project .gift-container .gift-form .gift-form {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .ek-project .gift-remove {
+        position: absolute;
+        top: 12px;
+        inset-inline-end: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: #FDECEC;
+        color: #D64545;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background-color .2s ease, color .2s ease;
+    }
+
+    .ek-project .gift-remove:hover { background: #D64545; color: #fff; }
+
+    .ek-project .gift-form__title,
+    .ek-project .gift-header h4 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 16px !important;
+        padding-inline-end: 36px;
+        color: var(--pj-text);
+        font-size: 16px !important;
+        font-weight: 700;
+        text-align: start !important;
+    }
+
+    .ek-project .gift-form__title i { color: var(--pj-orange); }
+
+    .ek-project .gift-container .donation-label,
+    .ek-project .gift-container .form-group > label,
+    .ek-project .gift-container .gift-category-label {
+        display: block !important;
+        width: auto !important;
+        margin: 0 0 6px !important;
+        color: var(--pj-text) !important;
+        font-size: 14px !important;
+        font-weight: 600;
+        text-align: start !important;
+    }
+
+    .ek-project .gift-container .form-group > label .text-muted { font-size: 12px; font-weight: 400; }
+
+    .ek-project .gift-donation-section { margin: 0 0 14px !important; }
+
+    /* the outer wrapper holds a nested grid (unit) or an input (open): don't grid it */
+    .ek-project .gift-container .gift-amounts.is-wrapper { display: block !important; margin: 0 !important; }
+
+    .ek-project .gift-container .donation-amounts {
+        grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+    }
+
+    .ek-project .gift-container .donation-amounts .amount-btn { min-height: 54px; }
+
+    .ek-project .gift-container .amount-btn .price,
+    .ek-project .gift-container .amount-btn .price span { color: #fff; font-size: 16px; font-weight: 800; }
+
+    .ek-project .gift-container .inputs-container {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        width: 100%;
+    }
+
+    .ek-project .gift-container .gift-form > .form-group {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 0 14px !important;
+    }
+
+    .ek-project .gift-container .inputs-container .form-group {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .ek-project .gift-container .form-control,
+    .ek-project .gift-container .form-select {
+        width: 100% !important;
+        height: 46px !important;
+        min-height: 46px;
+        padding: 0 14px;
+        border: 1px solid #D6E1DF !important;
+        border-radius: 12px !important;
+        background-color: #fff;
+        color: var(--pj-text) !important;
+        font-size: 15px !important;
+        box-shadow: none !important;
+    }
+
+    .ek-project .gift-container .form-select { padding-inline-end: 36px; background-position: left 12px center; }
+
+    .ek-project .gift-container .form-control:focus,
+    .ek-project .gift-container .form-select:focus {
+        border-color: var(--pj-teal-2) !important;
+        box-shadow: 0 0 0 4px rgba(70, 158, 141, .15) !important;
+    }
+
+    .ek-project .gift-container .form-control::placeholder { color: #9AABA8 !important; }
+    .ek-project .gift-container .form-control:disabled { background-color: var(--pj-soft) !important; }
+
+    .ek-project .gift-container .send-copy-container {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+        margin: 14px 0 !important;
+        padding: 0 !important;
+    }
+
+    .ek-project .gift-container .send-copy-container .form-check-input {
+        flex: none;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        accent-color: var(--pj-teal);
+        cursor: pointer;
+    }
+
+    .ek-project .gift-container .send-copy-container .form-check-label {
+        margin: 0;
+        color: var(--pj-text);
+        font-size: 14px;
+    }
+
+    .ek-project .gift-container .gift-cards-container { margin: 0 0 4px; }
+
+    .ek-project .gift-container .gift-cards-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 10px;
+        margin: 0 0 12px;
+    }
+
+    .ek-project .gift-container .gift-img {
+        display: block;
+        margin: 0 !important;
+        padding: 4px !important;
+        overflow: hidden;
+        border: 2px solid var(--pj-border) !important;
+        border-radius: 12px !important;
+        background: #fff !important;
+        cursor: pointer;
+        transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .ek-project .gift-container .gift-img img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .ek-project .gift-container .gift-img.active {
+        border-color: var(--pj-teal) !important;
+        box-shadow: 0 0 0 3px rgba(44, 95, 93, .15);
+    }
+
+    .ek-project .gift-container .gift-actions { margin-top: 4px; }
+
+    .ek-project .gift-container .gift-save {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100% !important;
+        height: 48px !important;
+        margin: 0 !important;
+        padding: 0 16px !important;
+        border: 0 !important;
+        border-radius: 12px !important;
+        background: linear-gradient(135deg, var(--pj-teal-2), var(--pj-teal)) !important;
+        color: #fff !important;
+        font-size: 15px !important;
+        font-weight: 700;
+        box-shadow: 0 8px 18px rgba(44, 95, 93, .2) !important;
+    }
+
+    .ek-project .gift-container .gift-add-wrap { margin: 0; }
+
+    .ek-project .gift-container .gift-btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100% !important;
+        height: 46px !important;
+        margin: 0 !important;
+        padding: 0 16px !important;
+        border: 1.5px dashed var(--pj-teal-2) !important;
+        border-radius: 12px !important;
+        background: var(--pj-soft) !important;
+        color: var(--pj-teal) !important;
+        font-size: 14px !important;
+        font-weight: 700;
+        box-shadow: none !important;
+    }
+
+    .ek-project .gift-container .gift-btn:hover { background: #E6F1EF !important; }
+
+    .ek-project .gift-container .alert { margin: 0 0 12px; border-radius: 12px; font-size: 14px; }
+    .ek-project .gift-container hr { display: none; }
+
+    /* saved card summary */
+    .ek-project .gift-container .saved-card .gift-donation-section .form-control { max-width: 160px; text-align: center; }
+    .ek-project .gift-container .saved-card .row { align-items: center; margin: 0; }
+
     /* ---------- Responsive ---------- */
     @media (max-width: 991.98px) {
         .ek-pj-grid {
@@ -558,5 +803,6 @@
         .ek-project .donation-amounts[data-count="many"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         .ek-project .statistics-section { grid-template-columns: minmax(0, 1fr); }
         .ek-pj-progress__value { font-size: 15px; }
+        .ek-project .gift-container .inputs-container { grid-template-columns: minmax(0, 1fr); }
     }
 </style>

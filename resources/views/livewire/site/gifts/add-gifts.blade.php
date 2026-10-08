@@ -40,9 +40,9 @@
         @forelse($cardFields as $index => $field)
         @if (isset($cardInfo[$index]['saved']) && $cardInfo[$index]['saved'])
         <div class="gift-form saved-card mb-4">
-            <div class="text-start">
-                <i class="fa-solid fa-times-circle text-danger" wire:click="removeField({{ $index }})"></i>
-            </div>
+            <button type="button" class="gift-remove" wire:click="removeField({{ $index }})" title="حذف">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
             <div class="gift-header">
                 <h4>بيانات المهدى إليه</h4>
@@ -102,10 +102,10 @@
         </div>
         @else
         <div class="gift-form mb-4">
-            <div class="text-start">
-                <i class="fa-solid fa-times-circle text-danger" wire:click="removeField({{ $index }})"></i>
-            </div>
-            <h4 class="text-center mb-3">بيانات المهدى إليه</h4>
+            <button type="button" class="gift-remove" wire:click="removeField({{ $index }})" title="حذف">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h4 class="gift-form__title"><i class="fa-solid fa-gift"></i> بيانات المهدى إليه</h4>
 
             @if ($index == $errorIndex)
             <div class="alert alert-danger text-center" role="alert">
@@ -115,8 +115,8 @@
 
             <!-- Donation Amount Section -->
             <div class="gift-donation-section mb-3">
-                <div class="donation-label mb-2" style="text-align: right;">مبلغ التبرع</div>
-                <div class="donation-amounts ">
+                <div class="donation-label mb-2">مبلغ التبرع</div>
+                <div class="donation-amounts gift-amounts @if (is_array($donation) && in_array($donation['type'], ['unit', 'open'])) is-wrapper @endif">
                     @if (is_array($donation))
                         @switch($donation['type'])
                             @case('unit')
@@ -240,8 +240,8 @@
                 @endif
             </div>
 
-            <div class="text-end mt-3">
-                <button class="btn btn-primary btn-xs" wire:click="saveGiftInfo({{ $index }})">
+            <div class="gift-actions">
+                <button class="btn btn-primary btn-xs gift-save" wire:click="saveGiftInfo({{ $index }})">
                     <i class="fa-solid fa-check"></i> حفظ
                 </button>
             </div>
@@ -252,7 +252,7 @@
 
         <!-- Add Another Gift Button -->
         @if ($cardFields)
-        <div class="text-end mt-3">
+        <div class="gift-add-wrap">
             <button class="btn btn-primary gift-btn" id="add_another_gift" wire:click="addField">
                 <i class="fa-solid fa-plus"></i> @lang('Add a gift for someone else')
             </button>
