@@ -2,11 +2,13 @@
 
 @section('content')
 
-    <main>
+    <main class="ek-home">
 
         @livewire('site.charity-category.index')
 
     </main>
+
+    @include('site.layouts.ek-card-sliders')
 
 
 @endsection

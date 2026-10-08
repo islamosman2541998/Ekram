@@ -16,6 +16,7 @@
         @endphp
 
         <!-- Cards -->
+        <div class="ek-slider">
         <div class="swiper ProjectSections">
             <div class="swiper-wrapper">
                 @forelse ($categoriesCarousels as $carouselIndex => $carousel)
@@ -52,8 +53,10 @@
                 @empty
                 @endforelse
             </div>
-            <div class="swiper-button-next ProjectSection-button-next"></div>
-            <div class="swiper-button-prev ProjectSection-button-prev"></div>
+        </div>
+        <div class="ek-dots" wire:ignore></div>
+        <div class="swiper-button-next ProjectSection-button-next"></div>
+        <div class="swiper-button-prev ProjectSection-button-prev"></div>
         </div>
 
         <div class="text-center mt-3">
