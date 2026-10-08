@@ -233,6 +233,7 @@
     .ek-project .donation-amounts[data-count="4"],
     .ek-project .donation-amounts[data-count="many"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
+    /* each amount keeps the colour set in the dashboard (same logic as the home cards) */
     .ek-project .donation-amounts .amount-btn {
         position: relative;
         display: flex !important;
@@ -244,39 +245,46 @@
         min-height: 64px;
         margin: 0 !important;
         padding: 8px 6px !important;
-        border: 1.5px solid var(--pj-border) !important;
+        border: 0 !important;
         border-radius: 14px !important;
-        background: #fff !important;
-        color: var(--pj-text) !important;
-        box-shadow: none !important;
+        background: var(--amt, var(--pj-teal-2)) !important;
+        color: #fff !important;
+        box-shadow: 0 6px 14px rgba(31, 70, 69, .12) !important;
         opacity: 1 !important;
         transform: none !important;
         cursor: pointer;
-        transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease !important;
+        transition: transform .15s ease, box-shadow .2s ease, filter .2s ease !important;
     }
 
-    /* the admin colour of each amount becomes a small accent strip */
-    .ek-project .donation-amounts .amount-btn::before {
-        content: "";
-        position: absolute;
-        top: 8px;
-        inset-inline-start: 8px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--amt, var(--pj-teal-2));
+    .ek-project .donation-amounts .amount-btn:hover {
+        filter: brightness(1.05);
+        transform: translateY(-2px) !important;
+        box-shadow: 0 10px 20px rgba(31, 70, 69, .18) !important;
     }
 
-    .ek-project .donation-amounts .amount-btn:hover { border-color: var(--pj-teal-2) !important; }
-
+    /* selected: ring + check badge */
     .ek-project .donation-amounts .amount-btn.active {
-        border-color: var(--pj-teal) !important;
-        background: var(--pj-teal) !important;
-        color: #fff !important;
-        box-shadow: 0 8px 18px rgba(44, 95, 93, .25) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--pj-teal), 0 10px 22px rgba(31, 70, 69, .22) !important;
     }
 
-    .ek-project .donation-amounts .amount-btn.active::before { background: #fff; }
+    .ek-project .donation-amounts .amount-btn.active::after {
+        content: "\f00c";
+        position: absolute;
+        top: -8px;
+        inset-inline-end: -8px;
+        width: 22px;
+        height: 22px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: var(--pj-teal);
+        color: #fff;
+        font-family: "Font Awesome 6 Free";
+        font-size: 10px;
+        font-weight: 900;
+        line-height: 18px;
+        text-align: center;
+    }
 
     .ek-project .amount-btn__value,
     .ek-project .donation-amounts .amount-btn .price {
@@ -289,7 +297,7 @@
         max-width: 100%;
         overflow: hidden;
         font-size: 11.5px;
-        opacity: .75;
+        opacity: .9;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
