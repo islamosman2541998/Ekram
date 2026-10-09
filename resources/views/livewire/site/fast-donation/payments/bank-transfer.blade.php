@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group bank-form">
                     <label for="account-owner"> @lang('Account Holder Name') </label>
-                    <input class="bank-input" disabled wire:model="bankHoldName" type="text" id="account-owner">
+                    <input class="bank-input" wire:model.defer="bankHoldName" type="text" id="account-owner" placeholder="@lang('Account Holder Name')">
                 </div>
                 <div class="form-group bank-form">
                     <label for="account-number"> @lang('Account number') </label>
