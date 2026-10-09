@@ -198,18 +198,17 @@
                 <div class="money-collected">
                     <div class="d-flex justify-content-between custom-card-amount-row">
                         <span>تم جمع: <br>{{ $progressBar['collected'] }} <span>ر.س</span> </br></span>
-                        <span class="mt-1">{{ $progressBar['avarge'] }}%</span>
                         <span> المستهدف: <br>{{ $progressBar['target_price'] }} <span>ر.س</span> </br></span>
                     </div>
 
-                    <div class="progress mb-2 custom-card-progress">
-                        <div data-toggle="tooltip" data-placement="top" role="progressbar" aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100"
-                            data-original-title=" {{ $progressBar['avarge'] }}%" bis_skin_checked="1"
-                            class="progress-bar custom-card-progress-bar"
-                            style="width: {{ $progressBar['avarge'] }}%">
-                            {{-- {{ $progressBar['avarge'] }}% --}}
+                    <div class="ek-progress {{ $progressBar['avarge'] >= 100 ? 'is-complete' : '' }}">
+                        <div class="progress custom-card-progress">
+                            <div role="progressbar" aria-valuenow="{{ $progressBar['avarge'] }}"
+                                aria-valuemin="0" aria-valuemax="100"
+                                class="progress-bar custom-card-progress-bar"
+                                style="width: {{ min(100, $progressBar['avarge']) }}%"></div>
                         </div>
+                        <span class="ek-progress__pct">{{ $progressBar['avarge'] }}%</span>
                     </div>
                 </div>
             </div>

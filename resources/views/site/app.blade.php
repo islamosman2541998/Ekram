@@ -6,6 +6,7 @@
   <body>
 
     @include('site.layouts.menus')
+    @include('site.layouts.ek-progress')
 
 
     @include('site.layouts.message')

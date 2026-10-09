@@ -29,12 +29,13 @@
                         <br>{{ number_format(max(0, $progressBar['target_price'] - $progressBar['collected'])) }}
                         ر.س</span>
                 </div>
-                <div class="progress mb-2 custom-card-progress">
-                    <div class="progress-bar custom-card-progress-bar" role="progressbar"
-                        style="width: {{ $progressBar['avarge'] }}%" aria-valuenow="{{ $progressBar['avarge'] }}"
-                        aria-valuemin="0" aria-valuemax="100">
-                        %{{ $progressBar['avarge'] }}
+                <div class="ek-progress {{ $progressBar['avarge'] >= 100 ? 'is-complete' : '' }}">
+                    <div class="progress custom-card-progress">
+                        <div class="progress-bar custom-card-progress-bar" role="progressbar"
+                            style="width: {{ min(100, $progressBar['avarge']) }}%" aria-valuenow="{{ $progressBar['avarge'] }}"
+                            aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <span class="ek-progress__pct">{{ $progressBar['avarge'] }}%</span>
                 </div>
             </div>
 
