@@ -199,32 +199,67 @@
                text-align: center;
            }
 
-           /* payment methods as cards */
-           .fast-pay .payment-methods { margin: 0 0 6px !important; padding: 0 !important; }
+           /* payment methods: one row per method (radio + name + logo), scales to 3 with Apple Pay */
+           .fast-pay .payment-methods { margin: 0 0 4px !important; padding: 0 !important; }
 
            .fast-pay .payment-methods .img-container {
-               display: grid !important;
-               grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+               display: flex !important;
+               flex-direction: column;
                gap: 8px;
                width: 100% !important;
                margin: 0 !important;
            }
 
            .fast-pay .payment-methods .nav-link {
-               position: relative;
                display: flex !important;
                align-items: center;
-               justify-content: center;
+               gap: 10px;
+               width: 100% !important;
                height: 52px;
                margin: 0 !important;
-               padding: 6px !important;
+               padding: 0 14px !important;
                border: 1.5px solid var(--fp-border) !important;
-               border-radius: 10px !important;
+               border-radius: 12px !important;
                background: #fff !important;
+               color: var(--fp-text) !important;
+               text-align: start;
+               transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+           }
+
+           .fast-pay .payment-methods .nav-link:hover:not(:disabled) { border-color: var(--fp-teal-2) !important; }
+           .fast-pay .payment-methods .nav-link:disabled { opacity: .55; cursor: not-allowed; }
+
+           .fast-pay .payment-methods .pm-radio {
+               position: relative;
+               flex: none;
+               width: 20px;
+               height: 20px;
+               border: 2px solid #C5D3D1;
+               border-radius: 50%;
+               background: #fff;
                transition: border-color .15s ease;
            }
 
-           .fast-pay .payment-methods .nav-link:hover { border-color: var(--fp-teal-2) !important; }
+           .fast-pay .payment-methods .pm-name {
+               flex: 1;
+               font-size: 14px;
+               font-weight: 700;
+           }
+
+           .fast-pay .payment-methods .img {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               flex: none;
+               width: 64px;
+               height: 32px;
+               padding: 3px 6px;
+               border: 1px solid var(--fp-border);
+               border-radius: 6px;
+               background: #fff;
+           }
+
+           .fast-pay .payment-methods .nav-link img { max-width: 100%; max-height: 24px; width: auto; height: auto; }
 
            .fast-pay .payment-methods .nav-link.active {
                border-color: var(--fp-teal) !important;
@@ -232,11 +267,34 @@
                box-shadow: 0 0 0 3px rgba(44, 95, 93, .12);
            }
 
-           .fast-pay .payment-methods .nav-link img { max-width: 100%; max-height: 28px; width: auto; height: auto; }
+           .fast-pay .payment-methods .nav-link.active .pm-name { color: var(--fp-teal); }
+           .fast-pay .payment-methods .nav-link.active .pm-radio { border-color: var(--fp-teal); }
+
+           .fast-pay .payment-methods .nav-link.active .pm-radio::after {
+               content: "";
+               position: absolute;
+               inset: 3px;
+               border-radius: 50%;
+               background: var(--fp-teal);
+           }
+
+           .fast-visa-note {
+               margin: 0 0 12px !important;
+               padding: 10px 12px;
+               border-radius: 10px;
+               background: var(--fp-soft);
+               color: var(--fp-teal);
+               font-size: 13px;
+               font-weight: 600;
+               line-height: 1.7;
+               text-align: center;
+           }
+
+           .fast-visa-note i { margin-inline-end: 4px; }
 
            /* chosen method content */
            .fast-pay .tab-content { margin: 10px 0 0 !important; }
-           .fast-pay .payment-content > p,
+           .fast-pay .payment-content > p:not(.fast-visa-note),
            .fast-pay .bank-text { display: none; }
 
            .fast-pay .bank-fields { margin: 0 !important; padding: 0 !important; }
@@ -276,8 +334,9 @@
                display: flex !important;
                align-items: center;
                gap: 8px;
-               margin: 6px 0 0 !important;
+               margin: 4px 0 0 !important;
                padding: 0 !important;
+               border: 0 !important;
            }
 
            .fast-pay .cart-form-actions .proceed-text { display: none !important; }
@@ -315,9 +374,13 @@
                border-radius: 10px !important;
                background: #fff !important;
                color: var(--fp-muted) !important;
-               font-size: 16px;
+               font-size: 15px !important;
                text-decoration: none;
+               transition: border-color .15s ease, color .15s ease;
            }
+
+           .fast-pay .cart-form-actions .cancel-btn:hover { border-color: #F2B9A6 !important; color: var(--fp-orange) !important; }
+           .fast-pay .cart-form-actions .cancel-btn i { font-size: 15px !important; line-height: 1; }
 
            .fast-pay input[type="file"].d-none { display: none !important; }
        </style>
@@ -447,16 +510,20 @@
                        <div class="img-container">
                             @if ($visaStatus)
                             <button wire:click="SelectPayment('visa')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == "visa") active @endif" type="button" aria-selected="true">
+                                <span class="pm-radio"></span>
+                                <span class="pm-name">بطاقة مدى / فيزا</span>
                                 <span class="img">
-                                    <img src="{{ site_path('img/pay-4.png') }}" alt="" />
+                                    <img src="{{ site_path('img/pay-4.png') }}" alt="بطاقة مدى / فيزا" />
                                 </span>
                             </button>
                             @endif
                            @if ($applePayStatus && ($iphone || $safari))
                                 <button wire:click="SelectPayment('applePay')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == "applePay") active @endif" type="button" aria-selected="true">
-                                    <span class="img">
-                                        <img src="{{ site_path('img/pay-2.png') }}" alt="" />
-                                    </span>
+                                    <span class="pm-radio"></span>
+                                <span class="pm-name">Apple Pay</span>
+                                <span class="img">
+                                    <img src="{{ site_path('img/pay-2.png') }}" alt="Apple Pay" />
+                                </span>
                                 </button>
                                 @if(!config("app.TEST_MODE"))
                                 <input type="hidden" id="SHARequestPhrase" value="{{config("payfort.SHARequestPhrase")}}">
@@ -466,9 +533,11 @@
                            @endif
                            @if ($banktransferStatus)
                            <button wire:click="SelectPayment('bankTransfer')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == "bankTransfer") active @endif" type="button" role="tab" aria-selected="true">
-                               <span class="img">
-                                   <img src="{{ site_path('img/pay-1.png') }}" alt="" />
-                               </span>
+                               <span class="pm-radio"></span>
+                                <span class="pm-name">تحويل بنكي</span>
+                                <span class="img">
+                                    <img src="{{ site_path('img/pay-1.png') }}" alt="تحويل بنكي" />
+                                </span>
                            </button>
                         @endif
                        </div>

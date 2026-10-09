@@ -56,8 +56,19 @@ public function checkout()
     $data['item_name']    = $this->donationData['project_name'];
     $data['item_type']    = $this->donationData['donationtype'];
 
+    if (empty($data['mobile']) || empty($data['name']) || empty($data['total'])) {
+        session()->flash('warning', trans('Please fill in the mobile number to proceed.'));
+        return;
+    }
+
     $order = new CheckoutController();
     $process = $order->fastDonationProcess($data);
+
+    if (empty($process['status']) || empty($process['order'])) {
+        session()->flash('warning', $process['message'] ?? trans('Something went wrong, please try again'));
+        return;
+    }
+
     return redirect()->route('site.moyasar.payment', $process['order']->identifier);
 }
 

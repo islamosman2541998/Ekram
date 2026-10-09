@@ -24,19 +24,4 @@
         </div>
     </form>
 
-    <style>
-        .fast-visa-note {
-            margin: 6px 0 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            background: #F3F8F7;
-            color: #2C5F5D;
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.7;
-            text-align: center;
-        }
-
-        .fast-visa-note i { margin-inline-end: 4px; }
-    </style>
 </div>
