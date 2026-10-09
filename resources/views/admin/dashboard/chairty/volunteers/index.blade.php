@@ -219,7 +219,7 @@
                                                             class="bx bxs-edit"></i></a>
                                                     <a type="button" class="btn btn-neutral text-danger"
                                                         class="color-red" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal{{ $item->id }}"> <i
+                                                        data-bs-target="#exampleModal{{ $item->id }}"> <i
                                                             class="bx bxs-trash"></i></a>
                                                 </div>
                                             </td>

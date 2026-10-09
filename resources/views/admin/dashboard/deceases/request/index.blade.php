@@ -123,7 +123,7 @@
                                 <a href="{{ route('admin.deceases.request.show', $item->id) }}" data-hover="@lang('admin.show')" class="btn btn-neutral text-info">
                                     <i class="bx bxs-show"></i>
                                 </a>
-                                <a type="button" class="btn btn-neutral text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $item->id }}">
+                                <a type="button" class="btn btn-neutral text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}">
                                     <i class="bx bxs-trash"></i>
                                 </a>
                             </div>

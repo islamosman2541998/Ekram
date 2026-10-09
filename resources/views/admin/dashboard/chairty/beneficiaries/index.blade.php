@@ -79,7 +79,7 @@
                                         <td>
                                             <a href="{{ route('admin.beneficiaries.show', $item->id) }}" class="btn btn-info btn-sm">@lang('admin.show')</a>
                                             <a href="{{ route('admin.beneficiaries.edit', $item->id) }}" class="btn btn-warning btn-sm">@lang('admin.edit')</a>
-                                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $item->id }}">@lang('admin.delete')</a>
+                                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}">@lang('admin.delete')</a>
                                         </td>
                                     </tr>
                                     @include('admin.layouts.delete', ['route' => 'admin.beneficiaries.destroy', 'id' => $item->id])
