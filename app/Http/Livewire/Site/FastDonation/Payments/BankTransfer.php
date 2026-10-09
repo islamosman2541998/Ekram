@@ -112,8 +112,12 @@ class BankTransfer extends Component
     }
 
 
-    public function mount()
+    public function mount($dataDonation = null)
     {
+        if ($dataDonation) {
+            $this->donationData = $dataDonation;
+        }
+
         $this->payment = PaymentMethod::find($this->payment_method_id);
         $this->bankHoldName = $this->payment->name_holder;
         $this->bank_accounts = PaymentBank::get();

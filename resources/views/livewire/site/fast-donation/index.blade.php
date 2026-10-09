@@ -12,6 +12,10 @@
            .iti__country-name {
                display: none;
            }
+
+           /* Livewire renders only the chosen method; public/site/js/cart.js toggles .payment-content
+              by image index and was hiding the bank-transfer form. */
+           .fast-pay .payment-content { display: block !important; }
        </style>
 
 
@@ -138,14 +142,14 @@
                    <div class="payment-methods">
                        <div class="img-container">
                             @if ($visaStatus)
-                            <button wire:click="SelectPayment('visa')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == " visa") active @endif" data-bs-toggle="pill" data-bs-target="#visa-pay" type="button" aria-selected="true">
+                            <button wire:click="SelectPayment('visa')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == " visa") active @endif" type="button" aria-selected="true">
                                 <span class="img">
                                     <img src="{{ site_path('img/pay-4.png') }}" alt="" />
                                 </span>
                             </button>
                             @endif
                            @if ($applePayStatus && ($iphone || $safari))
-                                <button wire:click="SelectPayment('applePay')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == " applePay") active @endif" data-bs-toggle="pill" data-bs-target="#apple-pay" type="button" aria-selected="true">
+                                <button wire:click="SelectPayment('applePay')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == " applePay") active @endif" type="button" aria-selected="true">
                                     <span class="img">
                                         <img src="{{ site_path('img/pay-2.png') }}" alt="" />
                                     </span>
@@ -157,7 +161,7 @@
                                 @endif
                            @endif
                            @if ($banktransferStatus)
-                           <button wire:click="SelectPayment('bankTransfer')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == " bankTransfer") active @endif" data-bs-toggle="pill" type="button" role="tab" aria-selected="true">
+                           <button wire:click="SelectPayment('bankTransfer')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == " bankTransfer") active @endif" type="button" role="tab" aria-selected="true">
                                <span class="img">
                                    <img src="{{ site_path('img/pay-1.png') }}" alt="" />
                                </span>
@@ -171,7 +175,7 @@
 
                        <!-- visa-pay-tab -->
                        @if($paymentMethod == "visa"  && $visaStatus)
-                       @livewire('site.fast-donation.payments.visa')
+                       @livewire('site.fast-donation.payments.visa', ['dataDonation' => $dataDonation])
 
                        <!-- apple-pay-tab -->
                        @elseif($paymentMethod == "applePay" && $applePayStatus)
@@ -180,7 +184,7 @@
 
                        <!-- transfer-pay-tab -->
                        @elseif($paymentMethod == "bankTransfer" && $banktransferStatus)
-                       @livewire('site.fast-donation.payments.bank-transfer')
+                       @livewire('site.fast-donation.payments.bank-transfer', ['dataDonation' => $dataDonation])
 
                        @endif
                    </div>

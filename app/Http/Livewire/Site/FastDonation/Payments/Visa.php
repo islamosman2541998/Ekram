@@ -44,15 +44,14 @@ class Visa extends Component
 
     public function updated($field)
     {
-        $this->validateOnly($field);
+        // no fields to validate here any more (see getSanitized)
     }
 
 
     public function getSanitized()
     {
-        $data = $this->validate();
-        $data['payment_method_id'] = $this->payment_method_id;
-        return $data;
+        // Card details are entered on the Moyasar payment page, not in this form.
+        return ['payment_method_id' => $this->payment_method_id];
     }
 
     public function UpdatedSelectedCard()
@@ -106,14 +105,24 @@ class Visa extends Component
         // return redirect(route('site.payments.fastdonation.intital', $data));
         $order = new CheckoutController();
         $process = $order->fastDonationProcess($data);
+
+        if (empty($process['status']) || empty($process['order'])) {
+            session()->flash('warning', $process['message'] ?? trans('Something went wrong, please try again'));
+            return;
+        }
+
         return redirect()->route('site.moyasar.payment', $process['order']->identifier);
         // Make Order ---
 
     }
 
 
-    public function mount()
+    public function mount($dataDonation = null)
     {
+        if ($dataDonation) {
+            $this->donationData = $dataDonation;
+        }
+
         if (@auth('account')->user()?->types->where('type', 'donor')->first() != null) {
             $donor = @auth('account')->user()->donor;
             $this->myCards = $donor->cards;

@@ -181,9 +181,29 @@ class CheckoutController extends Controller
             // create or get donor info
             $donor = Donor::with('account')->where('mobile', $data['mobile'])->get()->first();
             if (!$donor) {
-                $account = Accounts::create(['mobile' => $data['mobile']]);
+                // The mobile can already belong to an account (a donor who deleted their profile,
+                // or a soft-deleted account). accounts.mobile is unique, so reuse it instead of
+                // creating a duplicate (that was a 500 on the fast donation).
+                $account = Accounts::withTrashed()->where('mobile', $data['mobile'])->first();
+
+                if ($account && $account->trashed()) {
+                    $otherTypes = $account->types()->pluck('type')->diff(['donor']);
+                    if ($otherTypes->isNotEmpty()) {
+                        DB::rollback();
+                        return [
+                            'status'  => false,
+                            'message' => __('This mobile number cannot be used, please use another number'),
+                        ];
+                    }
+                    $account->restore();
+                }
+
+                if (!$account) {
+                    $account = Accounts::create(['mobile' => $data['mobile']]);
+                }
+
                 $types = LoginTypes::query()->whereIn('type', ['donor'])->pluck('id')->toArray();
-                $account->types()->attach($types);
+                $account->types()->syncWithoutDetaching($types);
                 $donor = Donor::with('account')->create([
                     'account_id' => $account->id,
                     'full_name'  => $data['name'],
