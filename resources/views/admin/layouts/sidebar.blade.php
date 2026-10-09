@@ -1,8 +1,15 @@
 <div class="sidebar-wrapper" data-simplebar="true">
+    @php
+        // Embedded (base64) so the logo works whatever folder the web server serves public files from.
+        $huluLogo = function ($file) {
+            $path = resource_path('images/admin/' . $file);
+            return is_file($path) ? 'data:image/png;base64,' . base64_encode(file_get_contents($path)) : '';
+        };
+    @endphp
     <div class="sidebar-header hulul-header">
         <a href="{{ route('admin.home') }}" class="hulul-brand" title="@lang('admin.holol')">
-            <img src="{{ asset('img/admin/hulul-logo-white.png') }}" class="hulul-brand__full" alt="@lang('admin.holol')">
-            <img src="{{ asset('img/admin/hulul-mark-white.png') }}" class="hulul-brand__mark" alt="">
+            <img src="{{ $huluLogo('hulul-logo-white.png') }}" class="hulul-brand__full" alt="@lang('admin.holol')">
+            <img src="{{ $huluLogo('hulul-mark-white.png') }}" class="hulul-brand__mark" alt="">
         </a>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
         </div>
