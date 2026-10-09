@@ -273,7 +273,7 @@
                                             <span class="order-status-badge order-status-badge--{{ $current[1] }}">@lang($current[0])</span>
                                         @endif
                                         <select class="form-select form-select-sm order-status-select"
-                                            wire:change="changeStatus({{ $item->id }}, $event.target.value)"
+                                            onchange="@this.call('changeStatus', {{ $item->id }}, this.value)"
                                             wire:loading.attr="disabled" title="@lang('admin.status')">
                                             @foreach ($statusOptions as $value => $option)
                                                 <option value="{{ $value }}" @selected((int) $item->status === $value)>@lang($option[0])</option>
@@ -347,14 +347,15 @@
 
 
         </div>
-    </div>
+    
 
-<style>
-    .order-status-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 130px; }
-    .order-status-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
-    .order-status-badge--success { background: #ECFDF3; color: #067647; }
-    .order-status-badge--warning { background: #FFFAEB; color: #B54708; }
-    .order-status-badge--info { background: #EFF8FF; color: #175CD3; }
-    .order-status-badge--danger { background: #FEF3F2; color: #B42318; }
-    .order-status-select { width: auto; min-width: 120px; font-size: 13px; }
-</style>
+    <style>
+        .order-status-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 130px; }
+        .order-status-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+        .order-status-badge--success { background: #ECFDF3; color: #067647; }
+        .order-status-badge--warning { background: #FFFAEB; color: #B54708; }
+        .order-status-badge--info { background: #EFF8FF; color: #175CD3; }
+        .order-status-badge--danger { background: #FEF3F2; color: #B42318; }
+        .order-status-select { width: auto; min-width: 120px; font-size: 13px; }
+    </style>
+</div>

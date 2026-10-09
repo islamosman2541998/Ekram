@@ -112,7 +112,15 @@ class Index extends Component
         $order->save();
 
         if ($status === 1 && !$wasConfirmed) {
-            event(new OrderConfirmationEvent($order));
+            // a failing SMS / WhatsApp provider must not turn the (already saved) confirmation into an error
+            try {
+                event(new OrderConfirmationEvent($order));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::error('Order confirmation notification failed', [
+                    'order_id' => $order->id,
+                    'error'    => $e->getMessage(),
+                ]);
+            }
         }
 
         session()->flash('success', trans('message.admin.status_changed_sucessfully'));
