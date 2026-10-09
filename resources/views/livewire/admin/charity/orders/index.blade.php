@@ -268,27 +268,23 @@
                                         ];
                                         $current = $statusOptions[(int) $item->status] ?? null;
                                     @endphp
-                                    <div class="order-status-cell">
-                                        @if ($current)
-                                            <span class="order-status-badge order-status-badge--{{ $current[1] }}">@lang($current[0])</span>
-                                        @endif
+                                    @if ($current)
+                                        <span class="order-status-badge order-status-badge--{{ $current[1] }}">@lang($current[0])</span>
+                                    @endif
+                                </td>
+                                <td> {{ date('H:i:s d-m-Y', strtotime($item->created_at)) }} </td>
+                                <td>
+                                    <div class="order-actions bulk-order">
                                         <select class="form-select form-select-sm order-status-select"
                                             onchange="@this.call('changeStatus', {{ $item->id }}, this.value)"
-                                            wire:loading.attr="disabled" title="@lang('admin.status')">
+                                            wire:loading.attr="disabled" title="@lang('admin.status')"
+                                            aria-label="@lang('admin.status')">
                                             @foreach ($statusOptions as $value => $option)
                                                 <option value="{{ $value }}" @selected((int) $item->status === $value)>@lang($option[0])</option>
                                             @endforeach
                                         </select>
-                                        @if (@$item->status_ar)
-                                            <small class="text-muted d-block">{{ $item->status_ar }}</small>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td> {{ date('H:i:s d-m-Y', strtotime($item->created_at)) }} </td>
-                                <td>
-                                    <div class="d-flex justify-content-center bulk-order">
                                         <button type="button" data-hover="@lang('admin.delete')"
-                                            class="btn btn-neutral text-danger" data-bs-toggle="modal"
+                                            class="btn btn-neutral text-danger order-delete-btn" data-bs-toggle="modal"
                                             data-bs-target="#delete{{ $item->id }}">
                                             <i class="bx bxs-trash"></i>
                                         </button>
@@ -350,12 +346,17 @@
     
 
     <style>
-        .order-status-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 130px; }
+        .order-actions { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 185px; }
+        .order-actions .order-delete-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; padding: 0; border: 1px solid #F3D3D0; border-radius: 6px; background: #fff;
+        }
+        .order-actions .order-delete-btn:hover { background: #FEF3F2; }
         .order-status-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
         .order-status-badge--success { background: #ECFDF3; color: #067647; }
         .order-status-badge--warning { background: #FFFAEB; color: #B54708; }
         .order-status-badge--info { background: #EFF8FF; color: #175CD3; }
         .order-status-badge--danger { background: #FEF3F2; color: #B42318; }
-        .order-status-select { width: auto; min-width: 120px; font-size: 13px; }
+        .order-status-select { width: 140px; height: 32px; padding-top: 0; padding-bottom: 0; font-size: 13px; }
     </style>
 </div>
