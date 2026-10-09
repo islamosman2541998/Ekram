@@ -199,67 +199,39 @@
                text-align: center;
            }
 
-           /* payment methods: one row per method (radio + name + logo), scales to 3 with Apple Pay */
-           .fast-pay .payment-methods { margin: 0 0 4px !important; padding: 0 !important; }
+           /* payment methods: cards side by side (2 or 3 with Apple Pay), check badge like the checkout page */
+           .fast-pay .payment-methods { margin: 0 0 4px !important; padding: 0 !important; overflow: visible !important; }
 
            .fast-pay .payment-methods .img-container {
-               display: flex !important;
-               flex-direction: column;
-               gap: 8px;
+               display: grid !important;
+               grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+               gap: 10px;
                width: 100% !important;
                margin: 0 !important;
+               padding: 8px 0 0 !important;
+               overflow: visible !important;
            }
 
            .fast-pay .payment-methods .nav-link {
+               position: relative;
                display: flex !important;
                align-items: center;
-               gap: 10px;
+               justify-content: center;
                width: 100% !important;
-               height: 52px;
+               height: 56px;
                margin: 0 !important;
-               padding: 0 14px !important;
+               padding: 6px 8px !important;
                border: 1.5px solid var(--fp-border) !important;
                border-radius: 12px !important;
                background: #fff !important;
-               color: var(--fp-text) !important;
-               text-align: start;
                transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
            }
 
            .fast-pay .payment-methods .nav-link:hover:not(:disabled) { border-color: var(--fp-teal-2) !important; }
            .fast-pay .payment-methods .nav-link:disabled { opacity: .55; cursor: not-allowed; }
 
-           .fast-pay .payment-methods .pm-radio {
-               position: relative;
-               flex: none;
-               width: 20px;
-               height: 20px;
-               border: 2px solid #C5D3D1;
-               border-radius: 50%;
-               background: #fff;
-               transition: border-color .15s ease;
-           }
-
-           .fast-pay .payment-methods .pm-name {
-               flex: 1;
-               font-size: 14px;
-               font-weight: 700;
-           }
-
-           .fast-pay .payment-methods .img {
-               display: flex;
-               align-items: center;
-               justify-content: center;
-               flex: none;
-               width: 64px;
-               height: 32px;
-               padding: 3px 6px;
-               border: 1px solid var(--fp-border);
-               border-radius: 6px;
-               background: #fff;
-           }
-
-           .fast-pay .payment-methods .nav-link img { max-width: 100%; max-height: 24px; width: auto; height: auto; }
+           .fast-pay .payment-methods .img { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+           .fast-pay .payment-methods .nav-link img { max-width: 100%; max-height: 30px; width: auto; height: auto; object-fit: contain; }
 
            .fast-pay .payment-methods .nav-link.active {
                border-color: var(--fp-teal) !important;
@@ -267,15 +239,30 @@
                box-shadow: 0 0 0 3px rgba(44, 95, 93, .12);
            }
 
-           .fast-pay .payment-methods .nav-link.active .pm-name { color: var(--fp-teal); }
-           .fast-pay .payment-methods .nav-link.active .pm-radio { border-color: var(--fp-teal); }
-
-           .fast-pay .payment-methods .nav-link.active .pm-radio::after {
+           /* teal badge with a white check on the corner (drawn in CSS, no icon font) */
+           .fast-pay .payment-methods .nav-link.active::before {
                content: "";
                position: absolute;
-               inset: 3px;
+               top: -8px;
+               inset-inline-end: -8px;
+               width: 22px;
+               height: 22px;
+               border: 2px solid #fff;
                border-radius: 50%;
                background: var(--fp-teal);
+               box-shadow: 0 2px 6px rgba(31, 70, 69, .25);
+           }
+
+           .fast-pay .payment-methods .nav-link.active::after {
+               content: "";
+               position: absolute;
+               top: -3px;
+               inset-inline-end: 0;
+               width: 6px;
+               height: 10px;
+               border: solid #fff;
+               border-width: 0 2px 2px 0;
+               transform: rotate(45deg);
            }
 
            .fast-visa-note {
@@ -328,7 +315,13 @@
                cursor: pointer;
            }
 
-           .fast-pay .attach-btn span { margin: 0 !important; color: var(--fp-muted) !important; font-size: 11px !important; }
+           .fast-pay .attach-btn .attach-state { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 8px; }
+           .fast-pay .attach-btn .attach-main { margin: 0 !important; color: var(--fp-teal) !important; font-size: inherit !important; font-weight: 700; }
+           .fast-pay .attach-btn .attach-sub { margin: 0 !important; color: var(--fp-muted) !important; font-size: 11px !important; font-weight: 600; direction: ltr; unicode-bidi: plaintext; }
+           .fast-pay .attach-btn.is-done { border-style: solid !important; border-color: #2E9E6B !important; background: #EEF8F2 !important; }
+           .fast-pay .attach-btn.is-done .attach-main,
+           .fast-pay .attach-btn.is-done .fa-check-circle { color: #1F7A50 !important; }
+           .fast-pay .attach-btn.is-done .fa-check-circle { font-size: 18px; }
 
            .fast-pay .cart-form-actions {
                display: flex !important;
@@ -510,8 +503,6 @@
                        <div class="img-container">
                             @if ($visaStatus)
                             <button wire:click="SelectPayment('visa')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == "visa") active @endif" type="button" aria-selected="true">
-                                <span class="pm-radio"></span>
-                                <span class="pm-name">بطاقة مدى / فيزا</span>
                                 <span class="img">
                                     <img src="{{ site_path('img/pay-4.png') }}" alt="بطاقة مدى / فيزا" />
                                 </span>
@@ -519,9 +510,7 @@
                             @endif
                            @if ($applePayStatus && ($iphone || $safari))
                                 <button wire:click="SelectPayment('applePay')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == "applePay") active @endif" type="button" aria-selected="true">
-                                    <span class="pm-radio"></span>
-                                <span class="pm-name">Apple Pay</span>
-                                <span class="img">
+                                    <span class="img">
                                     <img src="{{ site_path('img/pay-2.png') }}" alt="Apple Pay" />
                                 </span>
                                 </button>
@@ -533,9 +522,7 @@
                            @endif
                            @if ($banktransferStatus)
                            <button wire:click="SelectPayment('bankTransfer')" @if(!$donationAmt) disabled @endif class="p-0 nav-link @if($paymentMethod == "bankTransfer") active @endif" type="button" role="tab" aria-selected="true">
-                               <span class="pm-radio"></span>
-                                <span class="pm-name">تحويل بنكي</span>
-                                <span class="img">
+                               <span class="img">
                                     <img src="{{ site_path('img/pay-1.png') }}" alt="تحويل بنكي" />
                                 </span>
                            </button>

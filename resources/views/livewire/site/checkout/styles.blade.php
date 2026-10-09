@@ -640,7 +640,13 @@
         cursor: pointer;
     }
 
-    .ek-checkout .attach-btn span { margin: 0 !important; color: var(--co-muted) !important; font-size: 12px !important; }
+    .ek-checkout .attach-btn .attach-state { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 8px; }
+    .ek-checkout .attach-btn .attach-main { margin: 0 !important; color: var(--co-teal) !important; font-size: inherit !important; font-weight: 700; }
+    .ek-checkout .attach-btn .attach-sub { margin: 0 !important; color: var(--co-muted) !important; font-size: 12px !important; font-weight: 600; direction: ltr; unicode-bidi: plaintext; }
+    .ek-checkout .attach-btn.is-done { border-style: solid !important; border-color: #2E9E6B !important; background: #EEF8F2 !important; }
+    .ek-checkout .attach-btn.is-done .attach-main,
+    .ek-checkout .attach-btn.is-done .fa-check-circle { color: #1F7A50 !important; }
+    .ek-checkout .attach-btn.is-done .fa-check-circle { font-size: 18px; }
 
     /* Apple Pay */
     .ek-checkout #payment-methods .btn-success {

@@ -32,13 +32,7 @@
                     <input class="bank-input" type="text" id="iban-number" wire:model="iban">
                 </div>
                 <div class="form-group bank-form">
-                    <input wire:model="image" type="file" class="pay-btn d-none" id="fileInput"  x-ref="fileInput" @change="fileName = $refs.fileInput.files[0]?.name || ''" >
-
-                    <label for="fileInput" type="button" x-text="fileName" class="pay-btn attach-btn" style="background: #22B573; min-width: 180px;">
-                        ارفاق إيصال الدفع
-                        <span style="font-size: 0.9rem; margin-right: 8px; color: #333;">Pdf - jpeg - png</span>
-                        <i class="fa fa-paperclip"></i>
-                    </label>
+                    @include('livewire.site.payments.receipt-upload')
                     @error('image')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
