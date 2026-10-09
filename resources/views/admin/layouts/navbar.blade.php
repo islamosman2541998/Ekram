@@ -235,14 +235,55 @@
             </div>
 
             @auth
+            <style>
+                .user-box .admin-avatar {
+                    position: relative;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex: none;
+                    width: 40px;
+                    height: 40px;
+                    overflow: hidden;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #1B4F8A, #133A66);
+                    box-shadow: 0 0 0 2px #fff, 0 0 0 3px #DCE4EE;
+                }
+
+                .user-box .admin-avatar img {
+                    position: absolute;
+                    inset: 0;
+                    z-index: 1;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .user-box .admin-avatar__initial { color: #fff; font-size: 17px; font-weight: 700; line-height: 1; }
+                .user-box .user-info .user-name { color: #1F2A37; font-size: 14px; font-weight: 600; }
+                .user-box .user-info .designattion { color: #6B7280; font-size: 12px; text-transform: capitalize; }
+                .user-box .admin-avatar__caret { color: #6B7280; font-size: 18px; }
+            </style>
             {{-- profile --}}
             <div class="user-box dropdown px-3">
                 <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ auth()->user()->image ? getImageThumb(auth()->user()->image) : admin_path('images/avatars/avatar-1.png') }}" class="user-img" alt="user avatar">
+                    @php
+                        $navUser = auth()->user();
+                        $navName = $navUser->name ?: ($navUser->user_name ?: \Illuminate\Support\Str::before((string) $navUser->email, '@'));
+                        $navInitial = mb_strtoupper(mb_substr(trim((string) $navName), 0, 1)) ?: 'A';
+                    @endphp
+                    <span class="admin-avatar">
+                        @if ($navUser->image)
+                            <img src="{{ getImageThumb($navUser->image) }}" alt="{{ $navName }}"
+                                onerror="this.remove()">
+                        @endif
+                        <span class="admin-avatar__initial">{{ $navInitial }}</span>
+                    </span>
                     <div class="user-info">
-                        <p class="user-name mb-0">{{ auth()->user()->name }}</p>
-                        <p class="designattion mb-0">{{ auth()->user()->roles->first()?->name }}</p>
+                        <p class="user-name mb-0">{{ $navName }}</p>
+                        <p class="designattion mb-0">{{ $navUser->roles->first()?->name }}</p>
                     </div>
+                    <i class="bx bx-chevron-down admin-avatar__caret"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile') }}"><i class="bx bx-user fs-5"></i><span>@lang('admin.profile')</span></a>

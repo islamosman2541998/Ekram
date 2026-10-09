@@ -1,14 +1,46 @@
 <div class="sidebar-wrapper" data-simplebar="true">
-    <div class="sidebar-header">
-        <div>
-            <img src="{{ admin_path('images/logos/holol-side-logo.png') }}" class="logo-icon" alt="logo icon">
-        </div>
-        <div>
-            <h4 class="logo-text">@lang('admin.holol')</h4>
-        </div>
+    <div class="sidebar-header hulul-header">
+        <a href="{{ route('admin.home') }}" class="hulul-brand" title="@lang('admin.holol')">
+            <img src="{{ asset('img/admin/hulul-logo-white.png') }}" class="hulul-brand__full" alt="@lang('admin.holol')">
+            <img src="{{ asset('img/admin/hulul-mark-white.png') }}" class="hulul-brand__mark" alt="">
+        </a>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
         </div>
     </div>
+
+    <style>
+        .sidebar-wrapper .sidebar-header.hulul-header {
+            gap: 10px;
+            padding: 0 16px;
+            border-bottom: 0;
+            background: linear-gradient(135deg, #1B4F8A 0%, #133A66 100%);
+        }
+
+        .hulul-brand { display: flex; align-items: center; height: 100%; text-decoration: none; }
+        .hulul-brand__full { display: block; height: 38px; width: auto; }
+        .hulul-brand__mark { display: none; height: 32px; width: auto; }
+
+        .sidebar-wrapper .hulul-header .toggle-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            font-size: 18px;
+            transition: background-color .15s ease;
+        }
+
+        .sidebar-wrapper .hulul-header .toggle-icon:hover { background: rgba(255, 255, 255, .22); }
+
+        /* collapsed sidebar (70px): show only the mark */
+        @media screen and (min-width: 1025px) {
+            .wrapper.toggled:not(.sidebar-hovered) .hulul-brand__full { display: none; }
+            .wrapper.toggled:not(.sidebar-hovered) .hulul-brand__mark { display: block; }
+        }
+    </style>
     <!--navigation-->
     <ul class="metismenu" id="menu">
         <li>
