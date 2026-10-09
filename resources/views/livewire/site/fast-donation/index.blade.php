@@ -45,7 +45,7 @@
                margin: 14px 0 8px;
                color: var(--fp-text);
                font-size: 14.5px;
-               font-weight: 800;
+               font-weight: 500;
                text-align: start;
            }
 
@@ -63,7 +63,7 @@
                background: #fff;
                color: var(--fp-text);
                font-size: 13px;
-               font-weight: 700;
+               font-weight: 500;
                cursor: pointer;
                transition: border-color .15s ease, background-color .15s ease, color .15s ease;
            }
@@ -85,7 +85,7 @@
                background-color: #fff !important;
                color: var(--fp-text) !important;
                font-size: 14px !important;
-               font-weight: 600 !important;
+               font-weight: 500 !important;
                box-shadow: none !important;
            }
 
@@ -132,16 +132,16 @@
                border-radius: 10px !important;
                color: #fff !important;
                font-size: 15px !important;
-               font-weight: 700;
+               font-weight: 500;
                opacity: 1 !important;
                transform: none !important;
                box-shadow: 0 4px 10px rgba(31, 70, 69, .12) !important;
                cursor: pointer;
            }
 
-           .fast-pay .amount-btn .price span { color: #fff; font-size: 16px; font-weight: 800; }
-           .fast-pay .donation-form ::placeholder { color: #8A9A98; font-weight: 600; }
-           .fast-pay .iti__selected-dial-code { font-weight: 700; color: var(--fp-text); }
+           .fast-pay .amount-btn .price span { color: #fff; font-size: 16px; font-weight: 500; }
+           .fast-pay .donation-form ::placeholder { color: #8A9A98; font-weight: 500; }
+           .fast-pay .iti__selected-dial-code { font-weight: 500; color: var(--fp-text); }
 
            .fast-pay .amount-btn.active {
                box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--fp-teal), 0 6px 14px rgba(31, 70, 69, .2) !important;
@@ -204,8 +204,10 @@
 
            .fast-pay .payment-methods .img-container {
                display: grid !important;
-               grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
-               gap: 10px;
+               grid-template-columns: none;
+               grid-auto-flow: column;
+               grid-auto-columns: minmax(0, 1fr);
+               gap: 8px;
                width: 100% !important;
                margin: 0 !important;
                padding: 8px 0 0 !important;
@@ -272,7 +274,7 @@
                background: var(--fp-soft);
                color: var(--fp-teal);
                font-size: 13px;
-               font-weight: 600;
+               font-weight: 500;
                line-height: 1.7;
                text-align: center;
            }
@@ -292,7 +294,7 @@
                margin: 0 0 5px !important;
                color: var(--fp-text) !important;
                font-size: 13px !important;
-               font-weight: 700;
+               font-weight: 500;
                text-align: start;
            }
 
@@ -311,13 +313,14 @@
                background: var(--fp-soft) !important;
                color: var(--fp-teal) !important;
                font-size: 13.5px !important;
-               font-weight: 700;
+               font-weight: 500;
                cursor: pointer;
            }
 
-           .fast-pay .attach-btn .attach-state { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 8px; }
-           .fast-pay .attach-btn .attach-main { margin: 0 !important; color: var(--fp-teal) !important; font-size: inherit !important; font-weight: 700; }
-           .fast-pay .attach-btn .attach-sub { margin: 0 !important; color: var(--fp-muted) !important; font-size: 11px !important; font-weight: 600; direction: ltr; unicode-bidi: plaintext; }
+           .fast-pay .attach-btn .attach-state[wire\:loading\.flex] { display: none; }
+    .fast-pay .attach-btn .attach-state { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 8px; }
+           .fast-pay .attach-btn .attach-main { margin: 0 !important; color: var(--fp-teal) !important; font-size: inherit !important; font-weight: 500; }
+           .fast-pay .attach-btn .attach-sub { margin: 0 !important; color: var(--fp-muted) !important; font-size: 11px !important; font-weight: 500; direction: ltr; unicode-bidi: plaintext; }
            .fast-pay .attach-btn.is-done { border-style: solid !important; border-color: #2E9E6B !important; background: #EEF8F2 !important; }
            .fast-pay .attach-btn.is-done .attach-main,
            .fast-pay .attach-btn.is-done .fa-check-circle { color: #1F7A50 !important; }
@@ -348,7 +351,7 @@
                background: linear-gradient(135deg, #F07A3F, var(--fp-orange)) !important;
                color: #fff !important;
                font-size: 15px !important;
-               font-weight: 700;
+               font-weight: 500;
                box-shadow: 0 8px 18px rgba(238, 90, 52, .22) !important;
            }
 
@@ -376,7 +379,26 @@
            .fast-pay .cart-form-actions .cancel-btn i { font-size: 15px !important; line-height: 1; }
 
            .fast-pay input[type="file"].d-none { display: none !important; }
-       </style>
+       
+           /* "brando" maps weight bold to the thinner regular file and normal to the medium file,
+              so inside the panel keep weight 500 (medium file) and thicken it slightly */
+           .fast-pay .donation-form,
+           .fast-pay .donation-form input,
+           .fast-pay .donation-form select,
+           .fast-pay .donation-form button,
+           .fast-pay .donation-form label,
+           .fast-pay .container h6 {
+               font-weight: 500 !important;
+               -webkit-text-stroke: .35px currentColor;
+           }
+
+           .fast-pay .donation-form ::placeholder { -webkit-text-stroke: 0; }
+
+           @media (max-width: 576px) {
+               .fast-pay .payment-methods .nav-link { height: 50px; padding: 4px 6px !important; }
+               .fast-pay .payment-methods .nav-link img { max-height: 24px; }
+           }
+</style>
 
 
        <!-- quick donation  -->

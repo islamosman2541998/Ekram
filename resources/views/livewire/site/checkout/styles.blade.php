@@ -640,6 +640,7 @@
         cursor: pointer;
     }
 
+    .ek-checkout .attach-btn .attach-state[wire\:loading\.flex] { display: none; }
     .ek-checkout .attach-btn .attach-state { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 8px; }
     .ek-checkout .attach-btn .attach-main { margin: 0 !important; color: var(--co-teal) !important; font-size: inherit !important; font-weight: 700; }
     .ek-checkout .attach-btn .attach-sub { margin: 0 !important; color: var(--co-muted) !important; font-size: 12px !important; font-weight: 600; direction: ltr; unicode-bidi: plaintext; }
