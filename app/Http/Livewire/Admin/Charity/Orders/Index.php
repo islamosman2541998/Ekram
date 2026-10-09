@@ -94,6 +94,30 @@ class Index extends Component
         $this->emit('updatedSelectAll', $this->mySelected);
     }
 
+    /**
+     * Change the status of a single order from its row (bank transfers are confirmed by hand).
+     * Same side effects as the bulk actions: confirming fires OrderConfirmationEvent.
+     */
+    public function changeStatus($id, $status)
+    {
+        $status = (int) $status;
+        if (!in_array($status, [0, 1, 3, 4], true)) {
+            return;
+        }
+
+        $order = Order::with(['donor', 'details'])->findOrFail($id);
+        $wasConfirmed = (int) $order->status === 1;
+
+        $order->status = $status;
+        $order->save();
+
+        if ($status === 1 && !$wasConfirmed) {
+            event(new OrderConfirmationEvent($order));
+        }
+
+        session()->flash('success', trans('message.admin.status_changed_sucessfully'));
+    }
+
     public function unpublishSelected()
     {
         $orders = Order::findMany($this->mySelected);

@@ -249,53 +249,44 @@
                                             {{ $item->payment_method_ar }}
                                     @endswitch
                                 </td>
-                                <td>{{ $item->refer }}</td>
+                                {{-- refer #1 is the default bucket for donations made directly on the site --}}
+                                <td>
+                                    @if ($item->refer_id && (int) $item->refer_id !== 1)
+                                        {{ $item->refer }}
+                                    @else
+                                        <span class="text-muted">مباشر</span>
+                                    @endif
+                                </td>
 
                                 <td>
-                                    @if (@$item->status_order_ar)
-                                        <a data-hover="{{ @$item->status_order_ar }}"
-                                            class="btn btn-neutral text-info"><i
-                                                class="bx bxs-info-square bx-tada bx-flip-horizontal"></i></a>
-                                    @endif
+                                    @php
+                                        $statusOptions = [
+                                            0 => ['Pending', 'warning'],
+                                            1 => ['Confirmed', 'success'],
+                                            3 => ['Waiting', 'info'],
+                                            4 => ['Canceled', 'danger'],
+                                        ];
+                                        $current = $statusOptions[(int) $item->status] ?? null;
+                                    @endphp
+                                    <div class="order-status-cell">
+                                        @if ($current)
+                                            <span class="order-status-badge order-status-badge--{{ $current[1] }}">@lang($current[0])</span>
+                                        @endif
+                                        <select class="form-select form-select-sm order-status-select"
+                                            wire:change="changeStatus({{ $item->id }}, $event.target.value)"
+                                            wire:loading.attr="disabled" title="@lang('admin.status')">
+                                            @foreach ($statusOptions as $value => $option)
+                                                <option value="{{ $value }}" @selected((int) $item->status === $value)>@lang($option[0])</option>
+                                            @endforeach
+                                        </select>
+                                        @if (@$item->status_ar)
+                                            <small class="text-muted d-block">{{ $item->status_ar }}</small>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td> {{ date('H:i:s d-m-Y', strtotime($item->created_at)) }} </td>
                                 <td>
                                     <div class="d-flex justify-content-center bulk-order">
-                                        @switch ($item->status)
-                                            @case('0')
-                                                <a data-hover="@lang('Pending')"
-                                                    class="btn btn-neutral text-warning order-action" data-toggle="tooltip"
-                                                    title="" data-original-title="@lang('Pending')">
-                                                    <i class="bx bx-no-entry"></i>
-                                                </a>
-                                            @break
-
-                                            @case(1)
-                                                <a data-hover="@lang('Confirmed')"
-                                                    class="btn btn-neutral text-success order-action" data-toggle="tooltip"
-                                                    title="" data-original-title="@lang('Confirmed')">
-                                                    <i class='bx bx-check-circle'></i>
-                                                </a>
-                                            @break
-
-                                            @case(3)
-                                                <a data-hover="@lang('Waiting')"
-                                                    class="btn btn-neutral text-info order-action" data-toggle="tooltip"
-                                                    title="" data-original-title="@lang('Waiting')"
-                                                    aria-describedby="tooltip358766">
-                                                    <i class='bx bx-history'></i>
-                                                </a>
-                                            @break
-
-                                            @case(4)
-                                                <a data-hover="@lang('Canceled')"
-                                                    class="btn btn-neutral text-danger order-action" data-toggle="tooltip"
-                                                    title="" data-original-title="@lang('Canceled')"
-                                                    aria-describedby="tooltip358766">
-                                                    <i class='bx bx-window-close'></i>
-                                                </a>
-                                            @break
-                                        @endswitch
                                         <button type="button" data-hover="@lang('admin.delete')"
                                             class="btn btn-neutral text-danger" data-bs-toggle="modal"
                                             data-bs-target="#delete{{ $item->id }}">
@@ -357,3 +348,13 @@
 
         </div>
     </div>
+
+<style>
+    .order-status-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 130px; }
+    .order-status-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+    .order-status-badge--success { background: #ECFDF3; color: #067647; }
+    .order-status-badge--warning { background: #FFFAEB; color: #B54708; }
+    .order-status-badge--info { background: #EFF8FF; color: #175CD3; }
+    .order-status-badge--danger { background: #FEF3F2; color: #B42318; }
+    .order-status-select { width: auto; min-width: 120px; font-size: 13px; }
+</style>
