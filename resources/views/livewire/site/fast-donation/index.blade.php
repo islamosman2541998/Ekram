@@ -31,7 +31,10 @@
            .fast-pay .donation-form,
            .fast-pay.expanded .donation-form {
                height: auto;
-               max-height: min(560px, calc(100vh - 160px));
+               /* the panel is fixed at bottom:20% and lifted 300px, so the form starts at
+                  (80vh - 300px): only 20vh + 300px is left below it on screen */
+               max-height: min(560px, calc(20vh + 284px));
+               overscroll-behavior: contain;
                padding: 16px 16px 18px;
                border-radius: 0 0 16px 16px;
                background: #fff;
@@ -41,8 +44,8 @@
            .fast-pay .donation-form .form-title {
                margin: 14px 0 8px;
                color: var(--fp-text);
-               font-size: 14px;
-               font-weight: 700;
+               font-size: 14.5px;
+               font-weight: 800;
                text-align: start;
            }
 
@@ -60,6 +63,7 @@
                background: #fff;
                color: var(--fp-text);
                font-size: 13px;
+               font-weight: 700;
                cursor: pointer;
                transition: border-color .15s ease, background-color .15s ease, color .15s ease;
            }
@@ -81,6 +85,7 @@
                background-color: #fff !important;
                color: var(--fp-text) !important;
                font-size: 14px !important;
+               font-weight: 600 !important;
                box-shadow: none !important;
            }
 
@@ -134,28 +139,39 @@
                cursor: pointer;
            }
 
-           .fast-pay .amount-btn .price span { color: #fff; font-size: 15px; font-weight: 700; }
+           .fast-pay .amount-btn .price span { color: #fff; font-size: 16px; font-weight: 800; }
+           .fast-pay .donation-form ::placeholder { color: #8A9A98; font-weight: 600; }
+           .fast-pay .iti__selected-dial-code { font-weight: 700; color: var(--fp-text); }
 
            .fast-pay .amount-btn.active {
                box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--fp-teal), 0 6px 14px rgba(31, 70, 69, .2) !important;
            }
 
-           .fast-pay .amount-btn.active::after {
-               content: "\f00c";
+           /* check badge drawn inside the button (no icon font, never clipped by the panel) */
+           .fast-pay .amount-btn.active::before {
+               content: "";
                position: absolute;
-               top: -7px;
-               inset-inline-end: -7px;
-               width: 18px;
-               height: 18px;
-               border: 2px solid #fff;
+               top: 50%;
+               inset-inline-start: 10px;
+               width: 20px;
+               height: 20px;
+               margin-top: -10px;
                border-radius: 50%;
-               background: var(--fp-teal);
-               color: #fff;
-               font-family: "Font Awesome 6 Free";
-               font-size: 8px;
-               font-weight: 900;
-               line-height: 14px;
-               text-align: center;
+               background: #fff;
+               box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+           }
+
+           .fast-pay .amount-btn.active::after {
+               content: "";
+               position: absolute;
+               top: 50%;
+               inset-inline-start: 17px;
+               width: 6px;
+               height: 11px;
+               margin-top: -7px;
+               border: solid var(--fp-teal);
+               border-width: 0 2.5px 2.5px 0;
+               transform: rotate(45deg);
            }
 
            .fast-pay .custom-amount { position: relative; display: block !important; width: 100%; margin: 0 !important; }
@@ -231,7 +247,7 @@
                margin: 0 0 5px !important;
                color: var(--fp-text) !important;
                font-size: 13px !important;
-               font-weight: 600;
+               font-weight: 700;
                text-align: start;
            }
 
@@ -250,7 +266,7 @@
                background: var(--fp-soft) !important;
                color: var(--fp-teal) !important;
                font-size: 13.5px !important;
-               font-weight: 600;
+               font-weight: 700;
                cursor: pointer;
            }
 
