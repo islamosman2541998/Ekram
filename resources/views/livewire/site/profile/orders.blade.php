@@ -78,13 +78,17 @@
                          <tr>
                              <th scope="row">{{ $order['identifier'] }}</th>
                              <td>{{ $order['quantity'] }}</td>
-                             <td>{{ $order['total'] }}</td>
+                             <td>{{ number_format($order['total']) }} <small>ر.س</small></td>
                              {{-- <td>test1</td> --}}
                              <td>{{ $order['payment_method_' . app()->getLocale()] }}</td>
-                             <td>{{ date('H:i:s d-m-Y', strtotime($order['created_at'])) }} </td>
-                             <td dir="rtl"
-                                 class="text-center d-flex align-items-center justify-content-center gap-2">
-                                 <x-icofont-link status="{{ $order['status'] }}" />
+                             <td><span dir="ltr">{{ date('Y/m/d', strtotime($order['created_at'])) }}</span></td>
+                             <td dir="rtl" class="ek-orders__status-cell">
+                                 @php
+                                     $rowStatus = ['0' => ['Pending', 'wait'], '1' => ['Confirmed', 'ok'], '3' => ['Waiting', 'info'], '4' => ['Canceled', 'bad']][(string) $order['status']] ?? null;
+                                 @endphp
+                                 @if ($rowStatus)
+                                     <span class="ek-od__status ek-od__status--{{ $rowStatus[1] }}">@lang($rowStatus[0])</span>
+                                 @endif
                                  @livewire('site.profile.order-items', ['order_id' => $order['id']], key($order['id']))
 
                              </td>

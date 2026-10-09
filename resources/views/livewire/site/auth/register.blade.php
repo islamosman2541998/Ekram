@@ -16,19 +16,6 @@
         .iti__country-name {
             display: none;
         }
-
-        .register-card {
-            background: #ffffff;
-        }
-
-        .form-group {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            margin-bottom: 8px;
-            align-content: stretch;
-            flex-wrap: wrap;
-        }
     </style>
 
 
@@ -80,8 +67,7 @@
                             <label for="name" class="form-label fw-bold">@lang('Name') <span
                                     class="text-danger">*</span></label>
                             <input type="text" wire:model.defer="name" class="form-control" id="name" dir="rtl"
-                                placeholder="@lang('Full Name')"
-                                style="border: 2px solid #ced4da; border-radius: 10px; padding: 10px 15px; background: #fafafa;" />
+                                placeholder="@lang('Full Name')" />
                             @error('name')
                                 <span class="text-danger small">{{ $message }}</span>
                             @enderror
@@ -92,8 +78,8 @@
                             <label for="mobile" class="form-label fw-bold">@lang('Mobile') <span
                                     class="text-danger">*</span></label>
                             <input type="number" class="form-control mobile" wire:model.defer="mobile"
-                                value="{{ $mobile }}" wire:ignore id="mobile"
-                                style="direction: ltr; border: 2px solid #ced4da; border-radius: 10px; padding: 10px 15px; background: #fafafa;" />
+                                value="{{ $mobile }}" wire:ignore id="mobile" placeholder="5XXXXXXXX"
+                                style="direction: ltr" />
                             <input id="countryData" wire:model="mobileWithCode" wire:ignore value=""
                                 {{ $mobileWithCode }} type="hidden" />
                             <span class="text-danger" id="notification-register"></span>
@@ -109,8 +95,7 @@
                         <div class="form-group mb-3">
                             <label for="email" class="form-label fw-bold">@lang('Email')</label>
                             <input type="email"  wire:model.defer="email" class="form-control" dir="rtl"
-                                placeholder="@lang('Email')"
-                                style="border: 2px solid #ced4da; border-radius: 10px; padding: 10px 15px; background: #fafafa;" />
+                                placeholder="name@example.com" />
                             @error('email')
                                 <span class="text-danger small">{{ $message }}</span>
                             @enderror
@@ -119,14 +104,13 @@
                         <!-- btn-->
                         <div class="form-group mb-3 mt-3">
                             <button type="button" id="btnSend" class="btn btn-primary w-100 btn-send submit_form"
-                                value="register" @if ($otp_modal) disabled @endif
-                                style="border-radius: 10px; padding: 12px;">
+                                value="register" @if ($otp_modal) disabled @endif>
                                 @lang('Create New Account')
                             </button>
                         </div>
 
                         @if ($showDescription1)
-                            <p>
+                            <p class="auth-switch">
                                 <span>@lang('Do you have account')</span>
                                 <a href="{{ route('site.login') }}">@lang('Login')</a>
                             </p>
@@ -154,7 +138,7 @@
                 <div class="modal-body">
                     <div class="row text-center">
                         <div class="col-md-9">
-                            <input type="text" max="4" min="4" wire:model="otp" class="form-control">
+                            <input type="text" max="4" min="4" wire:model="otp" class="form-control" inputmode="numeric" autocomplete="one-time-code">
                         </div>
                         <div class="col-md-3">
                             <button class="btn btn-success auth-btn mt-1" type="button"

@@ -654,6 +654,52 @@
 
     .ek-checkout #payment-methods .container { padding: 0 !important; }
 
+    /* ---------- Country picker (intl-tel-input dropdown) ---------- */
+    .ek-checkout .iti__country-list {
+        /* open over the input (RTL would otherwise push it out of the card / screen) */
+        left: 0 !important;
+        right: auto !important;
+        z-index: 50;
+        width: 300px;
+        max-width: min(300px, 82vw);
+        max-height: 260px;
+        margin-top: 6px;
+        padding: 6px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        border: 1px solid #E3ECEB;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 18px 40px rgba(31, 70, 69, .18);
+        white-space: normal;
+        scrollbar-width: thin;
+        scrollbar-color: #469e8d #EEF4F3;
+    }
+
+    .ek-checkout .iti__country-list::-webkit-scrollbar { width: 8px; }
+    .ek-checkout .iti__country-list::-webkit-scrollbar-track { margin: 8px 0; border-radius: 8px; background: #EEF4F3; }
+    .ek-checkout .iti__country-list::-webkit-scrollbar-thumb { border-radius: 8px; background: #469e8d; }
+    .ek-checkout .iti__country-list::-webkit-scrollbar-thumb:hover { background: #2C5F5D; }
+
+    .ek-checkout .iti__country {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        direction: rtl;
+    }
+
+    .ek-checkout .iti__country.iti__highlight { background: #F3F8F7; }
+    .ek-checkout .iti__country.iti__active { background: #E6F1EF; font-weight: 700; }
+
+    .ek-checkout .iti__country .iti__flag-box { order: 0; margin: 0; }
+    .ek-checkout .iti__country-name { display: inline !important; order: 1; flex: 1; margin: 0; color: #1F3B3A; }
+    .ek-checkout .iti__dial-code { order: 2; margin: 0; color: #6B7C7A; direction: ltr; }
+
+    .ek-checkout .iti__divider { margin: 6px 4px; padding: 0; border-bottom: 1px dashed #E3ECEB; }
+
     /* ---------- Responsive ---------- */
     @media (max-width: 991.98px) {
         .ek-co-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
@@ -672,4 +718,7 @@
         .ek-checkout .cart-form-tabs .tab-btn { height: 42px; font-size: 14px !important; }
         .ek-checkout .payment-methods .img-container { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); }
     }
+    /* style.css sets main { overflow-x: hidden }, which turns <main> into a scroll container and
+       breaks position: sticky (the element got pushed down). clip hides the same overflow without that. */
+    main:has(.ek-checkout) { overflow-x: clip !important; }
 </style>

@@ -1,209 +1,275 @@
+@php
+    // create_date is never filled on orders: use created_at (it showed "now" before)
+    $invoiceDate = $order->created_at ?? now();
+    $orgName = env('APP_NAME_AR') ?: 'إكرام المسنين';
+@endphp
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title> جمعية البر بمكة المكرمة </title>
-    <meta name="title" content="إيصال استلام" />
-
-    @if (app()->getLocale() == 'ar')
-        @vite(['resources/assets/admin/app-style-rtl.css'])
-    @else
-        @vite(['resources/assets/admin/app-style.css?v=0.0.1'])
-    @endif
-
-</head>
-
-<body dir="rtl">
+    <title>إيصال استلام #{{ $order->identifier }} | جمعية {{ $orgName }}</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 
     <style>
-        .img-div {
-            background-image: url("asset/images/checkout/0.jpg");
-            /* Replace 'pallon.jpg' with your image path */
-            background-size: cover;
-            padding: 20px;
+        @font-face {
+            font-family: "brando";
+            src: url("{{ asset('site/fonts/din-next-lt-w23-regular.ttf') }}") format("truetype");
+            font-weight: 400;
         }
 
-        .dashed-border {
-            border: 2px dashed;
+        @font-face {
+            font-family: "brando";
+            src: url("{{ asset('site/fonts/din-next-lt-w23-medium.ttf') }}") format("truetype");
+            font-weight: 700;
+        }
+
+        :root {
+            --teal: #469e8d;
+            --teal-dark: #04525A;
+            --orange: #ee5a34;
+            --amber: #faa440;
+            --sand: #f8d5ae;
+            --cream: #FCF4EC;
+            --text: #1F2A2A;
+            --muted: #66706F;
+            --line: #E7E1DA;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 32px 16px;
+            background: var(--cream);
+            color: var(--text);
+            font-family: "brando", "Segoe UI", Tahoma, sans-serif;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .receipt {
+            max-width: 820px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 12px 40px rgba(4, 82, 90, .10);
+        }
+
+        /* brand strip: the four identity colours */
+        .receipt__strip { display: flex; height: 8px; }
+        .receipt__strip span { flex: 1; }
+        .receipt__strip span:nth-child(1) { background: var(--teal-dark); }
+        .receipt__strip span:nth-child(2) { background: var(--teal); }
+        .receipt__strip span:nth-child(3) { background: var(--amber); }
+        .receipt__strip span:nth-child(4) { background: var(--orange); }
+
+        .receipt__head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 28px 36px 24px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .receipt__logo img { display: block; height: 78px; width: auto; }
+
+        .receipt__title { text-align: left; }
+        .receipt__title h1 { margin: 0; color: var(--teal-dark); font-size: 28px; font-weight: 700; }
+        .receipt__title p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+        .receipt__body { padding: 28px 36px; }
+
+        .receipt__meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-bottom: 26px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+
+        .receipt__meta > div { padding: 14px 18px; }
+        .receipt__meta > div + div { border-inline-start: 1px solid var(--line); }
+        .receipt__meta dt { color: var(--muted); font-size: 13px; }
+        .receipt__meta dd { margin: 4px 0 0; font-size: 16px; font-weight: 700; }
+
+        .receipt__table { width: 100%; border-collapse: collapse; font-size: 15px; }
+
+        .receipt__table th {
+            padding: 11px 16px;
+            background: var(--teal-dark);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: start;
+        }
+
+        .receipt__table th:first-child { border-start-start-radius: 10px; }
+        .receipt__table th:last-child { border-start-end-radius: 10px; text-align: end; }
+
+        .receipt__table td { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+        .receipt__table td:last-child { font-weight: 700; text-align: end; white-space: nowrap; }
+        .receipt__table td small { color: var(--muted); font-size: 12px; font-weight: 400; }
+        .receipt__table .sub { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; }
+
+        .receipt__total {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 18px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: var(--cream);
+            border: 1px solid var(--sand);
+        }
+
+        .receipt__total span { color: var(--teal-dark); font-size: 16px; font-weight: 700; }
+        .receipt__total strong { color: var(--orange); font-size: 26px; }
+        .receipt__total strong small { color: var(--muted); font-size: 14px; font-weight: 400; }
+
+        .receipt__thanks {
+            margin: 24px 0 0;
+            padding-inline-start: 14px;
+            border-inline-start: 3px solid var(--amber);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .receipt__foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 16px 36px;
+            background: var(--teal-dark);
+            color: rgba(255, 255, 255, .85);
+            font-size: 13px;
+        }
+
+        .receipt__foot a { color: #fff; font-weight: 700; text-decoration: none; }
+
+        .actions { margin: 22px auto 0; text-align: center; }
+
+        .actions button,
+        .actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 44px;
+            margin: 0 4px;
+            padding: 0 22px;
+            border: 1px solid var(--teal-dark);
             border-radius: 10px;
+            background: var(--teal-dark);
+            color: #fff;
+            font: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
         }
 
-        hr {
-            height: 5px;
-            opacity: 1;
+        .actions a { background: #fff; color: var(--teal-dark); }
+
+        @media (max-width: 640px) {
+            body { padding: 16px 10px; }
+            .receipt__head { flex-direction: column-reverse; align-items: flex-start; padding: 22px 20px 18px; }
+            .receipt__title { text-align: start; }
+            .receipt__logo img { height: 64px; }
+            .receipt__body { padding: 20px; }
+            .receipt__meta { grid-template-columns: minmax(0, 1fr); }
+            .receipt__meta > div + div { border-inline-start: 0; border-top: 1px solid var(--line); }
+            .receipt__table th, .receipt__table td { padding: 10px 12px; }
+            .receipt__foot { padding: 14px 20px; }
+            .actions button, .actions a { margin: 4px; }
         }
 
-        .usernameFlied {
-            background: transparent;
-        }
-
-        .green {
-            position: relative;
-            width: 80%;
-        }
-
-        .green input {
-            width: 100%;
-        }
-
-        .user-info .UserName {
-            margin-top: 1rem !important;
-        }
-
-        @media (max-width: 991.98px) {
-            .UserName input {
-                width: 100%;
-                background-color: rgba(110, 165, 112, 0.5);
-            }
-
-            .ValueOfDontaion input {
-                width: 100%;
-                background-color: rgba(43, 152, 212, 0.5);
-            }
-
-            .user-info .UserName {
-                margin-top: 0.3rem !important;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .UserName input {
-                width: 75%;
-                background-color: rgba(110, 165, 112, 0.5);
-            }
-
-            .ValueOfDontaion input {
-                width: 75%;
-                background-color: rgba(43, 152, 212, 0.5);
-            }
-        }
-
-        .DateOfDonation input {
-            background-color: rgba(235, 150, 81, 0.5);
-        }
-
-        .projectDonation {
-            background-color: rgba(108, 117, 125, 0.3);
-            border: 0.1px solid #000;
-        }
-
-        .Number input {
-            background-color: rgba(108, 117, 125, 0.5);
-        }
-
-        .x {
-            height: 5px;
-        }
-
-        .projectDonation {
-            background-color: rgba(108, 117, 125, 0.3);
-        }
-
-        .copyrght {
-            padding: 10px;
-        }
-
-        .y {
-            height: 5px !important;
-            border: none;
-            background: linear-gradient(to left,
-                    var(--primary-color) 25%,
-                    var(--secound-color) 25%);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-        }
-
-        .info {
-            padding: 10px;
-        }
-
-        .print-button {
-            font-family: 'cairo', sans-serif;
-            padding: 5px 15px;
+        @media print {
+            body { padding: 0; background: #fff; }
+            .receipt { max-width: none; border-radius: 0; box-shadow: none; }
+            .actions { display: none; }
         }
     </style>
+</head>
 
-    <!--checkout-->
-    <div class="checkout">
-        <div class="container">
-            <div class="row img-div justify-content-center align-content-center" style="background-image: url({{ admin_path('images/invoices/background.jpg') }});">
-                <div class="check row  dashed-border border-primary p-md-5 pe-0 " dir="rtl">
-                    <div class="col-12 logo d-flex justify-content-center align-items-center ">
-                        <h3 class="text-dark mx-md-0">إيصال استلام </h3>
-                        <a href="{{ route('site.home') }}" class=" mx-md-auto">
-                            <img src="{{ asset('storage/site/img/invoices/logo.png') }}" class=" mx-md-auto" alt="" />
-                        </a>
-                    </div>
-                    <hr class="bg-primary mt-2" />
-                    <div class=" donation-info row justify-content-center align-content-center mt-2">
-                        <div class="user-info col-lg-6 col-12 col-md-6 col-sm-6 row justify-content-center align-content-center text-center ">
-                            <div class="col-12 UserName row justify-content-center align-content-center justify-content-center align-items-center">
-                                <label for="" class="col-lg-3 col-12 text-dark fs-5"> اسم المتبرع</label>
-                                <input type="text" value="<?= $order->donor?->full_name ?>" class="col-md-9  col-12 usernameFlied" />
-                            </div>
-                            <div class="col-12 ValueOfDontaion row  justify-content-center align-items-center">
-                                <label for="" class=" col-lg-3 col-12 text-dark fs-5 "> إجمالي قيمة التبرع </label>
-                                <input type="text" value="<?= $order->total ?> ريال" class="col-md-9 col-12 usernameFlied " />
-                            </div>
-                            <div class="DateOfDonation col-12 rowjustify-content-center align-items-center">
-                                <label for="" class="col-lg-3 col-12 text-dark fs-5"> تاريخ التبرع </label>
-                                <input type="text" value="<?php echo date('d-m-Y', $order->create_date); ?>" class="col-lg-5 col-12 usernameFlied ms-lg-0 mb-3 mb-md-0" />
-                                <input type="text" value="<?php echo date('H:i:s', $order->create_date); ?>" class="col-lg-3 col-12 usernameFlied me-lg-3" />
-                            </div>
-                            <div class="Number col-12 row my-3 justify-content-center align-items-center">
-                                <label for="" class="col-lg-3 col-12 text-dark fs-5 "> رقم العملية </label>
-                                <input type="text" value="#<?= $order->identifier ?>" class="col-lg-9 col-12 usernameFlied" />
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-12 col-md-6 col-sm-6  mb-3 mb-md-0 mx-auto  text-center justify-content-center projectDonation">
-                            <div class="row">
-                                <div class="col-6">
-                                    <h2 class="mt-5 text-dark"> اسم المشروع </h2>
-                                </div>
-                                <div class="col-6">
-                                    <h2 class="mt-5 text-dark"> قيمه المبلغ </h2>
-                                </div>
-                            </div>
-                            <hr class="x text-dark">
-                            @forelse($order->details as $key => $detail)
-                                <div class="row">
-                                    <div class="col-6">
-                                        <p class="text-dark"> {{ $detail->item_name }} </p>
-                                    </div>
-                                    <div class="col-6">
-                                        <p class="text-dark"> {{ $detail->total }} </p>
-                                    </div>
-                                </div>
-                            @empty
-                            @endforelse
-                        </div>
-                    </div>
-                </div>
+<body>
+    <div class="receipt">
+        <div class="receipt__strip"><span></span><span></span><span></span><span></span></div>
 
-                <div class="copyright col-12 row mt-5 justify-content-between">
-                    <h6 class="col-6 text-start text-dark" dir="rtl">هذا الإیصال إلكتروني لا یحتاج إلى ختم أو توقیع</h6>
-                    <h6 class="col-6 text-end text-dark"><span> &copy;</span>
-                        جميع الحقوق محفوظة لجمعية {{ env('APP_NAME_AR') }} </h6>
-                </div>
-                <hr class="y mt-2">
-                <div class=" info col-12 justify-content-center">
-                    <p class="mx-auto text-center fs-5" dir="rtl">
-                        <br> يمكنك التعرف على مشاريعنا من خلال موقعنا <a href="{{ route('site.home') }}"> {{ env('APP_URL') }} </a>
-                    </p>
-                </div>
+        <header class="receipt__head">
+            <a href="{{ route('site.home') }}" class="receipt__logo">
+                <img src="{{ asset('img/Untitled-1.png') }}" alt="جمعية {{ $orgName }}">
+            </a>
+            <div class="receipt__title">
+                <h1>إيصال استلام تبرع</h1>
+                <p>رقم العملية #{{ $order->identifier }}</p>
             </div>
+        </header>
+
+        <div class="receipt__body">
+            <dl class="receipt__meta">
+                <div>
+                    <dt>اسم المتبرع</dt>
+                    <dd>{{ $order->donor?->full_name ?: 'فاعل خير' }}</dd>
+                </div>
+                <div>
+                    <dt>تاريخ التبرع</dt>
+                    <dd><span dir="ltr">{{ $invoiceDate->format('Y/m/d') }}</span></dd>
+                </div>
+                <div>
+                    <dt>وقت التبرع</dt>
+                    <dd><span dir="ltr">{{ $invoiceDate->format('h:i A') }}</span></dd>
+                </div>
+            </dl>
+
+            <table class="receipt__table">
+                <thead>
+                    <tr>
+                        <th>المشروع</th>
+                        <th>المبلغ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($order->details as $detail)
+                        <tr>
+                            <td>
+                                {{ $detail->item_name }}
+                                @if ($detail->quantity > 1)
+                                    <span class="sub">{{ $detail->quantity }} × {{ number_format($detail->price, 2) }} ريال</span>
+                                @endif
+                            </td>
+                            <td>{{ number_format($detail->total, 2) }} <small>ريال</small></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <div class="receipt__total">
+                <span>إجمالي قيمة التبرع</span>
+                <strong>{{ number_format($order->total, 2) }} <small>ريال</small></strong>
+            </div>
+
+            <p class="receipt__thanks">
+                شكرًا لعطائك، تقبّل الله منك وجعله في ميزان حسناتك.
+                <br>هذا الإيصال إلكتروني ولا يحتاج إلى ختم أو توقيع.
+            </p>
         </div>
+
+        <footer class="receipt__foot">
+            <span>&copy; جميع الحقوق محفوظة لجمعية {{ $orgName }}</span>
+            <a href="{{ route('site.home') }}">{{ preg_replace('#^https?://#', '', rtrim(config('app.url'), '/')) }}</a>
+        </footer>
     </div>
 
-    <div class="text-center">
-        <button onclick="window.print();" target="_blank" class="mb-3 btn btn-primary print-button hidePrint noPrint">
-            <img src="{{ admin_path('images/invoices/download.svg') }}">
-            &nbsp;طباعة الايصال</button>
+    <div class="actions">
+        <button type="button" onclick="window.print()">طباعة الإيصال</button>
+        <a href="{{ route('site.home') }}">العودة للموقع</a>
     </div>
-
 </body>
 
 </html>

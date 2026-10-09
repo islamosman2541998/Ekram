@@ -15,15 +15,6 @@
         .iti__country-name {
             display: none;
         }
-
-        .form-label {
-            width: 20% !important;
-
-        }
-
-        .btn {
-            padding: 0px !important;
-        }
     </style>
 
     @if ($authMessage)
@@ -63,8 +54,7 @@
                             <div class="input-group" wire:ignore>
                                 <input type="number" wire:ignore id="login-mobile"
                                     class="form-control text-dark box-shadow iti-phone" wire:model.defer="mobile"
-                                    placeholder="@lang('Log in using mobile number')" 
-                                    style="direction: ltr border: 2px solid #ced4da; border-radius: 10px; padding: 10px 15px; background: #fafafa;"  />
+                                    placeholder="5XXXXXXXX" style="direction: ltr" />
                                 <input id="countryData-login" wire:ignore wire:model="mobileWithCode"
                                     value="{{ $mobileWithCode }}" type="hidden" />
                             </div>
@@ -97,7 +87,7 @@
                                 @lang('Send')
                             </button>
                             @if ($showDescription)
-                                <p class="mt-3 text-center">
+                                <p class="auth-switch">
                                     <span>@lang('Don`t have an account?')</span>
                                     <a class="" href="{{ route('site.register') }}">@lang('Create an account')</a>
                                 </p>
@@ -152,7 +142,7 @@
                 <div class="modal-body">
                     <div class="row text-center">
                         <div class="col-md-9">
-                            <input type="text" max="4" min="4" wire:model="otp" class="form-control">
+                            <input type="text" max="4" min="4" wire:model="otp" class="form-control" inputmode="numeric" autocomplete="one-time-code">
                         </div>
                         <div class="col-md-3">
                             <button class="btn btn-primary auth-btn mt-2" type="button"

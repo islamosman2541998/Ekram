@@ -2,19 +2,15 @@
 @section('title', __('personal account information'))
 @section('content')
 
-<main>
-    <div class="profile-container ">
-        <div class="container card p-5 py-5 mt-3">
-            <div class="row">
-                <!-- Sidebar Navigation -->
-                <x-site.profile.side-menu />
+<main class="ek-profile">
+    <div class="ek-profile__wrap">
+        <x-site.profile.side-menu />
 
-                <!-- Main Content -->
-                <div class="col-md-8">
-                    @livewire('site.profile.edit')
-                </div>
+        <section class="ek-profile__main">
+            <div class="ek-pf-card ek-pf-card--content">
+                @livewire('site.profile.edit')
             </div>
-        </div>
+        </section>
     </div>
 </main>
 

@@ -3,25 +3,18 @@
 @section('title', __('Register'))
 
 @section('content')
+    <main class="ek-auth">
+        <div class="ek-auth__wrap">
+            @include('site.auth.layout-side', [
+                'sideTitle' => 'انضم إلى أسرة العطاء',
+                'sideText' => 'أنشئ حسابك في أقل من دقيقة، وكن سببًا في رسم الابتسامة على وجوه كبار السن.',
+            ])
 
-    <!--Login-->
-    <div class="login-container">
-        <div class="container">
-            <div class="sub row justify-content-center align-items-center min-vh-100">
-                <div class="col-lg-5 col-md-8 col-sm-10">
-                    <div class="login-card">
-                        <div class="login-header text-center mb-4">
-                            <i class="fas fa-handshake fa-5x"></i>
-                            
-                            <h2 class="mt-3">@lang('New Account') </h2>
-                        </div>
-                        <livewire:site.auth.register />
-                    </div>
-
-                </div>
-            </div>
+            <section class="ek-auth__main">
+                <livewire:site.auth.register />
+            </section>
         </div>
-    </div>
-    <!--Login-->
+    </main>
 
+    @include('site.auth.styles')
 @endsection

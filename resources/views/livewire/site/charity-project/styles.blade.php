@@ -1005,4 +1005,7 @@
     }
 
     .ek-project .ek-pj-about:empty { display: none; }
+    /* style.css sets main { overflow-x: hidden }, which turns <main> into a scroll container and
+       breaks position: sticky (the element got pushed down). clip hides the same overflow without that. */
+    main:has(.ek-project) { overflow-x: clip !important; }
 </style>
