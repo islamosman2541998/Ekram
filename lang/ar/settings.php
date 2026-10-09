@@ -305,4 +305,8 @@ return [
     'enter_welcome_message' => 'أدخل رسالة الترحيب',
     'custom_pixel_script'           => 'custom pixel',
     'body_pixel'                    => 'body script',
+    'volunteering' => 'التطوع',
+    'badalnotfication' => 'تنبيهات البدل',
+    'settings_section' => 'القسم',
+    'settings_controls' => 'ما يتحكم فيه',
 ];

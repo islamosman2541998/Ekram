@@ -16,7 +16,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>@lang('admin.title')</th>
+                                    <th>@lang('settings.settings_section')</th>
+                                    <th>@lang('settings.settings_controls')</th>
                                     <th>@lang('admin.actions')</th>
                                 </tr>
                             </thead>
@@ -25,8 +26,9 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
-                                        {{ $item->title ?? trans('settings.' . $item->key) }}
+                                        {{ trans()->has('settings.' . $item->key) ? trans('settings.' . $item->key) : $item->title }}
                                     </td>
+                                    <td class="text-muted" style="white-space: normal; min-width: 260px;">{{ $item->description }}</td>
                                     <td>
                                         <div class="d-flex justify-content-center">
                                             <a href="{{ route('admin.settings.form',$item->key) }}" data-hover="@lang('admin.edit')" class="btn btn-neutral text-primary btn-sm m-1"><i class="bx bxs-edit"></i></a>

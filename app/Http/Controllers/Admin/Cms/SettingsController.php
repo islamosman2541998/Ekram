@@ -13,7 +13,13 @@ class SettingsController extends Controller
 {
     public function index()
     {
-        $items = Settings::active()->orderBy('sort', 'ASC')->get();
+        // Only the real setting groups. Some databases have stray rows whose key is a field name
+        // of another group (title, gift_title_ar, gift_category, status...); they hold no values
+        // and nothing reads them, so they are hidden here (not deleted).
+        $items = Settings::active()
+            ->whereIn('key', array_keys(Settings::GROUPS))
+            ->orderBy('sort', 'ASC')
+            ->get();
         return view('admin.dashboard.cms.settings.index', compact('items'));
     }
 

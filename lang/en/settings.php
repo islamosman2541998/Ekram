@@ -254,4 +254,8 @@ return [
     "bouquets_ramadan"              => "Bouquets Ramadan",
     'welcome_message' => 'Welcome Message',
     'enter_welcome_message' => 'Enter welcome message',
+    'volunteering' => 'Volunteering',
+    'badalnotfication' => 'Badal notifications',
+    'settings_section' => 'Section',
+    'settings_controls' => 'What it controls',
 ];
