@@ -186,24 +186,4 @@
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Auto-detect user's country
-        fetch('https://ipapi.co/json/')
-            .then(response => response.json())
-            .then(data => {
-                const countryCode = data.country_calling_code || '+966'; // Default to KSA if not found
-                const select = document.getElementById('countryCode');
-                for (let i = 0; i < select.options.length; i++) {
-                    if (select.options[i].value === countryCode) {
-                        select.selectedIndex = i;
-                        break;
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error detecting country:', error);
-            });
-    });
-</script>
 @endpush

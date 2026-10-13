@@ -197,7 +197,7 @@
             preferredCountries: ['sa', 'ae', 'kw', 'qa', 'bh', 'om'],
             separateDialCode: true,
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-            initialCountry: "auto",
+            initialCountry: "sa",
             geoIpLookup: function(success, failure) {
                 fetch("https://ipapi.co/json")
                     .then(function(res) { return res.json(); })

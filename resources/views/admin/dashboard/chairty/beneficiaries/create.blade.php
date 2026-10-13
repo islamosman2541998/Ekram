@@ -269,7 +269,7 @@
     var buttonSbmit = document.getElementById("submit");
     var errorMap = [`{{ trans('admin.Invalid_number') }}`, `{{ trans('admin.Invalid_country_code') }}`, `{{ trans('admin.Too_short') }}`, `{{ trans('admin.Too_long') }}`];
     var iti = window.intlTelInput(input, {
-        initialCountry: "auto",
+        initialCountry: "sa",
         geoIpLookup: function(callback) {
             $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
                 var countryCode = (resp && resp.country) ? resp.country : "";

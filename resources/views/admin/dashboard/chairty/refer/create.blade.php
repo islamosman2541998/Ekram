@@ -400,7 +400,7 @@
             `{{ trans('admin.Too_short') }}`, `{{ trans('admin.Too_long') }}`
         ];
         var iti = window.intlTelInput(input, {
-            initialCountry: "auto",
+            initialCountry: "sa",
             geoIpLookup: function(callback) {
                 $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
                     var countryCode = (resp && resp.country) ? resp.country : "";
