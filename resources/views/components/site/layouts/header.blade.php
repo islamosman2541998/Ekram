@@ -235,6 +235,17 @@
         #footer {
             border-top: 5px solid {{ $secound_color }};
         }
+
+        /* Arabic: keep the alert close (X) on the left so it doesn't cover the text */
+        html[lang="ar"] .alert-dismissible {
+            padding-right: 1rem;
+            padding-left: 3rem !important;
+        }
+
+        html[lang="ar"] .alert-dismissible .btn-close {
+            right: auto;
+            left: 0;
+        }
     </style>
 
 </head>
